@@ -1,0 +1,44 @@
+# ------------------------------------
+# Archivos/Directorios de Aplicación
+# ------------------------------------
+
+# Ignorar las dependencias de PHP (Composer)
+/vendor/
+
+# Ignorar el archivo de configuración de entorno (contiene credenciales)
+.env
+
+# setup.sql (Si ya se ejecutó, no es necesario mantenerlo en el control de versiones)
+setup.sql
+
+# ------------------------------------
+# Archivos de Node.js / Tailwind
+# ------------------------------------
+
+# Dependencias de Node.js (se regeneran con npm install)
+
+/node_modules/
+
+# Archivos de lock
+
+package-lock.json
+
+# Archivos de salida de compilación
+# Ignora el CSS compilado, ya que se genera automáticamente.
+
+/public/assets/css/tailwind.css
+
+# También ignoramos los archivos de mapeo de fuente si se generan
+
+*.map
+
+# ------------------------------------
+# Archivos del Sistema Operativo
+# ------------------------------------
+
+MacOS
+.DS_Store
+Windows
+Thumbs.db
+VS Code
+.vscode/

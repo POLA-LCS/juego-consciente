@@ -1,0 +1,10 @@
+Juego Consciente - Archivo de Entrada CSS para Tailwind
+Ubicación: ludopatia/public/assets/css/input.css
+
+Este archivo contiene las directivas base de Tailwind que el compilador lee
+para generar el archivo de salida (tailwind.css).
+"""
+tailwind_input_css = """
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
