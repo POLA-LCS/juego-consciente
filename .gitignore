@@ -2,15 +2,6 @@
 # Archivos/Directorios de Aplicación
 # ------------------------------------
 
-# Ignorar las dependencias de PHP (Composer)
-/vendor/
-
-# Ignorar el archivo de configuración de entorno (contiene credenciales)
-.env
-
-# setup.sql (Si ya se ejecutó, no es necesario mantenerlo en el control de versiones)
-setup.sql
-
 # ------------------------------------
 # Archivos de Node.js / Tailwind
 # ------------------------------------
