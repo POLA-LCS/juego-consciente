@@ -64,20 +64,7 @@
     <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
 
     <script src="/ludopatia/public/assets/js/sidebar.js"></script>
-    <script>
-        const betSidebar = document.getElementById('betSidebar');
-        const openBetSidebar = document.getElementById('openBetSidebar');
-        const closeBetSidebar = document.getElementById('closeBetSidebar');
-
-        openBetSidebar.addEventListener('click', () => {
-            betSidebar.classList.toggle('-translate-x-full');
-        });
-
-        closeBetSidebar.addEventListener('click', () => {
-            betSidebar.classList.add('-translate-x-full');
-        });
-
-    </script>
+    <script src="/ludopatia/public/assets/js/bet_sidebar.js"></script>
     <script src="/ludopatia/public/assets/js/blackjack.js"></script>
 </body>
 </html>
