@@ -1,6 +1,10 @@
-<header class="bg-[var(--color-surface)] p-5 flex items-center justify-center shadow-lg border-b border-[var(--color-border)]">
-    <div class="flex items-center">
-        <img src="/ludopatia/public/assets/images/logo.png" alt="Logo" class="h-10 w-10 mr-3">
-        <h1 class="text-3xl text-[var(--color-primary)]" style="font-family: 'Grand Casino', sans-serif;">Juego Consciente</h1>
+<header class="bg-[var(--color-header-bg)] text-white py-6 px-6 border-b border-[var(--color-border)]">
+    <div class="container mx-auto flex justify-center items-center gap-3">
+        <a href="?page=login" class="flex items-center gap-3">
+            <svg class="h-10 w-10 text-[var(--color-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span class="text-xl font-bold" style="font-family: 'Grand Casino', sans-serif;">Juego Consciente</span>
+        </a>
     </div>
 </header>
