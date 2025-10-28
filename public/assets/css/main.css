@@ -75,14 +75,16 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
 /* Estilos para los enlaces del sidebar */
 .sidebar-link {
     display: block;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem calc(1rem - 3px); /* Ajustamos padding para el borde */
+    border-left: 3px solid transparent; /* Borde transparente por defecto */
     border-radius: 0.375rem; /* rounded-md */
     font-weight: bold;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
 }
 
 .sidebar-link:hover {
     background-color: var(--color-surface);
+    border-left-color: var(--color-primary);
 }
 
 .sidebar-link-danger {
@@ -91,4 +93,5 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
 .sidebar-link-danger:hover {
     background-color: var(--color-primary);
     color: white;
+    border-left-color: var(--color-primary); /* Mantenemos el borde rojo */
 }

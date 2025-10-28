@@ -1,11 +1,11 @@
-<aside id="userSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l border-[var(--color-border)] p-4 transform translate-x-full transition-transform duration-300 z-50">
+<aside id="userSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l border-[var(--color-border)] p-3 transform translate-x-full transition-transform duration-300 z-50">
     <div class="flex justify-end">
         <button id="closeUserSidebar" class="text-[var(--color-text-muted)] hover:text-white text-4xl font-light leading-none">&times;</button>
     </div>
     <div class="text-center mb-6">
-        <img src="/ludopatia/public/assets/images/logo.png" alt="Profile" class="h-16 w-16 rounded-full mx-auto mb-2">
-        <p class="text-[var(--color-text-base)] font-bold"><?php echo $_SESSION['username']; ?></p>
-        <p class="text-[var(--color-text-muted)]">ID: <?php echo $_SESSION['user_id']; ?></p>
+        <img src="/ludopatia/public/assets/images/logo.png" alt="Profile" class="h-20 w-20 rounded-full mx-auto mb-3">
+        <p class="text-lg text-[var(--color-text-base)] font-bold"><?php echo $_SESSION['username']; ?></p>
+        <p class="text-sm text-[var(--color-text-muted)]">ID: <?php echo $_SESSION['user_id']; ?></p>
     </div>
     <nav>
         <ul class="space-y-2">
