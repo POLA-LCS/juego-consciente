@@ -1,10 +1,6 @@
 <?php
-// Cláusula de guarda: si la constante APP_RUNNING no está definida, significa que se está accediendo directamente al archivo.
-if (!defined('APP_RUNNING')) {
-    http_response_code(403); // 403 Forbidden es más apropiado para acceso denegado.
-    include_once(__DIR__ . '/../views/errors/403.php');
-    die();
-}
+// La función protect_page() está definida globalmente gracias a la carga en index.php
+protect_page();
 
 // ROOT_PATH es definido en index.php
 require_once ROOT_PATH . 'config/database.php';

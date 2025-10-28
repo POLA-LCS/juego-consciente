@@ -7,6 +7,9 @@ define('APP_RUNNING', true);
 // Definir la ruta raíz del proyecto para que los includes sean consistentes.
 define('ROOT_PATH', __DIR__ . '/');
 
+// Cargar helpers globales
+require_once ROOT_PATH . 'app/helpers/security.php';
+
 if (isset($_GET['action'])) {
     include 'app/controllers/UserController.php';
 } else {

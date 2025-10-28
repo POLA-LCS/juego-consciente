@@ -1,10 +1,5 @@
 <?php
-// Cláusula de guarda: si la constante APP_RUNNING no está definida, significa que se está accediendo directamente al archivo.
-if (!defined('APP_RUNNING')) {
-    http_response_code(403);
-    include_once(__DIR__ . '/errors/403.php');
-    die();
-}
+protect_page();
 ?>
 <!DOCTYPE html>
 <html lang="es">
