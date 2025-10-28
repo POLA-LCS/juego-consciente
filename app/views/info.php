@@ -14,12 +14,11 @@ if (!defined('ROOT_PATH')) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/ludopatia/public/assets/css/main.css">
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
     <?php include ROOT_PATH . 'app/views/partials/header.php'; ?>
     <?php include ROOT_PATH . 'app/views/partials/sidebar.php'; ?>
 
-    <main class="p-6">
-        <!-- El botón de menú de usuario ahora está en el header -->
+    <main class="p-6 flex-1">
     <div class="max-w-4xl mx-auto">
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg mb-6">
             <h2 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">¿Qué es la Ludopatía?</h2>

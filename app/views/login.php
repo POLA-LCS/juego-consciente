@@ -14,7 +14,7 @@ if (!defined('ROOT_PATH')) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/ludopatia/public/assets/css/main.css">
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="bg-[var(--color-background)] flex flex-col min-h-screen">
     <?php include ROOT_PATH . 'app/views/partials/header_auth.php'; ?>
     <main class="flex items-center justify-center flex-1">
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-8 rounded-lg shadow-lg w-full max-w-md">
