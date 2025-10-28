@@ -17,7 +17,7 @@
         </div>
     <div class="max-w-2xl mx-auto">
         <h1 class="text-4xl font-bold mb-6 text-center text-red-500">Contacto</h1>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
+        <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg mb-6">
             <h2 class="text-2xl font-bold mb-4 text-red-500">¿Necesitas Ayuda?</h2>
             <p class="mb-4">Si tú o alguien que conoces está luchando con la ludopatía, no estás solo. Hay recursos disponibles para ayudarte.</p>
             <div class="mb-4">
@@ -38,7 +38,7 @@
                 </ul>
             </div>
         </div>
-        <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg">
             <h2 class="text-2xl font-bold mb-4 text-red-500">Contáctanos</h2>
             <form>
                 <div class="mb-4">
@@ -53,11 +53,11 @@
                     <label for="message" class="block text-sm font-medium mb-2">Mensaje</label>
                     <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required></textarea>
                 </div>
-                <button type="submit" class="w-full btn-red text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-200">Enviar Mensaje</button>
+                <button type="submit" class="w-full btn py-2 px-4 rounded-md font-bold">Enviar Mensaje</button>
             </form>
         </div>
         <div class="text-center mt-6">
-            <a href="?page=dashboard" class="btn-red text-white py-2 px-4 rounded-md">Volver al Dashboard</a>
+            <a href="?page=dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Dashboard</a>
         </div>
     </main>
 

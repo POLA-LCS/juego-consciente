@@ -17,12 +17,22 @@
     src: url('/ludopatia/public/assets/fonts/roboto/Roboto-Regular.ttf') format('truetype');
 }
 
+:root {
+    --color-background: #0a0a0a;      /* Negro profundo */
+    --color-surface: #161616;         /* Superficie oscura */
+    --color-primary: #ff3333;         /* Rojo neón sutil */
+    --color-primary-hover: #ff4f4f;    /* Rojo neón más brillante */
+    --color-border: #2a2a2a;          /* Borde muy sutil */
+    --color-text-base: #f0f0f0;        /* Texto base casi blanco */
+    --color-text-muted: #a0a0a0;       /* Texto atenuado */
+}
+
 body { 
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #1a1a1a; 
-    color: #ffffff;
+    background-color: var(--color-background); 
+    color: var(--color-text-base);
     font-family: 'Roboto', sans-serif;
 }
 
@@ -31,8 +41,6 @@ main {
     flex-grow: 1;
 }
 
-.btn-red { background-color: #dc2626; }
-.btn-red:hover { background-color: #b91c1c; }
 h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bold; }
 
 .card { background-color: #374151; border-radius: 8px; padding: 10px; margin: 5px; display: inline-block; }
@@ -40,9 +48,47 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
 /* Estilos para las tarjetas de juego */
 .game-card {
     border: 2px solid transparent; /* Borde invisible por defecto */
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
 .game-card:hover {
-    border-color: #dc2626; /* Borde rojo al hacer hover */
+    border-color: var(--color-primary); /* Borde rojo al hacer hover */
+    transform: scale(1.03);
+}
+
+.center-grid {
+    justify-content: center;
+}
+
+/* Nuevo estilo de botón moderno */
+.btn {
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btn:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* Estilos para los enlaces del sidebar */
+.sidebar-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem; /* rounded-md */
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.sidebar-link:hover {
+    background-color: var(--color-surface);
+}
+
+.sidebar-link-danger {
+    color: var(--color-primary);
+}
+.sidebar-link-danger:hover {
+    background-color: var(--color-primary);
+    color: white;
 }
