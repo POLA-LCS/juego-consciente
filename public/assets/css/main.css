@@ -1,28 +1,48 @@
 @font-face {
     font-family: 'Grand Casino';
-    src: url('/ludopatia/public/assets/fonts/grand_casino/Grand-Casino.otf') format('truetype');
+    src: url('/ludopatia/public/assets/fonts/grand_casino/Grand-Casino.otf') format('opentype');
 }
 @font-face {
     font-family: 'Montserrat';
-    src: url('/ludopatia/public/assets/fonts/montserrat/Montserrat-Regular.otf') format('truetype');
+    src: url('/ludopatia/public/assets/fonts/montserrat/Montserrat-Regular.otf') format('opentype');
     font-weight: normal;
 }
 @font-face {
     font-family: 'Montserrat';
-    src: url('/ludopatia/public/assets/fonts/montserrat/Montserrat-Bold.otf') format('truetype');
+    src: url('/ludopatia/public/assets/fonts/montserrat/Montserrat-Bold.otf') format('opentype');
     font-weight: bold;
 }
 @font-face {
     font-family: 'Roboto';
     src: url('/ludopatia/public/assets/fonts/roboto/Roboto-Regular.ttf') format('truetype');
 }
+
 body { 
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background-color: #1a1a1a; 
     color: #ffffff;
     font-family: 'Roboto', sans-serif;
 }
+
+/* Empuja el footer hacia abajo */
+main {
+    flex-grow: 1;
+}
+
 .btn-red { background-color: #dc2626; }
 .btn-red:hover { background-color: #b91c1c; }
 h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bold; }
 
 .card { background-color: #374151; border-radius: 8px; padding: 10px; margin: 5px; display: inline-block; }
+
+/* Estilos para las tarjetas de juego */
+.game-card {
+    border: 2px solid transparent; /* Borde invisible por defecto */
+    transition: border-color 0.3s ease;
+}
+
+.game-card:hover {
+    border-color: #dc2626; /* Borde rojo al hacer hover */
+}

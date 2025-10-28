@@ -12,7 +12,6 @@
     <?php include ROOT_PATH . 'app/views/partials/sidebar.php'; ?>
     <?php /* include ROOT_PATH . 'app/views/partials/cheat_sidebar.php'; */ // Descomenta si tienes este archivo ?>
 
-    <div class="p-6">
     <main class="p-6">
         <div class="flex justify-between items-center mb-6">
             <button id="openBetSidebar" class="btn-red text-white py-2 px-4 rounded-md mr-4">Apuesta</button>
@@ -60,7 +59,6 @@
         <button id="stand" class="btn-red text-white py-2 px-4 rounded-md" disabled>Plantarse</button>
     </div>
 
-    </div>
     </main>
 
     <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>

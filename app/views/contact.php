@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
     <?php include ROOT_PATH . 'app/views/partials/header.php'; ?>
     <?php include ROOT_PATH . 'app/views/partials/sidebar.php'; ?>
 
-    <div class="p-6">
+    <main class="p-6">
         <div class="flex justify-end items-center mb-6">
             <h1 class="text-3xl font-bold text-red-500">Contacto</h1>
         </div>
@@ -59,7 +59,7 @@
         <div class="text-center mt-6">
             <a href="?page=dashboard" class="btn-red text-white py-2 px-4 rounded-md">Volver al Dashboard</a>
         </div>
-    </div>
+    </main>
 
     <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
 

@@ -11,7 +11,7 @@
     <?php include ROOT_PATH . 'app/views/partials/header.php'; ?>
     <?php include ROOT_PATH . 'app/views/partials/sidebar.php'; ?>
 
-    <div class="p-6">
+    <main class="p-6">
         <!-- El botón de menú de usuario ahora está en el header -->
     <div class="max-w-4xl mx-auto">
         <div class="bg-gray-800 p-6 rounded-lg shadow-lg mb-6">
@@ -51,7 +51,7 @@
         <div class="text-center">
             <a href="?page=dashboard" class="btn-red text-white py-2 px-4 rounded-md">Volver al Dashboard</a>
         </div>
-    </div>
+    </main>
 
     <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
 

@@ -13,29 +13,35 @@
     <?php /* include ROOT_PATH . 'app/views/partials/cheat_sidebar.php'; */ // Descomenta si tienes este archivo ?>
 
     <!-- Main Content -->
-    <div class="p-6">
+    <main class="p-6">
         <div class="flex justify-end items-center mb-6">
-            <h1 class="text-3xl font-bold text-red-500">Dashboard</h1>
+            <h1 class="text-5xl font-bold text-red-500" style="font-family: 'Grand Casino', sans-serif;">¡A Jugar!</h1>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-700 transition" onclick="window..href='?page=blackjack'">
-                <img src="/ludopatia/public/assets/images/card.jpg" alt="Blackjack" class="w-full h-32 object-cover rounded mb-2">
-                <h2 class="text-xl font-bold text-red-500">Blackjack</h2>
+            <!-- Tarjeta de Juego -->
+            <div class="game-card bg-gray-800 rounded-lg shadow-lg text-center cursor-pointer overflow-hidden" onclick="window.location.href='?page=blackjack'">
+                <div class="relative h-56">
+                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Blackjack" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                    <h2 class="absolute bottom-4 left-0 right-0 text-2xl font-bold text-white">Blackjack</h2>
+                </div>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-700 transition" onclick="window.location.href='?page=cups'">
-                <img src="/ludopatia/public/assets/images/card.jpg" alt="Cups Game" class="w-full h-32 object-cover rounded mb-2">
-                <h2 class="text-xl font-bold text-red-500">Cups Game</h2>
+            <div class="game-card bg-gray-800 rounded-lg shadow-lg text-center cursor-pointer overflow-hidden" onclick="window.location.href='?page=cups'">
+                <div class="relative h-56">
+                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Cups Game" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                    <h2 class="absolute bottom-4 left-0 right-0 text-2xl font-bold text-white">Cups Game</h2>
+                </div>
             </div>
-            <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-700 transition" onclick="window.location.href='?page=roulette'">
-                <img src="/ludopatia/public/assets/images/card.jpg" alt="Roulette" class="w-full h-32 object-cover rounded mb-2">
-                <h2 class="text-xl font-bold text-red-500">Roulette</h2>
-            </div>
-            <div class="bg-gray-800 p-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-700 transition" onclick="window.location.href='?page=slots'">
-                <img src="/ludopatia/public/assets/images/card.jpg" alt="Slots" class="w-full h-32 object-cover rounded mb-2">
-                <h2 class="text-xl font-bold text-red-500">Slots</h2>
+            <div class="game-card bg-gray-800 rounded-lg shadow-lg text-center cursor-pointer overflow-hidden" onclick="window.location.href='?page=roulette'">
+                <div class="relative h-56">
+                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Roulette" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                    <h2 class="absolute bottom-4 left-0 right-0 text-2xl font-bold text-white">Roulette</h2>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
 
