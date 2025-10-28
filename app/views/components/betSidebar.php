@@ -14,21 +14,16 @@ if (!defined('ROOT_PATH')) {
         <hr class="border-[var(--color-border)] mb-4">
         <div class="text-center mb-4">
             <span class="text-lg text-[var(--color-text-muted)]">Apuesta</span>
-            <p id="currentBet" class="text-4xl font-bold text-[var(--color-primary)]">10</p>
+            <p id="currentBet" class="text-4xl font-bold text-[var(--color-primary)]">25</p>
         </div>
-        <div class="space-y-2">
-            <div class="flex items-center justify-between">
-                <button id="minus1" class="btn w-1/2 py-1 rounded-md mr-1">-1</button>
-                <button id="plus1" class="btn w-1/2 py-1 rounded-md ml-1">+1</button>
-            </div>
-            <div class="flex items-center justify-between">
-                <button id="minus10" class="btn w-1/2 py-1 rounded-md mr-1">-10</button>
-                <button id="plus10" class="btn w-1/2 py-1 rounded-md ml-1">+10</button>
-            </div>
-            <div class="flex items-center justify-between">
-                <button id="minus100" class="btn w-1/2 py-1 rounded-md mr-1">-100</button>
-                <button id="plus100" class="btn w-1/2 py-1 rounded-md ml-1">+100</button>
-            </div>
+        <!-- Chips para añadir a la apuesta -->
+        <div class="grid grid-cols-2 gap-2">
+            <button data-amount="1" class="btn bet-chip py-1 rounded-md">+1</button>
+            <button data-amount="5" class="btn bet-chip py-1 rounded-md">+5</button>
+            <button data-amount="10" class="btn bet-chip py-1 rounded-md">+10</button>
+            <button data-amount="25" class="btn bet-chip py-1 rounded-md">+25</button>
+            <button data-amount="100" class="btn bet-chip py-1 rounded-md">+100</button>
+            <button data-amount="500" class="btn bet-chip py-1 rounded-md">+500</button>
         </div>
     </div>
     <div class="space-y-3">
