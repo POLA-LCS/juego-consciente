@@ -1,5 +1,5 @@
 <aside id="userSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l border-[var(--color-border)] p-3 transform translate-x-full transition-transform duration-300 z-50">
-    <div class="flex justify-end">
+    <div class="flex justify-end mb-2">
         <button id="closeUserSidebar" class="text-[var(--color-text-muted)] hover:text-white text-4xl font-light leading-none">&times;</button>
     </div>
     <div class="text-center mb-6">
