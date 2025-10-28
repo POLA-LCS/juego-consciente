@@ -1,6 +1,10 @@
 <?php
 // Cláusula de guarda: si la constante APP_RUNNING no está definida, significa que se está accediendo directamente al archivo.
-defined('APP_RUNNING') or die('Acceso denegado');
+if (!defined('APP_RUNNING')) {
+    http_response_code(404);
+    include_once(__DIR__ . '/../errors/404.php');
+    die();
+}
 ?>
 <footer class="bg-[var(--color-surface)] text-[var(--color-text-muted)] py-4 mt-8 border-t border-[var(--color-border)]">
     <div class="container mx-auto text-center">

@@ -1,6 +1,10 @@
 <?php
 // Cláusula de guarda: si la constante APP_RUNNING no está definida, significa que se está accediendo directamente al archivo.
-defined('APP_RUNNING') or die('Acceso denegado');
+if (!defined('APP_RUNNING')) {
+    http_response_code(404);
+    include_once(__DIR__ . '/../app/views/errors/404.php');
+    die();
+}
 
 class Database {
     private $host = 'localhost';
