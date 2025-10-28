@@ -1,3 +1,6 @@
+<?php
+protect_page();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

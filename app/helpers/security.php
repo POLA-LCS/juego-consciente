@@ -1,15 +1,14 @@
 <?php
 
 /**
- * Verifica si la aplicación se está ejecutando a través del punto de entrada principal.
+ * Verifica si la constante ROOT_PATH está definida. Si no lo está, significa que
+ * el script no se ha ejecutado a través de index.php.
  * Si no, muestra una página de error 403 y detiene la ejecución.
- * Esta función debe ser llamada al principio de cada archivo PHP que no deba ser accedido directamente.
  */
 function protect_page() {
-    if (!defined('APP_RUNNING')) {
-        http_response_code(403);
-        // Usamos ROOT_PATH para una ruta absoluta y fiable.
-        include_once(ROOT_PATH . 'app/views/errors/403.php');
-        die();
+    if (!defined('ROOT_PATH')) {
+        // Redirigimos al router principal para que muestre la página de error.
+        header('Location: /ludopatia/index.php?page=error403');
+        exit(); // Es crucial detener la ejecución después de una redirección.
     }
 }

@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-// Definimos una constante para verificar que la aplicación se ejecuta desde este punto de entrada.
-define('APP_RUNNING', true);
-
 // Definir la ruta raíz del proyecto para que los includes sean consistentes.
 define('ROOT_PATH', __DIR__ . '/');
 
@@ -29,6 +26,7 @@ if (isset($_GET['action'])) {
         'cups'      => 'app/views/games/cups.php',
         'roulette'  => 'app/views/games/roulette.php',
         'slots'     => 'app/views/games/slots.php',
+        'error403'  => 'app/views/errors/403.php', // Ruta para la página de acceso denegado
     ];
 
     if (in_array($page, $protected_pages) && !isset($_SESSION['user_id'])) {
@@ -37,6 +35,11 @@ if (isset($_GET['action'])) {
 
     // Si la página solicitada existe en nuestras rutas, la incluimos.
     if (array_key_exists($page, $routes)) {
+        // Si estamos mostrando una página de error, establecemos el código de estado HTTP correcto.
+        if ($page === 'error403') {
+            http_response_code(403);
+        }
+
         include $routes[$page];
     } else {
         // Si la ruta no existe, mostramos un error 404.
