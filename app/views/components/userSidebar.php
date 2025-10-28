@@ -12,7 +12,14 @@
             <li><a href="?page=dashboard" class="sidebar-link text-[var(--color-text-base)]">Dashboard</a></li>
             <li><a href="?page=info" class="sidebar-link text-[var(--color-text-base)]">Ludopatía</a></li>
             <li><a href="?page=contact" class="sidebar-link text-[var(--color-text-base)]">Contacto</a></li>
-            <li><a href="#" id="openCheatSidebar" class="sidebar-link text-[var(--color-text-base)]">Cheats</a></li>
+            <?php
+            // Definimos las páginas que son consideradas "juegos"
+            $game_pages = ['blackjack', 'cups', 'roulette', 'slots'];
+            // Comprobamos si la página actual está en la lista de juegos para mostrar el botón
+            if (isset($page) && in_array($page, $game_pages)):
+            ?>
+                <li><a href="#" id="openCheatSidebar" class="sidebar-link text-[var(--color-text-base)]">Cheats</a></li>
+            <?php endif; ?>
             <li><a href="?action=logout" class="sidebar-link sidebar-link-danger">Logout</a></li>
         </ul>
     </nav>
