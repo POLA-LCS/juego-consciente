@@ -29,7 +29,9 @@ class User {
 
         $stmt->bindParam(":username", $this->username);
         $stmt->bindParam(":email", $this->email);
-        $stmt->bindParam(":password", password_hash($this->password, PASSWORD_DEFAULT));
+        // Usamos bindValue para pasar el resultado de la función password_hash.
+        // bindParam requiere una variable, bindValue puede tomar un valor directo.
+        $stmt->bindValue(":password", password_hash($this->password, PASSWORD_DEFAULT));
 
         if($stmt->execute()) {
             return true;
