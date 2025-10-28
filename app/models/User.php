@@ -154,5 +154,38 @@ class User {
         }
         return false;
     }
+
+    public function getWinStreak() {
+        $query = "SELECT win_streak FROM " . $this->table_name . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row["win_streak"];
+    }
+
+    public function setWinStreak($streak) {
+        $query = "UPDATE " . $this->table_name . " SET win_streak = :streak WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        $streak = htmlspecialchars(strip_tags($streak));
+
+        $stmt->bindParam(":streak", $streak);
+        $stmt->bindParam(":id", $this->id);
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function incrementWinStreak() {
+        $query = "UPDATE " . $this->table_name . " SET win_streak = win_streak + 1 WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $this->id);
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>

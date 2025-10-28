@@ -13,6 +13,11 @@ if (!defined('ROOT_PATH')) {
         </div>
         <hr class="border-[var(--color-border)] mb-4">
         <div class="text-center mb-4">
+            <span class="text-lg text-[var(--color-text-muted)]">Racha Victorias</span>
+            <p id="winStreak" class="text-3xl font-bold text-[var(--color-text-base)]">0</p>
+        </div>
+        <hr class="border-[var(--color-border)] mb-4">
+        <div class="text-center mb-4">
             <span class="text-lg text-[var(--color-text-muted)]">Apuesta</span>
             <p id="currentBet" class="text-4xl font-bold text-[var(--color-primary)]">25</p>
         </div>

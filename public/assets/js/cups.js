@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const betChips = document.querySelectorAll('.bet-chip');
     const resetBetButton = document.getElementById('resetBet');
     const placeBetButton = document.getElementById('placeBet');
+    const winStreakDisplay = document.getElementById('winStreak');
 
     let userBalance = 0;
     let currentBetValue = MIN_BET;
@@ -30,6 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('?action=getBalance').then(r => r.json()).then(data => {
         updateUserBalance(parseInt(data, 10));
         resetBet();
+    });
+
+    // Cargar la racha de victorias inicial
+    fetch('?action=getWinStreak').then(r => r.json()).then(data => {
+        winStreak = parseInt(data.win_streak, 10);
+        winStreakDisplay.textContent = winStreak;
     });
 
     betChips.forEach(b => b.addEventListener('click', () => addToBet(parseInt(b.dataset.amount, 10))));
@@ -145,7 +152,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isWinner) {
             messageContainer.textContent = `¡Has ganado ${currentBetValue * 2}!`;
             messageContainer.style.color = 'var(--color-primary)';
-            winStreak++; // Incrementar racha de victorias
+            // Incrementar racha de victorias en el backend
+            fetch('?action=incrementWinStreak', { method: 'POST' })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        winStreak++;
+                        winStreakDisplay.textContent = winStreak;
+                    }
+                });
             // Lógica para sumar el premio al saldo
             const formData = new FormData();
             formData.append('amount', currentBetValue * 2);
@@ -155,7 +170,17 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             messageContainer.textContent = "Inténtalo de nuevo...";
             messageContainer.style.color = 'var(--color-text-muted)';
-            winStreak = 0; // Resetear racha de victorias
+            // Resetear racha de victorias en el backend
+            const formData = new FormData();
+            formData.append('streak', 0);
+            fetch('?action=setWinStreak', { method: 'POST', body: formData })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        winStreak = 0;
+                        winStreakDisplay.textContent = winStreak;
+                    }
+                });
         }
         playAgainButton.classList.remove('hidden');
     }

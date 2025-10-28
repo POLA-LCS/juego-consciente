@@ -106,6 +106,28 @@ if (isset($_GET['action'])) {
             echo json_encode(['success' => $result]);
             exit();
             break;
+        case 'getWinStreak':
+            $user_id = $_SESSION['user_id'];
+            $streak = $controller->getWinStreak($user_id);
+            header('Content-Type: application/json');
+            echo json_encode(['win_streak' => $streak]);
+            exit();
+            break;
+        case 'setWinStreak':
+            $user_id = $_SESSION['user_id'];
+            $streak = $_POST['streak'];
+            $result = $controller->setWinStreak($user_id, $streak);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => $result]);
+            exit();
+            break;
+        case 'incrementWinStreak':
+            $user_id = $_SESSION['user_id'];
+            $result = $controller->incrementWinStreak($user_id);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => $result]);
+            exit();
+            break;
     }
 }
 
@@ -198,6 +220,21 @@ class UserController {
         $this->cheatSettings->max_streak = $settings['max_streak'] ?? -1;
         $this->cheatSettings->max_balance = $settings['max_balance'] ?? -1;
         return $this->cheatSettings->updateSettings();
+    }
+
+    public function getWinStreak($user_id) {
+        $this->user->id = $user_id;
+        return $this->user->getWinStreak();
+    }
+
+    public function setWinStreak($user_id, $streak) {
+        $this->user->id = $user_id;
+        return $this->user->setWinStreak($streak);
+    }
+
+    public function incrementWinStreak($user_id) {
+        $this->user->id = $user_id;
+        return $this->user->incrementWinStreak();
     }
 }
 ?>
