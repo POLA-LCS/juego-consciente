@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const betChips = document.querySelectorAll('.bet-chip');
     const resetBetButton = document.getElementById('resetBet');
     const placeBetButton = document.getElementById('placeBet');
+    const maxBetButton = document.getElementById('maxBetButton');
     const cups = document.querySelectorAll('.cup');
     const messageContainer = document.getElementById('message-container');
     const playAgainButton = document.getElementById('playAgain');
@@ -47,6 +48,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     function resetBet() {
         if (state.gameInProgress) return;
         state.currentBet = Math.min(MIN_BET, state.balance); // El mínimo es 25 o el saldo si es menor
+        updateUI();
+    }
+
+    function setMaxBet() {
+        if (state.gameInProgress) return;
+        state.currentBet = state.balance;
         updateUI();
     }
 
@@ -171,6 +178,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     betChips.forEach(b => b.addEventListener('click', () => addToBet(parseInt(b.dataset.amount, 10))));
     resetBetButton.addEventListener('click', resetBet);
     placeBetButton.addEventListener('click', placeBet);
+    maxBetButton.addEventListener('click', setMaxBet);
 
     // Listeners del Juego
     playAgainButton.addEventListener('click', resetGame);

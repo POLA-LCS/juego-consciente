@@ -22,8 +22,11 @@ if (!defined('ROOT_PATH')) {
         <?php include ROOT_PATH . 'app/views/components/betSidebar.php'; ?>
 
         <!-- Contenido Principal del Juego -->
-        <main class="p-6 flex-1 flex flex-col items-center justify-center">
-            <h1 class="text-3xl font-bold text-[var(--color-primary)] mb-8">Cups Game</h1>
+        <main class="p-6 flex-1 flex flex-col items-center justify-start">
+            <div class="text-center w-full mb-12">
+                <h1 class="text-5xl font-bold text-[var(--color-primary)]" style="font-family: 'Grand Casino', sans-serif;">Cups Game</h1>
+                <p class="text-xl text-[var(--color-text-muted)] mt-2">¡Encuentra la bola!</p>
+            </div>
             <div id="cups-container" class="flex gap-8 mb-8">
                 <div id="cup-1" class="cup w-32 h-32 bg-gray-500 rounded-t-full cursor-pointer transition-transform duration-300"></div>
                 <div id="cup-2" class="cup w-32 h-32 bg-gray-500 rounded-t-full cursor-pointer transition-transform duration-300"></div>

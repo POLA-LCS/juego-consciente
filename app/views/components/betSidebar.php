@@ -5,19 +5,19 @@ if (!defined('ROOT_PATH')) {
     exit();
 }
 ?>
-<aside id="bet-sidebar" class="w-64 bg-[var(--color-surface)] p-4 border-r border-[var(--color-border)] flex flex-col justify-between">
+<aside id="bet-sidebar" class="w-56 bg-[var(--color-surface)] p-3 border-r border-[var(--color-border)] flex flex-col justify-between">
     <div>
-        <div class="text-center mb-4">
+        <div class="text-center mb-2">
             <span class="text-lg text-[var(--color-text-muted)]">Saldo</span>
             <p id="balance" class="text-3xl font-bold text-[var(--color-text-base)]">1000</p>
         </div>
-        <hr class="border-[var(--color-border)] mb-4">
-        <div class="text-center mb-4">
+        <hr class="border-[var(--color-border)] mb-2">
+        <div class="text-center mb-2">
             <span class="text-lg text-[var(--color-text-muted)]">Racha Victorias</span>
             <p id="winStreak" class="text-3xl font-bold text-[var(--color-text-base)]">0</p>
         </div>
-        <hr class="border-[var(--color-border)] mb-4">
-        <div class="text-center mb-4">
+        <hr class="border-[var(--color-border)] mb-2">
+        <div class="text-center mb-3">
             <span class="text-lg text-[var(--color-text-muted)]">Apuesta</span>
             <p id="currentBet" class="text-4xl font-bold text-[var(--color-primary)]">25</p>
         </div>
@@ -31,8 +31,9 @@ if (!defined('ROOT_PATH')) {
             <button data-amount="250" class="btn bet-chip py-1 rounded-md">+250</button>
         </div>
     </div>
-    <div class="space-y-3">
+    <div class="space-y-2">
         <button id="placeBet" class="btn w-full py-2 px-4 rounded-md font-bold">Apostar</button>
+        <button id="maxBetButton" class="btn-secondary w-full py-2 px-2 rounded-md font-bold text-sm">APUESTA MAXIMA</button>
         <button id="resetBet" class="w-full text-[var(--color-text-muted)] hover:text-white">Reset</button>
     </div>
 </aside>
