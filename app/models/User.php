@@ -112,5 +112,20 @@ class User {
         }
         return false;
     }
+
+    public function setBalance($newBalance) {
+        $query = "UPDATE " . $this->table_name . " SET balance = :newBalance WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        $newBalance = htmlspecialchars(strip_tags($newBalance));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        $stmt->bindParam(":newBalance", $newBalance);
+        $stmt->bindParam(":id", $this->id);
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>

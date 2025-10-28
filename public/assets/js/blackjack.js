@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
         currentBetDisplay.textContent = currentBetValue;
     }
 
+    // Función para actualizar el saldo en la UI y en la variable local
+    function updateUserBalance(newBalance) {
+        userBalance = newBalance;
+        balanceDisplay.textContent = userBalance;
+        updateBetUI(); // Re-evaluar la apuesta por si el nuevo saldo es menor
+    }
+
     // Función para añadir a la apuesta
     function addToBet(amount) {
         const newBet = currentBetValue + amount;
@@ -42,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             userBalance = parseInt(data, 10);
-            balanceDisplay.textContent = userBalance;
+            updateUserBalance(userBalance);
             // Ajustar la apuesta inicial si el saldo es menor que el mínimo
             if (userBalance < MIN_BET) {
                 currentBetValue = userBalance;
@@ -61,6 +68,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Evento para el botón de reset
     resetBetButton.addEventListener('click', resetBet);
+
+    // Escuchar el evento personalizado desde cheat_sidebar.js
+    document.addEventListener('balanceUpdated', (e) => {
+        const newBalance = e.detail.newBalance;
+        updateUserBalance(newBalance);
+    });
 
     // --- LÓGICA DEL JUEGO BLACKJACK ---
     let deck = [];
@@ -134,8 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                userBalance -= currentBetValue;
-                balanceDisplay.textContent = userBalance;
+                updateUserBalance(userBalance - currentBetValue);
                 // Ahora que el saldo está actualizado, reparte las cartas
                 // dealCards(); // (Función a implementar)
             } else {

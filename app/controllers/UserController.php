@@ -76,6 +76,18 @@ if (isset($_GET['action'])) {
             echo json_encode(['success' => $result]);
             exit(); // Es buena práctica usar exit() después de enviar una respuesta AJAX.
             break;
+        case 'setBalance':
+            $user_id = $_SESSION['user_id'];
+            $amount = $_POST['amount'];
+            $result = $controller->setBalance($user_id, $amount);
+
+            // Establecer la cabecera para indicar que la respuesta es JSON
+            header('Content-Type: application/json');
+
+            // Enviar una respuesta JSON que el frontend pueda entender
+            echo json_encode(['success' => $result]);
+            exit();
+            break;
     }
 }
 
@@ -140,6 +152,11 @@ class UserController {
     public function updateBalance($user_id, $amount) {
         $this->user->id = $user_id;
         return $this->user->updateBalance($amount);
+    }
+
+    public function setBalance($user_id, $amount) {
+        $this->user->id = $user_id;
+        return $this->user->setBalance($amount);
     }
 }
 ?>
