@@ -5,7 +5,7 @@ if (!defined('ROOT_PATH')) {
     exit();
 }
 ?>
-<aside id="bet-sidebar" class="w-56 bg-[var(--color-surface)] p-3 border-r border-[var(--color-border)] flex flex-col justify-between">
+<aside id="bet-sidebar" class="w-56 bg-[var(--color-surface)] p-3 border-r-2 border-[var(--color-primary)] flex flex-col justify-between">
     <div>
         <div class="text-center mb-2">
             <span class="text-lg text-[var(--color-text-muted)]">Saldo</span>

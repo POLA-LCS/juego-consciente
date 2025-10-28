@@ -20,8 +20,8 @@
 :root {
     --color-background: #0a0a0a;      /* Negro profundo */
     --color-surface: #161616;         /* Superficie oscura */
-    --color-primary: #ff3333;         /* Rojo neón sutil */
-    --color-primary-hover: #ff4f4f;    /* Rojo neón más brillante */
+    --color-primary: #e52e2e;         /* Rojo intenso (menos brillante) */
+    --color-primary-hover: #f04444;    /* Versión de hover más brillante */
     --color-border: #2a2a2a;          /* Borde muy sutil */
     --color-text-base: #f0f0f0;        /* Texto base casi blanco */
     --color-text-muted: #a0a0a0;       /* Texto atenuado */
@@ -51,7 +51,7 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
 
 /* Estilos para las tarjetas de juego */
 .game-card {
-    border: 2px solid transparent; /* Borde invisible por defecto */
+    border: 2px solid rgba(255, 26, 26, 0.3); /* Borde rojo opaco por defecto */
     transition: border-color 0.3s ease, transform 0.3s ease;
 }
 

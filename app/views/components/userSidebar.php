@@ -1,4 +1,4 @@
-<aside id="userSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l border-[var(--color-border)] p-4 transform translate-x-full transition-transform duration-300 z-50">
+<aside id="userSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l-2 border-[var(--color-primary)] p-4 transform translate-x-full transition-transform duration-300 z-50">
     <button id="closeUserSidebar" class="absolute top-2 right-4 text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors text-4xl font-light leading-none">
         &times;
     </button>
