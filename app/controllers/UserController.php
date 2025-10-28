@@ -13,8 +13,11 @@ if (isset($_GET['action'])) {
                 $username = $_POST['username'];
                 $email = $_POST['email'];
                 $password = $_POST['password'];
-                echo $controller->register($username, $email, $password);
-                header("Location: index.php");
+                $result = $controller->register($username, $email, $password);
+                // Después de registrarse, es una buena práctica redirigir al login
+                // Podríamos incluso añadir un mensaje de éxito.
+                $_SESSION['success_message'] = "¡Registro completado! Por favor, inicia sesión.";
+                header("Location: index.php?page=login");
                 exit();
             }
             break;
@@ -25,8 +28,12 @@ if (isset($_GET['action'])) {
                 if ($controller->login($username, $password)) {
                     header("Location: index.php?page=dashboard");
                     exit();
+                } else {
+                    // Si el login falla, guardamos un error en la sesión y redirigimos al login.
+                    $_SESSION['error_message'] = "Usuario o contraseña incorrectos.";
+                    header("Location: index.php?page=login");
+                    exit();
                 }
-                // Si el login falla, podrías redirigir a la página de login con un mensaje de error.
             }
             break;
         case 'logout':
@@ -79,9 +86,9 @@ class UserController {
         if($this->user->login()) {
             $_SESSION['user_id'] = $this->user->id;
             $_SESSION['username'] = $this->user->username;
-            return "Login exitoso.";
+            return true;
         } else {
-            return "Credenciales incorrectas.";
+            return false;
         }
     }
 

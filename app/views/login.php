@@ -12,6 +12,19 @@
     <main class="flex items-center justify-center flex-1">
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-8 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-2xl font-bold mb-6 text-center text-[var(--color-primary)]">Login</h2>
+            <?php
+            // Mostrar mensaje de error si existe
+            if (isset($_SESSION['error_message'])) {
+                echo '<div class="bg-red-500/20 text-red-300 border border-red-500 p-3 rounded-md mb-4 text-center">' . $_SESSION['error_message'] . '</div>';
+                unset($_SESSION['error_message']); // Limpiar el mensaje para que no se muestre de nuevo
+            }
+
+            // Mostrar mensaje de éxito si existe (ej: después del registro)
+            if (isset($_SESSION['success_message'])) {
+                echo '<div class="bg-green-500/20 text-green-300 border border-green-500 p-3 rounded-md mb-4 text-center">' . $_SESSION['success_message'] . '</div>';
+                unset($_SESSION['success_message']); // Limpiar el mensaje
+            }
+            ?>
             <form action="?action=login" method="POST">
                 <div class="mb-4">
                     <label for="username" class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Usuario</label>
