@@ -15,11 +15,11 @@ if (!defined('ROOT_PATH')) {
     <link rel="stylesheet" href="/ludopatia/public/assets/css/main.css">
 </head>
 <body class="flex flex-col min-h-screen">
-    <?php include ROOT_PATH . 'app/views/partials/header.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/header.php'; ?>
 
     <div class="game-container">
         <!-- Bet Sidebar (Componente Reutilizable) -->
-        <?php include ROOT_PATH . 'app/views/partials/bet_sidebar.php'; ?>
+        <?php include ROOT_PATH . 'app/views/components/betSidebar.php'; ?>
 
         <!-- Contenido Principal del Juego -->
         <main class="p-6 flex-1">
@@ -27,11 +27,11 @@ if (!defined('ROOT_PATH')) {
         </main>
 
         <!-- User Sidebar (Derecha, Oculto) -->
-        <?php include ROOT_PATH . 'app/views/partials/sidebar.php'; ?>
-        <?php /* include ROOT_PATH . 'app/views/partials/cheat_sidebar.php'; */ ?>
+        <?php include ROOT_PATH . 'app/views/components/userSidebar.php'; ?>
+        <?php /* include ROOT_PATH . 'app/views/components/cheatSidebar.php'; */ ?>
     </div>
 
-    <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 
     <script src="/ludopatia/public/assets/js/user_sidebar.js"></script>
     <script src="/ludopatia/public/assets/js/bet_sidebar.js"></script>

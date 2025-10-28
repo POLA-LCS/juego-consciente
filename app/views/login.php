@@ -15,7 +15,7 @@ if (!defined('ROOT_PATH')) {
     <link rel="stylesheet" href="/ludopatia/public/assets/css/main.css">
 </head>
 <body class="bg-[var(--color-background)] flex flex-col min-h-screen">
-    <?php include ROOT_PATH . 'app/views/partials/header_auth.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/headerAuth.php'; ?>
     <main class="flex items-center justify-center flex-1">
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-8 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-2xl font-bold mb-6 text-center text-[var(--color-primary)]">Login</h2>
@@ -46,7 +46,7 @@ if (!defined('ROOT_PATH')) {
             <p class="mt-4 text-center text-[var(--color-text-muted)]">¿No tienes cuenta? <a href="?page=register" class="text-[var(--color-primary)] hover:underline">Regístrate</a></p>
         </div>
     </main>
-    <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 </body>
 </html>
     </div>

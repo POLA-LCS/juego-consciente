@@ -15,9 +15,9 @@ if (!defined('ROOT_PATH')) {
     <link rel="stylesheet" href="/ludopatia/public/assets/css/main.css">
 </head>
 <body class="flex flex-col min-h-screen">
-    <?php include ROOT_PATH . 'app/views/partials/header.php'; ?>
-    <?php include ROOT_PATH . 'app/views/partials/sidebar.php'; ?>
-    <?php /* include ROOT_PATH . 'app/views/partials/cheat_sidebar.php'; */ ?>
+    <?php include ROOT_PATH . 'app/views/components/header.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/userSidebar.php'; ?>
+    <?php /* include ROOT_PATH . 'app/views/components/cheatSidebar.php'; */ ?>
 
     <!-- Main Content -->
     <main class="p-6">
@@ -65,8 +65,8 @@ if (!defined('ROOT_PATH')) {
         </div>
     </main>
 
-    <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 
-    <script src="/ludopatia/public/assets/js/sidebar.js"></script>
+    <script src="/ludopatia/public/assets/js/user_sidebar.js"></script>
 </body>
 </html>

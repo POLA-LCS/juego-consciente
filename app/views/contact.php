@@ -15,8 +15,8 @@ if (!defined('ROOT_PATH')) {
     <link rel="stylesheet" href="/ludopatia/public/assets/css/main.css">
 </head>
 <body>
-    <?php include ROOT_PATH . 'app/views/partials/header.php'; ?>
-    <?php include ROOT_PATH . 'app/views/partials/sidebar.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/header.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/userSidebar.php'; ?>
 
     <main class="p-6">
         <div class="flex justify-end items-center mb-6">
@@ -68,8 +68,8 @@ if (!defined('ROOT_PATH')) {
         </div>
     </main>
 
-    <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 
-    <script src="/ludopatia/public/assets/js/sidebar.js"></script>
+    <script src="/ludopatia/public/assets/js/user_sidebar.js"></script>
 </body>
 </html>
