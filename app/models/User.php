@@ -107,8 +107,9 @@ class User {
 
         $stmt->bindParam(":amount", $amount);
         $stmt->bindParam(":id", $this->id);
-        if($stmt->execute()) {
-            return true;
+
+        if ($stmt->execute()) {
+            return $this->getBalance(); // Devuelve el nuevo saldo
         }
         return false;
     }
@@ -122,8 +123,8 @@ class User {
 
         $stmt->bindParam(":newBalance", $newBalance);
         $stmt->bindParam(":id", $this->id);
-        if($stmt->execute()) {
-            return true;
+        if ($stmt->execute()) {
+            return $this->getBalance(); // Devuelve el nuevo saldo
         }
         return false;
     }

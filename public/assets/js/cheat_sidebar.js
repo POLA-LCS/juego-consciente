@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(r => r.json())
             .then(data => {
                 if (data.success) {
-                    document.dispatchEvent(new CustomEvent('balanceUpdated', { detail: { newBalance: newAmount } }));
+                    document.dispatchEvent(new CustomEvent('balanceUpdated', { detail: { newBalance: data.newBalance } }));
                     cheatSidebar.classList.add('translate-x-full');
                 } else {
                     alert('Error al establecer el nuevo monto.');

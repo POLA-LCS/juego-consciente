@@ -1,200 +1,185 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- LÓGICA DE APUESTAS (Reutilizada) ---
+document.addEventListener('DOMContentLoaded', async () => {
+    // =================================================================
+    // 1. ELEMENTOS DEL DOM
+    // =================================================================
     const MIN_BET = 25;
     const balanceDisplay = document.getElementById('balance');
     const currentBetDisplay = document.getElementById('currentBet');
+    const winStreakDisplay = document.getElementById('winStreak');
     const betChips = document.querySelectorAll('.bet-chip');
     const resetBetButton = document.getElementById('resetBet');
     const placeBetButton = document.getElementById('placeBet');
-    const winStreakDisplay = document.getElementById('winStreak');
-
-    let userBalance = 0;
-    let currentBetValue = MIN_BET;
-
-    function updateBetUI() { currentBetDisplay.textContent = currentBetValue; }
-    function updateUserBalance(newBalance) {
-        userBalance = newBalance;
-        balanceDisplay.textContent = userBalance;
-        if (currentBetValue > userBalance) { currentBetValue = userBalance; }
-        updateBetUI();
-    }
-    function addToBet(amount) {
-        const newBet = currentBetValue + amount;
-        currentBetValue = (newBet > userBalance) ? userBalance : newBet;
-        updateBetUI();
-    }
-    function resetBet() {
-        currentBetValue = (MIN_BET > userBalance) ? userBalance : MIN_BET;
-        updateBetUI();
-    }
-
-    fetch('?action=getBalance').then(r => r.json()).then(data => {
-        updateUserBalance(parseInt(data, 10));
-        resetBet();
-    });
-
-    // Cargar la racha de victorias inicial
-    fetch('?action=getWinStreak').then(r => r.json()).then(data => {
-        winStreak = parseInt(data.win_streak, 10);
-        winStreakDisplay.textContent = winStreak;
-    });
-
-    betChips.forEach(b => b.addEventListener('click', () => addToBet(parseInt(b.dataset.amount, 10))));
-    resetBetButton.addEventListener('click', resetBet);
-    document.addEventListener('balanceUpdated', e => updateUserBalance(e.detail.newBalance));
-
-    // --- LÓGICA DEL JUEGO CUPS ---
     const cups = document.querySelectorAll('.cup');
     const messageContainer = document.getElementById('message-container');
     const playAgainButton = document.getElementById('playAgain');
 
-    let canChoose = false;
-    let winStreak = 0; // Contador para la racha de victorias
-    let cheatSettings = { mode: 0, max_streak: -1, max_balance: -1 }; // Configuración de trampas
+    // =================================================================
+    // 2. ESTADO DEL JUEGO
+    // =================================================================
+    let state = {
+        balance: 0,
+        winStreak: 0,
+        currentBet: MIN_BET,
+        cheatSettings: { mode: 0, max_streak: -1, max_balance: -1 },
+        canChoose: false,
+        gameInProgress: false,
+    };
 
-    // Función para actualizar la configuración de trampas localmente
-    function updateLocalCheatSettings(newSettings) {
-        cheatSettings = newSettings;
-        console.log('Local cheat settings updated:', cheatSettings);
+    // =================================================================
+    // 3. FUNCIONES DE ACTUALIZACIÓN DE UI
+    // =================================================================
+    function updateUI() {
+        balanceDisplay.textContent = state.balance;
+        winStreakDisplay.textContent = state.winStreak;
+        currentBetDisplay.textContent = state.currentBet;
     }
 
-    // Cargar la configuración de trampas al iniciar
-    fetch('?action=getCheatSettings')
-        .then(response => response.json())
-        .then(settings => {
-            cheatSettings = settings;
-            // Convertir a números para comparaciones seguras
-            cheatSettings.mode = parseInt(settings.mode, 10);
-            cheatSettings.max_streak = parseInt(settings.max_streak, 10);
-            cheatSettings.max_balance = parseInt(settings.max_balance, 10);
-            console.log('Initial cheat settings loaded:', cheatSettings);
-        });
+    // =================================================================
+    // 4. LÓGICA DE APUESTAS
+    // =================================================================
+    function addToBet(amount) {
+        if (state.gameInProgress) return;
+        const newBet = state.currentBet + amount;
+        state.currentBet = Math.min(newBet, state.balance); // No se puede apostar más de lo que se tiene
+        updateUI();
+    }
 
-    // Escuchar el evento personalizado desde cheat_sidebar.js para actualizaciones en tiempo real
-    document.addEventListener('cheatSettingsChanged', (e) => {
-        updateLocalCheatSettings(e.detail);
-    });
+    function resetBet() {
+        if (state.gameInProgress) return;
+        state.currentBet = Math.min(MIN_BET, state.balance); // El mínimo es 25 o el saldo si es menor
+        updateUI();
+    }
 
-    function startGame() {
-        if (currentBetValue <= 0 || currentBetValue > userBalance) {
+    // =================================================================
+    // 5. LÓGICA DEL JUEGO
+    // =================================================================
+    async function placeBet() {
+        if (state.currentBet <= 0 || state.currentBet > state.balance) {
             alert("Apuesta inválida.");
             return;
         }
 
-        // Deshabilitar controles de apuesta
-        placeBetButton.disabled = true;
-        betChips.forEach(b => b.disabled = true);
-        resetBetButton.disabled = true;
+        state.gameInProgress = true;
+        toggleBetControls(false);
 
-        // Lógica para restar la apuesta del saldo
-        const formData = new FormData();
-        formData.append('amount', -currentBetValue);
-        fetch('?action=updateBalance', { method: 'POST', body: formData })
-            .then(r => r.json())
-            .then(data => {
-                if (data.success) {
-                    updateUserBalance(userBalance - currentBetValue);
-                    // Iniciar el juego
-                    messageContainer.textContent = "Elige un vaso...";
-                    canChoose = true;
-                } else {
-                    alert('Error al realizar la apuesta.');
-                    resetGame();
-                }
-            });
+        const response = await fetch(`?action=updateBalance`, {
+            method: 'POST',
+            body: new URLSearchParams({ 'amount': -state.currentBet })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            state.balance = data.newBalance;
+            updateUI();
+            messageContainer.textContent = "Elige un vaso...";
+            state.canChoose = true;
+        } else {
+            alert('Error al realizar la apuesta.');
+            resetGame();
+        }
     }
 
-    // --- NUEVA LÓGICA DE DECISIÓN ---
-    // Esta función determina si el jugador debe ganar o perder
     function shouldPlayerWin() {
-        // Condición 1: ¿La ganancia potencial superaría el máximo saldo? Si es así, forzar derrota.
-        const potentialWinAmount = currentBetValue * 2;
-        const potentialBalance = userBalance + potentialWinAmount;
-        if (cheatSettings.max_balance !== -1 && potentialBalance > cheatSettings.max_balance) {
-            console.log("Cheat: Forzando derrota por alcanzar máximo saldo.");
+        const potentialWinAmount = state.currentBet * 2;
+        const potentialBalance = state.balance + potentialWinAmount;
+
+        if (state.cheatSettings.max_balance != -1 && potentialBalance > state.cheatSettings.max_balance) {
             return false;
         }
-
-        // Condición 2: ¿Se ha alcanzado la máxima racha? Si es así, forzar derrota.
-        if (cheatSettings.max_streak !== -1 && winStreak >= cheatSettings.max_streak) {
-            console.log("Cheat: Forzando derrota por alcanzar máxima racha.");
+        if (state.cheatSettings.max_streak != -1 && state.winStreak >= state.cheatSettings.max_streak) {
             return false;
         }
+        if (state.cheatSettings.mode === 1) return true; // Modo ganador
+        if (state.cheatSettings.mode === 2) return false; // Modo perdedor
 
-        // Condición 3: ¿Está activado el modo ganador?
-        if (cheatSettings.mode === 1) {
-            console.log("Cheat: Forzando victoria.");
-            return true;
-        }
-
-        // Condición 4: ¿Está activado el modo perdedor?
-        if (cheatSettings.mode === 2) {
-            console.log("Cheat: Forzando derrota.");
-            return false;
-        }
-
-        // Si no hay trampas activas, el resultado es aleatorio (1/3 de probabilidad de ganar).
-        return Math.random() < (1 / 3);
+        return Math.random() < (1 / 3); // Juego normal
     }
 
-    function chooseCup(cupNumber) {
-        if (!canChoose) return;
-        canChoose = false;
+    async function chooseCup(cupNumber) {
+        if (!state.canChoose) return;
+        state.canChoose = false;
 
-        const chosenCup = document.getElementById(`cup-${cupNumber}`);
         const isWinner = shouldPlayerWin();
-
-        console.log(`isWinner: ${isWinner}`);
-
-        // Animar el vaso elegido
-        chosenCup.style.transform = 'translateY(-30px)';
+        document.getElementById(`cup-${cupNumber}`).style.transform = 'translateY(-30px)';
 
         if (isWinner) {
-            messageContainer.textContent = `¡Has ganado ${currentBetValue * 2}!`;
+            messageContainer.textContent = `¡Has ganado ${state.currentBet * 2}!`;
             messageContainer.style.color = 'var(--color-primary)';
-            // Incrementar racha de victorias en el backend
-            fetch('?action=incrementWinStreak', { method: 'POST' })
-                .then(r => r.json())
-                .then(data => {
-                    if (data.success) {
-                        winStreak++;
-                        winStreakDisplay.textContent = winStreak;
-                    }
-                });
-            // Lógica para sumar el premio al saldo
-            const formData = new FormData();
-            formData.append('amount', currentBetValue * 2);
-            fetch('?action=updateBalance', { method: 'POST', body: formData })
-                .then(r => r.json())
-                .then(data => { if (data.success) updateUserBalance(userBalance + (currentBetValue * 2)); });
+            
+            // Incrementar racha y sumar premio
+            await fetch(`?action=incrementWinStreak`, { method: 'POST' });
+            const response = await fetch(`?action=updateBalance`, {
+                method: 'POST',
+                body: new URLSearchParams({ 'amount': state.currentBet * 2 })
+            });
+            const data = await response.json();
+            if (data.success) {
+                state.balance = data.newBalance;
+                state.winStreak++;
+            }
         } else {
             messageContainer.textContent = "Inténtalo de nuevo...";
             messageContainer.style.color = 'var(--color-text-muted)';
-            // Resetear racha de victorias en el backend
-            const formData = new FormData();
-            formData.append('streak', 0);
-            fetch('?action=setWinStreak', { method: 'POST', body: formData })
-                .then(r => r.json())
-                .then(data => {
-                    if (data.success) {
-                        winStreak = 0;
-                        winStreakDisplay.textContent = winStreak;
-                    }
-                });
+            
+            // Resetear racha
+            await fetch(`?action=setWinStreak`, {
+                method: 'POST',
+                body: new URLSearchParams({ 'streak': 0 })
+            });
+            state.winStreak = 0;
         }
+
+        updateUI();
         playAgainButton.classList.remove('hidden');
     }
 
     function resetGame() {
-        placeBetButton.disabled = false;
-        betChips.forEach(b => b.disabled = false);
-        resetBetButton.disabled = false;
+        state.gameInProgress = false;
+        toggleBetControls(true);
         playAgainButton.classList.add('hidden');
         messageContainer.innerHTML = '&nbsp;';
         cups.forEach(cup => cup.style.transform = 'translateY(0)');
+        resetBet();
     }
 
-    placeBetButton.addEventListener('click', startGame);
+    function toggleBetControls(enabled) {
+        placeBetButton.disabled = !enabled;
+        resetBetButton.disabled = !enabled;
+        betChips.forEach(b => b.disabled = !enabled);
+    }
+
+    // =================================================================
+    // 6. INICIALIZACIÓN Y EVENT LISTENERS
+    // =================================================================
+    async function initializeGame() {
+        const response = await fetch('?action=getPlayerData');
+        const data = await response.json();
+
+        state.balance = parseInt(data.balance, 10);
+        state.winStreak = parseInt(data.win_streak, 10);
+        state.cheatSettings = {
+            mode: parseInt(data.cheat_settings.mode, 10),
+            max_streak: parseInt(data.cheat_settings.max_streak, 10),
+            max_balance: parseInt(data.cheat_settings.max_balance, 10),
+        };
+        
+        resetGame();
+        updateUI();
+    }
+
+    // Listeners de Apuestas
+    betChips.forEach(b => b.addEventListener('click', () => addToBet(parseInt(b.dataset.amount, 10))));
+    resetBetButton.addEventListener('click', resetBet);
+    placeBetButton.addEventListener('click', placeBet);
+
+    // Listeners del Juego
     playAgainButton.addEventListener('click', resetGame);
     cups.forEach((cup, index) => cup.addEventListener('click', () => chooseCup(index + 1)));
+
+    // Listeners de Cheats (para actualizaciones en tiempo real)
+    document.addEventListener('balanceUpdated', e => state.balance = e.detail.newBalance);
+    document.addEventListener('cheatSettingsChanged', e => state.cheatSettings = e.detail);
+
+    // Iniciar todo
+    initializeGame();
 });

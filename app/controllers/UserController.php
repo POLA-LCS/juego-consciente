@@ -75,8 +75,7 @@ if (isset($_GET['action'])) {
             // Establecer la cabecera para indicar que la respuesta es JSON
             header('Content-Type: application/json');
 
-            // Enviar una respuesta JSON que el frontend pueda entender
-            echo json_encode(['success' => $result]);
+            echo json_encode(['success' => ($result !== false), 'newBalance' => $result]);
             exit(); // Es buena práctica usar exit() después de enviar una respuesta AJAX.
             break;
         case 'setBalance':
@@ -87,8 +86,7 @@ if (isset($_GET['action'])) {
             // Establecer la cabecera para indicar que la respuesta es JSON
             header('Content-Type: application/json');
 
-            // Enviar una respuesta JSON que el frontend pueda entender
-            echo json_encode(['success' => $result]);
+            echo json_encode(['success' => ($result !== false), 'newBalance' => $result]);
             exit();
             break;
         case 'getCheatSettings':
@@ -126,6 +124,17 @@ if (isset($_GET['action'])) {
             $result = $controller->incrementWinStreak($user_id);
             header('Content-Type: application/json');
             echo json_encode(['success' => $result]);
+            exit();
+            break;
+        case 'getPlayerData':
+            $user_id = $_SESSION['user_id'];
+            $playerData = [
+                'balance' => $controller->getBalance($user_id),
+                'win_streak' => $controller->getWinStreak($user_id),
+                'cheat_settings' => $controller->getCheatSettings($user_id)
+            ];
+            header('Content-Type: application/json');
+            echo json_encode($playerData);
             exit();
             break;
     }
