@@ -95,3 +95,8 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
     color: white;
     border-left-color: var(--color-primary); /* Mantenemos el borde rojo */
 }
+
+/* Elimina el contorno de foco por defecto del navegador en el botón de usuario */
+#openUserSidebar:focus {
+    outline: none;
+}
