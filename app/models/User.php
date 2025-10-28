@@ -1,5 +1,9 @@
 <?php
-protect_page();
+// Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
+if (!defined('ROOT_PATH')) {
+    header('Location: /ludopatia/index.php?page=error403');
+    exit();
+}
 
 class User {
     private $conn;
@@ -36,6 +40,9 @@ class User {
     public function login() {
         $query = "SELECT id, username, password FROM " . $this->table_name . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
+
+        $this->username = htmlspecialchars(strip_tags($this->username));
+
         $stmt->bindParam(":username", $this->username);
         $stmt->execute();
 
@@ -52,6 +59,9 @@ class User {
     public function delete() {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
         $stmt->bindParam(":id", $this->id);
         if($stmt->execute()) {
             return true;
@@ -62,6 +72,9 @@ class User {
     public function getBalance() {
         $query = "SELECT balance FROM " . $this->table_name . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
         $stmt->bindParam(":id", $this->id);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -71,6 +84,10 @@ class User {
     public function updateBalance($amount) {
         $query = "UPDATE " . $this->table_name . " SET balance = balance + :amount WHERE id = :id";
         $stmt = $this->conn->prepare($query);
+
+        $amount = htmlspecialchars(strip_tags($amount));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
         $stmt->bindParam(":amount", $amount);
         $stmt->bindParam(":id", $this->id);
         if($stmt->execute()) {

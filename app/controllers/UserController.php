@@ -1,6 +1,9 @@
 <?php
-// La función protect_page() está definida globalmente gracias a la carga en index.php
-protect_page();
+// Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
+if (!defined('ROOT_PATH')) {
+    header('Location: /ludopatia/index.php?page=error403');
+    exit();
+}
 
 // ROOT_PATH es definido en index.php
 require_once ROOT_PATH . 'config/database.php';

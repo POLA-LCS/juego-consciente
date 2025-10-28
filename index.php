@@ -4,9 +4,6 @@ session_start();
 // Definir la ruta raíz del proyecto para que los includes sean consistentes.
 define('ROOT_PATH', __DIR__ . '/');
 
-// Cargar helpers globales
-require_once ROOT_PATH . 'app/helpers/security.php';
-
 if (isset($_GET['action'])) {
     include 'app/controllers/UserController.php';
 } else {
@@ -44,7 +41,7 @@ if (isset($_GET['action'])) {
     } else {
         // Si la ruta no existe, mostramos un error 404.
         http_response_code(404);
-        include 'app/views/errors/404.php';
+        include 'app/views/errors/404.php'; // Corregido para apuntar a la ruta correcta
     }
 }
 ?>
