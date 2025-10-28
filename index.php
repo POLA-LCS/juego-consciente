@@ -32,11 +32,13 @@ if (isset($_GET['action'])) {
         $page = 'login'; // Si no está logueado y pide una página protegida, lo mandamos al login
     }
 
-    // Si la página solicitada existe en nuestras rutas, la incluimos. Si no, vamos al login.
+    // Si la página solicitada existe en nuestras rutas, la incluimos.
     if (array_key_exists($page, $routes)) {
         include $routes[$page];
     } else {
-        include $routes['login']; // Página por defecto si la ruta no existe
+        // Si la ruta no existe, mostramos un error 404.
+        http_response_code(404);
+        include 'app/views/errors/404.php';
     }
 }
 ?>
