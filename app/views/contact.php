@@ -14,14 +14,11 @@ if (!defined('ROOT_PATH')) {
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/ludopatia/public/assets/css/main.css">
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
     <?php include ROOT_PATH . 'app/views/components/header.php'; ?>
     <?php include ROOT_PATH . 'app/views/components/userSidebar.php'; ?>
 
-    <main class="p-6">
-        <div class="flex justify-end items-center mb-6">
-            <h1 class="text-3xl font-bold text-[var(--color-primary)]">Contacto</h1>
-        </div>
+    <main class="p-6 flex-1">
     <div class="max-w-2xl mx-auto">
         <h1 class="text-4xl font-bold mb-6 text-center text-[var(--color-primary)]">Contacto</h1>
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg mb-6">
