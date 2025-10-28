@@ -104,3 +104,15 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
 #openUserSidebar:focus {
     outline: none;
 }
+
+/* Oculta los spinners (flechas de subir/bajar) en los inputs de tipo número */
+/* Para Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Para Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}

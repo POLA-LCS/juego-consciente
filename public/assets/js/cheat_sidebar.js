@@ -46,4 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // Permitir enviar con la tecla "Enter" desde el input
+    if (cheatAmountInput && setCheatAmountButton) {
+        cheatAmountInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Evita el comportamiento por defecto (ej: recargar la página)
+                setCheatAmountButton.click(); // Simula un clic en el botón "OK"
+            }
+        });
+    }
 });
