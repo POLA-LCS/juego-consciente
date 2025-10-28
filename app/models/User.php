@@ -127,5 +127,32 @@ class User {
         }
         return false;
     }
+
+    public function getCheatMode() {
+        $query = "SELECT cheat_mode FROM " . $this->table_name . " WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row["cheat_mode"];
+    }
+
+    public function setCheatMode($newMode) {
+        $query = "UPDATE " . $this->table_name . " SET cheat_mode = :newMode WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+
+        $newMode = htmlspecialchars(strip_tags($newMode));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        $stmt->bindParam(":newMode", $newMode);
+        $stmt->bindParam(":id", $this->id);
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
 ?>

@@ -8,6 +8,7 @@ if (!defined('ROOT_PATH')) {
 // ROOT_PATH es definido en index.php
 require_once ROOT_PATH . 'config/database.php';
 require_once ROOT_PATH . 'app/models/User.php';
+require_once ROOT_PATH . 'app/models/CheatSettings.php';
 
 $controller = new UserController();
 
@@ -39,6 +40,8 @@ if (isset($_GET['action'])) {
                 $username = $_POST['username']; // Asumiendo que el login es solo con username y password
                 $password = $_POST['password'];
                 if ($controller->login($username, $password)) {
+                    // Asegurarse de que el usuario tenga settings de cheat al iniciar sesión
+                    $controller->ensureCheatSettings($_SESSION['user_id']);
                     header("Location: index.php?page=dashboard");
                     exit();
                 } else {
@@ -88,17 +91,34 @@ if (isset($_GET['action'])) {
             echo json_encode(['success' => $result]);
             exit();
             break;
+        case 'getCheatSettings':
+            $user_id = $_SESSION['user_id'];
+            $settings = $controller->getCheatSettings($user_id);
+            header('Content-Type: application/json');
+            echo json_encode($settings);
+            exit();
+            break;
+        case 'updateCheatSettings':
+            $user_id = $_SESSION['user_id'];
+            $settings = $_POST; // Recibe todos los datos del formulario
+            $result = $controller->updateCheatSettings($user_id, $settings);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => $result]);
+            exit();
+            break;
     }
 }
 
 class UserController {
     private $db;
     private $user;
+    private $cheatSettings;
 
     public function __construct() {
         $database = new Database();
         $this->db = $database->getConnection();
         $this->user = new User($this->db);
+        $this->cheatSettings = new CheatSettings($this->db);
     }
 
     public function register($username, $email, $password) {
@@ -106,7 +126,11 @@ class UserController {
         $this->user->email = $email;
         $this->user->password = $password;
         if($this->user->create()) {
-            return "Usuario registrado exitosamente.";
+            // Al registrar, también creamos sus settings de cheat por defecto
+            $lastId = $this->db->lastInsertId();
+            $this->cheatSettings->user_id = $lastId;
+            $this->cheatSettings->getSettings(); // Esto crea los defaults
+            return true;
         } else {
             return "Error al registrar usuario.";
         }
@@ -157,6 +181,23 @@ class UserController {
     public function setBalance($user_id, $amount) {
         $this->user->id = $user_id;
         return $this->user->setBalance($amount);
+    }
+
+    public function ensureCheatSettings($user_id) {
+        CheatSettings::ensureSettingsExist($this->db, $user_id);
+    }
+
+    public function getCheatSettings($user_id) {
+        $this->cheatSettings->user_id = $user_id;
+        return $this->cheatSettings->getSettings();
+    }
+
+    public function updateCheatSettings($user_id, $settings) {
+        $this->cheatSettings->user_id = $user_id;
+        $this->cheatSettings->mode = $settings['mode'] ?? 0;
+        $this->cheatSettings->max_streak = $settings['max_streak'] ?? -1;
+        $this->cheatSettings->max_balance = $settings['max_balance'] ?? -1;
+        return $this->cheatSettings->updateSettings();
     }
 }
 ?>
