@@ -15,12 +15,12 @@
         <!-- El botón de menú de usuario ahora está en el header -->
     <div class="max-w-4xl mx-auto">
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg mb-6">
-            <h2 class="text-2xl font-bold mb-4 text-red-500">¿Qué es la Ludopatía?</h2>
+            <h2 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">¿Qué es la Ludopatía?</h2>
             <p class="mb-4">La ludopatía, también conocida como adicción al juego, es un trastorno del comportamiento caracterizado por la incapacidad de controlar el impulso de jugar, a pesar de las consecuencias negativas que esto pueda tener en la vida personal, familiar y laboral.</p>
             <p class="mb-4">Esta adicción puede afectar a cualquier persona, independientemente de su edad, género o estatus social. Los juegos de azar pueden ser emocionantes al principio, pero cuando se convierten en una compulsión, pueden llevar a problemas graves como deudas, aislamiento social y problemas de salud mental.</p>
         </div>
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg mb-6">
-            <h2 class="text-2xl font-bold mb-4 text-red-500">Signos y Síntomas</h2>
+            <h2 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">Signos y Síntomas</h2>
             <ul class="list-disc list-inside mb-4">
                 <li>Preocupación constante por el juego</li>
                 <li>Necesidad de apostar cantidades cada vez mayores para obtener la misma emoción</li>
@@ -33,7 +33,7 @@
             </ul>
         </div>
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg mb-6">
-            <h2 class="text-2xl font-bold mb-4 text-red-500">Consecuencias</h2>
+            <h2 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">Consecuencias</h2>
             <p class="mb-4">La ludopatía puede tener graves consecuencias en múltiples aspectos de la vida:</p>
             <ul class="list-disc list-inside mb-4">
                 <li><strong>Económicas:</strong> Deudas, bancarrota, pérdida de ahorros</li>
@@ -44,7 +44,7 @@
             </ul>
         </div>
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg mb-6">
-            <h2 class="text-2xl font-bold mb-4 text-red-500">Prevención y Tratamiento</h2>
+            <h2 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">Prevención y Tratamiento</h2>
             <p class="mb-4">La prevención es clave. Establece límites de tiempo y dinero para jugar, juega solo por diversión, no como medio para ganar dinero, y busca ayuda si sientes que el juego está controlando tu vida.</p>
             <p class="mb-4">Si crees que tienes un problema con el juego, busca ayuda profesional. Existen tratamientos como terapia cognitivo-conductual, grupos de apoyo y, en casos graves, medicamentos para controlar los síntomas asociados.</p>
         </div>
