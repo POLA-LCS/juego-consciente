@@ -67,7 +67,14 @@ if (isset($_GET['action'])) {
         case 'updateBalance':
             $user_id = $_SESSION['user_id'];
             $amount = $_POST['amount'];
-            echo $controller->updateBalance($user_id, $amount);
+            $result = $controller->updateBalance($user_id, $amount);
+
+            // Establecer la cabecera para indicar que la respuesta es JSON
+            header('Content-Type: application/json');
+
+            // Enviar una respuesta JSON que el frontend pueda entender
+            echo json_encode(['success' => $result]);
+            exit(); // Es buena práctica usar exit() después de enviar una respuesta AJAX.
             break;
     }
 }

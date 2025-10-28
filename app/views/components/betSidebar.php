@@ -23,7 +23,7 @@ if (!defined('ROOT_PATH')) {
             <button data-amount="10" class="btn bet-chip py-1 rounded-md">+10</button>
             <button data-amount="25" class="btn bet-chip py-1 rounded-md">+25</button>
             <button data-amount="100" class="btn bet-chip py-1 rounded-md">+100</button>
-            <button data-amount="500" class="btn bet-chip py-1 rounded-md">+500</button>
+            <button data-amount="250" class="btn bet-chip py-1 rounded-md">+250</button>
         </div>
     </div>
     <div class="space-y-3">
