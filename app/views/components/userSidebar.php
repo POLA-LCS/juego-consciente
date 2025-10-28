@@ -12,7 +12,7 @@
             <li><a href="?page=dashboard" class="sidebar-link text-[var(--color-text-base)]">Dashboard</a></li>
             <li><a href="?page=info" class="sidebar-link text-[var(--color-text-base)]">Ludopatía</a></li>
             <li><a href="?page=contact" class="sidebar-link text-[var(--color-text-base)]">Contacto</a></li>
-            <li id="cheatOption" class="hidden"><a href="#" id="toggleCheat" class="sidebar-link text-[var(--color-text-base)]">Cheat</a></li>
+            <li><a href="#" id="openCheatSidebar" class="sidebar-link text-[var(--color-text-base)]">Cheats</a></li>
             <li><a href="?action=logout" class="sidebar-link sidebar-link-danger">Logout</a></li>
         </ul>
     </nav>

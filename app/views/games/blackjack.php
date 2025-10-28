@@ -28,13 +28,14 @@ if (!defined('ROOT_PATH')) {
 
         <!-- User Sidebar (Derecha, Oculto) -->
         <?php include ROOT_PATH . 'app/views/components/userSidebar.php'; ?>
-        <?php /* include ROOT_PATH . 'app/views/components/cheatSidebar.php'; */ ?>
+        <?php include ROOT_PATH . 'app/views/components/cheatSidebar.php'; ?>
     </div>
 
     <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 
     <script src="/ludopatia/public/assets/js/user_sidebar.js"></script>
     <script src="/ludopatia/public/assets/js/bet_sidebar.js"></script>
+    <script src="/ludopatia/public/assets/js/cheat_sidebar.js"></script>
     <script src="/ludopatia/public/assets/js/blackjack.js"></script>
 </body>
 </html>
