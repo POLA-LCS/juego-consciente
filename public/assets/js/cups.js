@@ -41,8 +41,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const messageContainer = document.getElementById('message-container');
     const playAgainButton = document.getElementById('playAgain');
 
-    let winningCup = -1;
     let canChoose = false;
+    let winStreak = 0; // Contador para la racha de victorias
+    let cheatSettings = { mode: 0, max_streak: -1, max_balance: -1 }; // Configuración de trampas
+
+    // Cargar la configuración de trampas al iniciar
+    fetch('?action=getCheatSettings')
+        .then(response => response.json())
+        .then(settings => {
+            cheatSettings = settings;
+            // Convertir a números para comparaciones seguras
+            cheatSettings.mode = parseInt(settings.mode, 10);
+            cheatSettings.max_streak = parseInt(settings.max_streak, 10);
+            cheatSettings.max_balance = parseInt(settings.max_balance, 10);
+        });
 
     function startGame() {
         if (currentBetValue <= 0 || currentBetValue > userBalance) {
@@ -65,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateUserBalance(userBalance - currentBetValue);
                     // Iniciar el juego
                     messageContainer.textContent = "Elige un vaso...";
-                    winningCup = Math.floor(Math.random() * 3) + 1;
                     canChoose = true;
                 } else {
                     alert('Error al realizar la apuesta.');
@@ -74,12 +85,45 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    // --- NUEVA LÓGICA DE DECISIÓN ---
+    // Esta función determina si el jugador debe ganar o perder
+    function shouldPlayerWin() {
+        // Condición 1: ¿Se ha alcanzado el máximo saldo? Si es así, forzar derrota.
+        if (cheatSettings.max_balance !== -1 && userBalance >= cheatSettings.max_balance) {
+            console.log("Cheat: Forzando derrota por alcanzar máximo saldo.");
+            return false;
+        }
+
+        // Condición 2: ¿Se ha alcanzado la máxima racha? Si es así, forzar derrota.
+        if (cheatSettings.max_streak !== -1 && winStreak >= cheatSettings.max_streak) {
+            console.log("Cheat: Forzando derrota por alcanzar máxima racha.");
+            return false;
+        }
+
+        // Condición 3: ¿Está activado el modo ganador?
+        if (cheatSettings.mode === 1) {
+            console.log("Cheat: Forzando victoria.");
+            return true;
+        }
+
+        // Condición 4: ¿Está activado el modo perdedor?
+        if (cheatSettings.mode === 2) {
+            console.log("Cheat: Forzando derrota.");
+            return false;
+        }
+
+        // Si no hay trampas activas, el resultado es aleatorio (1/3 de probabilidad de ganar).
+        return Math.random() < (1 / 3);
+    }
+
     function chooseCup(cupNumber) {
         if (!canChoose) return;
         canChoose = false;
 
         const chosenCup = document.getElementById(`cup-${cupNumber}`);
-        const isWinner = cupNumber === winningCup;
+        const isWinner = shouldPlayerWin();
+
+        console.log(`isWinner: ${isWinner}`);
 
         // Animar el vaso elegido
         chosenCup.style.transform = 'translateY(-30px)';
@@ -87,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isWinner) {
             messageContainer.textContent = `¡Has ganado ${currentBetValue * 2}!`;
             messageContainer.style.color = 'var(--color-primary)';
+            winStreak++; // Incrementar racha de victorias
             // Lógica para sumar el premio al saldo
             const formData = new FormData();
             formData.append('amount', currentBetValue * 2);
@@ -96,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             messageContainer.textContent = "Inténtalo de nuevo...";
             messageContainer.style.color = 'var(--color-text-muted)';
+            winStreak = 0; // Resetear racha de victorias
         }
         playAgainButton.classList.remove('hidden');
     }
