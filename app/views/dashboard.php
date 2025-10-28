@@ -1,3 +1,7 @@
+<?php
+// Cláusula de guarda: si la constante APP_RUNNING no está definida, significa que se está accediendo directamente al archivo.
+defined('APP_RUNNING') or die('Acceso denegado');
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
