@@ -7,15 +7,15 @@ define('ROOT_PATH', __DIR__ . '/');
 if (isset($_GET['action'])) {
     include 'app/controllers/UserController.php';
 } else {
+    $page = isset($_GET['page']) ? $_GET['page'] : 'login';
+
     // Lista de páginas que requieren autenticación
     $protected_pages = ['dashboard', 'contact', 'info', 'blackjack', 'cups', 'roulette', 'slots'];
-    $page = isset($_GET['page']) ? $_GET['page'] : 'login';
 
     if (in_array($page, $protected_pages) && !isset($_SESSION['user_id'])) {
         $page = 'login'; // Si no está logueado y pide una página protegida, lo mandamos al login
     }
 
-    $page = isset($_GET['page']) ? $_GET['page'] : 'login';
     switch ($page) {
         case 'login':
             include 'app/views/login.php';

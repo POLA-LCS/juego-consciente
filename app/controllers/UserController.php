@@ -15,24 +15,30 @@ if (isset($_GET['action'])) {
                 $password = $_POST['password'];
                 echo $controller->register($username, $email, $password);
                 header("Location: index.php");
+                exit();
             }
             break;
         case 'login':
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $username = $_POST['username']; // Asumiendo que el login es solo con username y password
                 $password = $_POST['password'];
-                echo $controller->login($username, $password);
-                header("Location: index.php?page=dashboard");
+                if ($controller->login($username, $password)) {
+                    header("Location: index.php?page=dashboard");
+                    exit();
+                }
+                // Si el login falla, podrías redirigir a la página de login con un mensaje de error.
             }
             break;
         case 'logout':
             echo $controller->logout();
             header("Location: index.php");
+            exit();
             break;
         case 'delete':
             $user_id = $_SESSION['user_id'];
             echo $controller->deleteAccount($user_id);
             header("Location: index.php");
+            exit();
             break;
         case 'getBalance':
             $user_id = $_SESSION['user_id'];

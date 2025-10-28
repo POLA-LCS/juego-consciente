@@ -60,18 +60,6 @@
 
     <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
 
-    <script>
-        const userSidebar = document.getElementById('userSidebar');
-        const openUserSidebar = document.getElementById('openUserSidebar'); // Botón en el header
-        const closeUserSidebar = document.getElementById('closeUserSidebar'); // Botón 'x' en el sidebar
-
-        openUserSidebar.addEventListener('click', () => {
-            userSidebar.classList.remove('translate-x-full');
-        });
-
-        closeUserSidebar.addEventListener('click', () => {
-            userSidebar.classList.add('translate-x-full');
-        });
-    </script>
+    <script src="/ludopatia/public/assets/js/sidebar.js"></script>
 </body>
 </html>
