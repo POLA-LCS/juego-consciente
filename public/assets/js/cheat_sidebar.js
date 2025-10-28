@@ -55,17 +55,32 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveCheatSettings() {
         const formData = new FormData();
         
-        let mode = 0; // normal
-        if (winnerModeToggle.checked) mode = 1;
-        if (loserModeToggle.checked) mode = 2;
+        const newSettings = {
+            mode: 0,
+            max_streak: -1,
+            max_balance: -1
+        };
 
-        formData.append('mode', mode);
-        formData.append('max_streak', maxStreakToggle.checked ? maxStreakInput.value : -1);
-        formData.append('max_balance', maxBalanceToggle.checked ? maxBalanceInput.value : -1);
+        if (winnerModeToggle.checked) newSettings.mode = 1;
+        if (loserModeToggle.checked) newSettings.mode = 2;
+        newSettings.max_streak = maxStreakToggle.checked ? (maxStreakInput.value || -1) : -1;
+        newSettings.max_balance = maxBalanceToggle.checked ? (maxBalanceInput.value || -1) : -1;
+
+        formData.append('mode', newSettings.mode);
+        formData.append('max_streak', newSettings.max_streak);
+        formData.append('max_balance', newSettings.max_balance);
 
         fetch('?action=updateCheatSettings', {
             method: 'POST',
             body: formData
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                // Disparamos un evento global para notificar a otros scripts del cambio.
+                document.dispatchEvent(new CustomEvent('cheatSettingsChanged', { detail: newSettings }));
+                console.log('Cheat settings saved and event dispatched:', newSettings);
+            }
         });
     }
 

@@ -45,6 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let winStreak = 0; // Contador para la racha de victorias
     let cheatSettings = { mode: 0, max_streak: -1, max_balance: -1 }; // Configuración de trampas
 
+    // Función para actualizar la configuración de trampas localmente
+    function updateLocalCheatSettings(newSettings) {
+        cheatSettings = newSettings;
+        console.log('Local cheat settings updated:', cheatSettings);
+    }
+
     // Cargar la configuración de trampas al iniciar
     fetch('?action=getCheatSettings')
         .then(response => response.json())
@@ -54,7 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
             cheatSettings.mode = parseInt(settings.mode, 10);
             cheatSettings.max_streak = parseInt(settings.max_streak, 10);
             cheatSettings.max_balance = parseInt(settings.max_balance, 10);
+            console.log('Initial cheat settings loaded:', cheatSettings);
         });
+
+    // Escuchar el evento personalizado desde cheat_sidebar.js para actualizaciones en tiempo real
+    document.addEventListener('cheatSettingsChanged', (e) => {
+        updateLocalCheatSettings(e.detail);
+    });
 
     function startGame() {
         if (currentBetValue <= 0 || currentBetValue > userBalance) {
@@ -88,8 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- NUEVA LÓGICA DE DECISIÓN ---
     // Esta función determina si el jugador debe ganar o perder
     function shouldPlayerWin() {
-        // Condición 1: ¿Se ha alcanzado el máximo saldo? Si es así, forzar derrota.
-        if (cheatSettings.max_balance !== -1 && userBalance >= cheatSettings.max_balance) {
+        // Condición 1: ¿La ganancia potencial superaría el máximo saldo? Si es así, forzar derrota.
+        const potentialWinAmount = currentBetValue * 2;
+        const potentialBalance = userBalance + potentialWinAmount;
+        if (cheatSettings.max_balance !== -1 && potentialBalance > cheatSettings.max_balance) {
             console.log("Cheat: Forzando derrota por alcanzar máximo saldo.");
             return false;
         }
