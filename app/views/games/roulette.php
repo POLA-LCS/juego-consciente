@@ -14,8 +14,6 @@ if (!defined('ROOT_PATH')) { header('Location: /ludopatia/index.php?page=error40
     <?php include ROOT_PATH . 'app/views/components/header.php'; ?>
 
     <div class="game-container">
-        <?php include ROOT_PATH . 'app/views/components/betSidebar.php'; ?>
-
         <main class="p-6 flex-1 flex flex-col items-center justify-center text-center">
             <h1 class="text-5xl font-bold text-[var(--color-primary)] mb-4">Roulette</h1>
             <p class="text-2xl text-[var(--color-text-muted)] mb-8">Próximamente...</p>
