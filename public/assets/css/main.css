@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'Grand Casino';
+    src: url('/ludopatia/public/assets/fonts/grand_casino/Grand-Casino.otf') format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/ludopatia/public/assets/fonts/montserrat/Montserrat-Regular.otf') format('truetype');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/ludopatia/public/assets/fonts/montserrat/Montserrat-Bold.otf') format('truetype');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('/ludopatia/public/assets/fonts/roboto/Roboto-Regular.ttf') format('truetype');
+}
+body { 
+    background-color: #1a1a1a; 
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+}
+.btn-red { background-color: #dc2626; }
+.btn-red:hover { background-color: #b91c1c; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bold; }
+
+.card { background-color: #374151; border-radius: 8px; padding: 10px; margin: 5px; display: inline-block; }
