@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Definimos una constante para verificar que la aplicación se ejecuta desde este punto de entrada.
+define('APP_RUNNING', true);
+
 // Definir la ruta raíz del proyecto para que los includes sean consistentes.
 define('ROOT_PATH', __DIR__ . '/');
 
