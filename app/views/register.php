@@ -19,6 +19,13 @@ if (!defined('ROOT_PATH')) {
     <main class="flex items-center justify-center flex-1">
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-8 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-2xl font-bold mb-6 text-center text-[var(--color-primary)]">Registro</h2>
+            <?php
+            // Mostrar mensaje de error si existe
+            if (isset($_SESSION['error_message'])) {
+                echo '<div class="bg-red-500/20 text-red-300 border border-red-500 p-3 rounded-md mb-4 text-center">' . $_SESSION['error_message'] . '</div>';
+                unset($_SESSION['error_message']); // Limpiar el mensaje para que no se muestre de nuevo
+            }
+            ?>
             <form action="?action=register" method="POST">
                 <div class="mb-4">
                     <label for="username" class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Usuario</label>

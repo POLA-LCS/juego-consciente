@@ -19,12 +19,19 @@ if (isset($_GET['action'])) {
                 $username = $_POST['username'];
                 $email = $_POST['email'];
                 $password = $_POST['password'];
-                $result = $controller->register($username, $email, $password);
-                // Después de registrarse, es una buena práctica redirigir al login
-                // Podríamos incluso añadir un mensaje de éxito.
-                $_SESSION['success_message'] = "¡Registro completado! Por favor, inicia sesión.";
-                header("Location: index.php?page=login");
-                exit();
+
+                if ($controller->isEmailTaken($email)) {
+                    $_SESSION['error_message'] = "El e-mail ya está registrado.";
+                    header("Location: index.php?page=register");
+                    exit();
+                } else {
+                    $controller->register($username, $email, $password);
+                    // Después de registrarse, es una buena práctica redirigir al login
+                    // con un mensaje de éxito.
+                    $_SESSION['success_message'] = "¡Registro completado! Por favor, inicia sesión.";
+                    header("Location: index.php?page=login");
+                    exit();
+                }
             }
             break;
         case 'login':
@@ -84,6 +91,11 @@ class UserController {
         } else {
             return "Error al registrar usuario.";
         }
+    }
+
+    public function isEmailTaken($email) {
+        $this->user->email = $email;
+        return $this->user->isEmailTaken();
     }
 
     public function login($username, $password) {

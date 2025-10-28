@@ -39,6 +39,21 @@ class User {
         return false;
     }
 
+    public function isEmailTaken() {
+        $query = "SELECT id FROM " . $this->table_name . " WHERE email = :email";
+        $stmt = $this->conn->prepare($query);
+
+        $this->email = htmlspecialchars(strip_tags($this->email));
+
+        $stmt->bindParam(":email", $this->email);
+        $stmt->execute();
+
+        if($stmt->rowCount() > 0) {
+            return true; // Email está en uso
+        }
+        return false; // Email está disponible
+    }
+
     public function login() {
         $query = "SELECT id, username, password FROM " . $this->table_name . " WHERE username = :username";
         $stmt = $this->conn->prepare($query);
