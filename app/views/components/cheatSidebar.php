@@ -5,11 +5,11 @@ if (!defined('ROOT_PATH')) {
     exit();
 }
 ?>
-<aside id="cheatSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l border-[var(--color-border)] p-3 transform translate-x-full transition-transform duration-300 z-50">
-    <div class="flex justify-end mb-2">
-        <button id="closeCheatSidebar" class="text-[var(--color-text-muted)] hover:text-white text-4xl font-light leading-none">&times;</button>
-    </div>
-    <h3 class="text-xl font-bold mb-4 text-[var(--color-primary)]">Cheats</h3>
+<aside id="cheatSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l border-[var(--color-border)] p-4 transform translate-x-full transition-transform duration-300 z-50">
+    <button id="closeCheatSidebar" class="absolute top-2 right-4 text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors text-4xl font-light leading-none">
+        &times;
+    </button>
+    <h3 class="text-xl font-bold mb-4 text-[var(--color-primary)] text-center">Cheats</h3>
     <div class="space-y-4">
         <div>
             <label for="cheatAmountInput" class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Establecer monto</label>

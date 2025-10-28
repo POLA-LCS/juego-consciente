@@ -1,7 +1,7 @@
-<aside id="userSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l border-[var(--color-border)] p-3 transform translate-x-full transition-transform duration-300 z-50">
-    <div class="flex justify-end mb-2">
-        <button id="closeUserSidebar" class="text-[var(--color-text-muted)] hover:text-white text-4xl font-light leading-none">&times;</button>
-    </div>
+<aside id="userSidebar" class="fixed right-0 top-0 h-full w-64 bg-[var(--color-background)] border-l border-[var(--color-border)] p-4 transform translate-x-full transition-transform duration-300 z-50">
+    <button id="closeUserSidebar" class="absolute top-2 right-4 text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors text-4xl font-light leading-none">
+        &times;
+    </button>
     <div class="text-center mb-6">
         <img src="/ludopatia/public/assets/images/logo.png" alt="Profile" class="h-20 w-20 rounded-full mx-auto mb-3">
         <p class="text-lg text-[var(--color-text-base)] font-bold"><?php echo $_SESSION['username']; ?></p>
