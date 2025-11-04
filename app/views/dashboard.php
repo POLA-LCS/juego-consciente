@@ -37,7 +37,7 @@ if (!defined('ROOT_PATH')) {
             </div>
             <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group" onclick="window.location.href='?page=cups'">
                 <div class="relative h-80">
-                    <img src="/ludopatia/public/assets/images/cups.jpg" alt="Cups Game" class="w-full h-full object-cover">
+                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Cups Game" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <h2 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">Cups Game</h2>
@@ -46,7 +46,7 @@ if (!defined('ROOT_PATH')) {
             </div>
             <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group" onclick="window.location.href='?page=roulette'">
                 <div class="relative h-80">
-                    <img src="/ludopatia/public/assets/images/cbum.jpg" alt="Roulette" class="w-full h-full object-cover">
+                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Roulette" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <h2 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">Roulette</h2>
@@ -55,7 +55,7 @@ if (!defined('ROOT_PATH')) {
             </div>
             <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group" onclick="window.location.href='?page=slots'">
                 <div class="relative h-80">
-                    <img src="/ludopatia/public/assets/images/anibal.jpg" alt="Slots" class="w-full h-full object-cover">
+                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Slots" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <h2 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">Slots</h2>
