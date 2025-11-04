@@ -29,6 +29,6 @@ $footer_message = "Acceso denegado. Por favor, continúa con el flujo natural de
         </div>
     </div>
 
-    <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 </body>
 </html>

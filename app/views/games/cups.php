@@ -1,5 +1,4 @@
 <?php
-// Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
 if (!defined('ROOT_PATH')) {
     header('Location: /ludopatia/index.php?page=error403');
     exit();

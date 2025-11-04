@@ -29,6 +29,6 @@ $footer_message = "No intentes acceder a contenido protegido.";
         </div>
     </div>
 
-    <?php include ROOT_PATH . 'app/views/partials/footer.php'; ?>
+    <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 </body>
 </html>
