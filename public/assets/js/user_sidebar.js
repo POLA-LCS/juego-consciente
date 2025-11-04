@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const openUserSidebar = document.getElementById('openUserSidebar'); // Botón en el header
     const closeUserSidebar = document.getElementById('closeUserSidebar'); // Botón 'x' en el sidebar
 
-    // Asegurarse de que los elementos existen antes de añadir listeners
     if (openUserSidebar && userSidebar && closeUserSidebar) {
         openUserSidebar.addEventListener('click', () => {
             userSidebar.classList.remove('translate-x-full');

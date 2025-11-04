@@ -18,13 +18,13 @@
 }
 
 :root {
-    --color-background: #0a0a0a;      /* Negro profundo */
-    --color-surface: #161616;         /* Superficie oscura */
-    --color-primary: #e52e2e;         /* Rojo intenso (menos brillante) */
-    --color-primary-hover: #f04444;    /* Versión de hover más brillante */
-    --color-border: #2a2a2a;          /* Borde muy sutil */
-    --color-text-base: #f0f0f0;        /* Texto base casi blanco */
-    --color-text-muted: #a0a0a0;       /* Texto atenuado */
+    --color-background: #0a0a0a;      
+    --color-surface: #161616;         
+    --color-border: #2a2a2a;          
+    --color-primary: #e52e2e;         
+    --color-primary-hover: #f04444;   
+    --color-text-base: #f0f0f0;       
+    --color-text-muted: #a0a0a0;      
 }
 
 body { 
@@ -33,14 +33,12 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-/* Contenedor principal para el layout de juego */
 .game-container {
     display: flex;
-    flex: 1; /* Ocupa todo el espacio vertical disponible */
-    min-height: 0; /* Previene que el contenedor flex se desborde */
+    flex: 1;
+    min-height: 0;
 }
 
-/* Empuja el footer hacia abajo */
 main {
     flex-grow: 1;
 }
@@ -49,14 +47,13 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
 
 .card { background-color: #374151; border-radius: 8px; padding: 10px; margin: 5px; display: inline-block; }
 
-/* Estilos para las tarjetas de juego */
 .game-card {
-    border: 2px solid rgba(255, 26, 26, 0.3); /* Borde rojo opaco por defecto */
+    border: 2px solid rgba(255, 26, 26, 0.3); 
     transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
 .game-card:hover {
-    border-color: var(--color-primary); /* Borde rojo al hacer hover */
+    border-color: var(--color-primary); 
     transform: scale(1.03);
 }
 
@@ -64,7 +61,6 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
     justify-content: center;
 }
 
-/* Nuevo estilo de botón moderno */
 .btn {
     background-color: transparent;
     border: 2px solid var(--color-primary);
@@ -76,7 +72,6 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
     color: white;
 }
 
-/* Estilo secundario para botones */
 .btn-secondary {
     background-color: var(--color-primary);
     color: white;
@@ -86,12 +81,11 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
     background-color: var(--color-primary-hover);
 }
 
-/* Estilos para los enlaces del sidebar */
 .sidebar-link {
     display: block;
-    padding: 0.75rem calc(1rem - 3px); /* Ajustamos padding para el borde */
-    border-left: 3px solid transparent; /* Borde transparente por defecto */
-    border-radius: 0.375rem; /* rounded-md */
+    padding: 0.75rem calc(1rem - 3px); 
+    border-left: 3px solid transparent; 
+    border-radius: 0.375rem; 
     font-weight: bold;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
 }
@@ -107,27 +101,23 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
 .sidebar-link-danger:hover {
     background-color: var(--color-primary);
     color: white;
-    border-left-color: var(--color-primary); /* Mantenemos el borde rojo */
+    border-left-color: var(--color-primary);
 }
 
-/* Elimina el contorno de foco por defecto del navegador en el botón de usuario */
 #openUserSidebar:focus {
     outline: none;
 }
 
-/* Oculta los spinners (flechas de subir/bajar) en los inputs de tipo número */
-/* Para Chrome, Safari, Edge, Opera */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-/* Para Firefox */
+
 input[type=number] {
     -moz-appearance: textfield;
 }
 
-/* Estilos para los switches */
 .switch {
     position: relative;
     display: inline-block;
@@ -139,6 +129,7 @@ input[type=number] {
     width: 0;
     height: 0;
 }
+
 .slider {
     position: absolute;
     cursor: pointer;
@@ -149,6 +140,7 @@ input[type=number] {
     background-color: #3a3a3a;
     transition: .4s;
 }
+
 .slider:before {
     position: absolute;
     content: "";
@@ -159,7 +151,19 @@ input[type=number] {
     background-color: white;
     transition: .4s;
 }
-input:checked + .slider { background-color: #059669; /* Verde */ }
-input:checked + .slider:before { transform: translateX(22px); }
-.slider.round { border-radius: 34px; }
-.slider.round:before { border-radius: 50%; }
+
+input:checked + .slider {
+    background-color: #059669; 
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

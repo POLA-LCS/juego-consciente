@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Lógica de Cheats ---
+    // =================================================================
+    // 1. LOGICA DE CHEATS
+    // =================================================================
 
     // Elementos de "Establecer Monto"
     const cheatAmountInput = document.getElementById('cheatAmountInput');
@@ -51,7 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Guardar la configuración en el backend
+    // =================================================================
+    // 1. LOGICA DE CHEATS
+    // =================================================================
     function saveCheatSettings() {
         const formData = new FormData();
         
@@ -84,7 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Event Listeners ---
+    // =================================================================
+    // 2. EVENT LISTENERS
+    // =================================================================
 
     // Exclusión mutua para modos ganador/perdedor
     winnerModeToggle.addEventListener('change', () => {
