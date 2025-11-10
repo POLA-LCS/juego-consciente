@@ -9,7 +9,7 @@ El objetivo principal no es ser un casino funcional, sino una plataforma interac
 ---
 
 ## TODO
-- Cambiar que la ruta relativa no es realmente relativa
+- Cambiar que la ruta relativa no es realmente relativa.
 - Separar las dependencias de la apuesta y de cups game por algo mas sofisticado (bet.js, cups.js).
 
 - - -
