@@ -1,7 +1,7 @@
 <?php
 // Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
 if (!defined('ROOT_PATH')) {
-    header('Location: /ludopatia/index.php?page=error403');
+    header('Location: index.php?page=error403');
     exit();
 }
 ?>
@@ -12,7 +12,7 @@ if (!defined('ROOT_PATH')) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Juego Consciente</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/ludopatia/public/assets/css/main.css">
+    <link rel="stylesheet" href="public/assets/css/main.css">
 </head>
 <body class="flex flex-col min-h-screen">
     <?php include ROOT_PATH . 'app/views/components/header.php'; ?>
@@ -28,7 +28,7 @@ if (!defined('ROOT_PATH')) {
             <!-- Tarjeta de Juego -->
             <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group" onclick="window.location.href='?page=blackjack'">
                 <div class="relative h-80">
-                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Blackjack" class="w-full h-full object-cover">
+                    <img src="public/assets/images/card.jpg" alt="Blackjack" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <h2 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">Blackjack</h2>
@@ -37,7 +37,7 @@ if (!defined('ROOT_PATH')) {
             </div>
             <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group" onclick="window.location.href='?page=cups'">
                 <div class="relative h-80">
-                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Cups Game" class="w-full h-full object-cover">
+                    <img src="public/assets/images/card.jpg" alt="Cups Game" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <h2 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">Cups Game</h2>
@@ -46,7 +46,7 @@ if (!defined('ROOT_PATH')) {
             </div>
             <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group" onclick="window.location.href='?page=roulette'">
                 <div class="relative h-80">
-                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Roulette" class="w-full h-full object-cover">
+                    <img src="public/assets/images/card.jpg" alt="Roulette" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <h2 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">Roulette</h2>
@@ -55,7 +55,7 @@ if (!defined('ROOT_PATH')) {
             </div>
             <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group" onclick="window.location.href='?page=slots'">
                 <div class="relative h-80">
-                    <img src="/ludopatia/public/assets/images/card.jpg" alt="Slots" class="w-full h-full object-cover">
+                    <img src="public/assets/images/card.jpg" alt="Slots" class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-black bg-opacity-60"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
                         <h2 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">Slots</h2>
@@ -67,6 +67,6 @@ if (!defined('ROOT_PATH')) {
 
     <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 
-    <script src="/ludopatia/public/assets/js/user_sidebar.js"></script>
+    <script src="public/assets/js/user_sidebar.js"></script>
 </body>
 </html>

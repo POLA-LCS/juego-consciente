@@ -1,6 +1,6 @@
 <header class="bg-[var(--color-header-bg)] text-white py-4 px-6 border-b border-[var(--color-border)] flex justify-between items-center">
     <a href="?page=dashboard" class="flex items-center gap-4 group">
-        <img src="/ludopatia/public/assets/images/logo.png" alt="Logo" class="h-16 w-16">
+        <img src="public/assets/images/logo.png" alt="Logo" class="h-16 w-16">
         <h1 class="text-4xl text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors" style="font-family: 'Grand Casino', sans-serif;">Juego Consciente</h1>
     </a>
     <button id="openUserSidebar" class="text-[var(--color-text-base)] hover:text-[var(--color-primary)] focus:outline-none transition-colors p-1 rounded-full hover:bg-gray-700">

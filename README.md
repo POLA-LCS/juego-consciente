@@ -8,6 +8,12 @@ El objetivo principal no es ser un casino funcional, sino una plataforma interac
 
 ---
 
+## TODO
+- Cambiar que la ruta relativa no es realmente relativa
+- Separar las dependencias de la apuesta y de cups game por algo mas sofisticado (bet.js, cups.js).
+
+- - -
+
 ## Características Principales
 
 - **Sistema de Autenticación:** Registro, inicio de sesión y gestión de sesiones de usuario.
@@ -58,7 +64,7 @@ Para ejecutar este proyecto en un entorno local, sigue estos pasos:
     - Verifica que las credenciales (`$host`, `$db_name`, `$username`, `$password`) coincidan con la configuración de tu entorno MySQL. Por defecto, está configurado para un XAMPP estándar.
 
 5.  **Acceder a la Aplicación:**
-    - Abre tu navegador y ve a `http://localhost/ludopatia/`.
+    - Abre tu navegador y ve a `http://localhost`.
 
 ---
 

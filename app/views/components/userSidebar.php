@@ -3,7 +3,7 @@
         &times;
     </button>
     <div class="text-center mb-6">
-        <img src="/ludopatia/public/assets/images/logo.png" alt="Profile" class="h-20 w-20 rounded-full mx-auto mb-3">
+        <img src="public/assets/images/logo.png" alt="Profile" class="h-20 w-20 rounded-full mx-auto mb-3">
         <p class="text-lg text-[var(--color-text-base)] font-bold"><?php echo $_SESSION['username']; ?></p>
         <p class="text-sm text-[var(--color-text-muted)]">ID: <?php echo $_SESSION['user_id']; ?></p>
     </div>
