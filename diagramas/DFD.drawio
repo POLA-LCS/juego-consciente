@@ -16,7 +16,7 @@
         <mxCell id="lxSjKif8moBs8GwvoC6A-94" value="2.0&#xa;Gestionar&#xa;Partida" style="rounded=1;arcSize=20;strokeWidth=2;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="1730.5" y="1088" width="99" height="102" as="geometry" />
         </mxCell>
-        <mxCell id="lxSjKif8moBs8GwvoC6A-95" value="3.0&#xa;Gestionar&#xa;Cheats" style="rounded=1;arcSize=20;strokeWidth=2;fontSize=16;" parent="1" vertex="1">
+        <mxCell id="lxSjKif8moBs8GwvoC6A-95" value="2.1&#xa;Gestionar&#xa;Cheats" style="rounded=1;arcSize=20;strokeWidth=2;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="1730" y="890" width="100" height="100" as="geometry" />
         </mxCell>
         <mxCell id="lxSjKif8moBs8GwvoC6A-96" value="DB 1:&#xa;users" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fontSize=16;" parent="1" vertex="1">
