@@ -47,6 +47,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         gameState.balance = betDetails.newBalance;
         gameState.currentBet = betDetails.betAmount;
 
+        // Limpiar resaltados de la partida anterior
+        reels.forEach(reel => {
+            reel.classList.remove('winning-reel');
+            reel.classList.remove('losing-reel');
+        });
+
         messageContainer.textContent = "Girando...";
         messageContainer.style.color = 'var(--color-text-muted)';
 
@@ -70,21 +76,55 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Forzar resultado según los cheats
         const shouldWin = shouldPlayerWin();
-        if (shouldWin) {
+        if (shouldWin) { // Si el cheat de ganar está activo, forzamos una victoria de 3 símbolos
             const winningSymbol = symbols[Math.floor(Math.random() * symbols.length)];
             finalReels.fill(winningSymbol);
         }
 
-        // Actualizar la UI con el resultado final
-        reels.forEach((reel, index) => reel.textContent = finalReels[index]);
+        // Detener los rodillos secuencialmente
+        setTimeout(() => {
+            reels[0].textContent = finalReels[0];
+        }, 0);
 
-        // Comprobar si hay victoria (todos los símbolos son iguales)
-        const isWinner = finalReels.every(symbol => symbol === finalReels[0]);
+        setTimeout(() => {
+            reels[1].textContent = finalReels[1];
+        }, 500);
 
-        if (isWinner) {
-            const prize = gameState.currentBet * 5; // Premio x5
+        setTimeout(() => {
+            reels[2].textContent = finalReels[2];
+            // Una vez que el último rodillo se detiene, comprobamos el resultado.
+            checkWinAndFinalize(finalReels);
+        }, 1000);
+    }
+
+    async function checkWinAndFinalize(finalReels) {
+        let prize = 0;
+        let winningReels = [];
+
+        // Comprobar victoria de 3 símbolos
+        if (finalReels[0] === finalReels[1] && finalReels[1] === finalReels[2]) {
+            prize = gameState.currentBet * 5;
+            winningReels = [0, 1, 2];
+        }
+        // Comprobar victoria de 2 símbolos (1 y 2)
+        else if (finalReels[0] === finalReels[1]) {
+            prize = gameState.currentBet * 1.5;
+            winningReels = [0, 1];
+        }
+        // Comprobar victoria de 2 símbolos (2 y 3)
+        else if (finalReels[1] === finalReels[2]) {
+            prize = gameState.currentBet * 1.5;
+            winningReels = [1, 2];
+        }
+
+        if (prize > 0) {
             messageContainer.textContent = `¡Has ganado ${prize}!`;
             messageContainer.style.color = 'var(--color-primary)';
+
+            // Resaltar los rodillos ganadores
+            winningReels.forEach(index => {
+                reels[index].classList.add('winning-reel');
+            });
 
             await fetch(`?action=incrementWinStreak`, { method: 'POST' });
             const response = await fetch(`?action=updateBalance`, {
@@ -92,10 +132,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: new URLSearchParams({ 'amount': prize })
             });
             const data = await response.json();
-            gameState.balance = data.newBalance;
-            gameState.winStreak++;
+            if (data.success) {
+                gameState.balance = data.newBalance;
+                gameState.winStreak++;
+            }
         } else {
-            messageContainer.textContent = "¡Perdiste! Inténtalo de nuevo...";
+            reels.forEach(reel => reel.classList.add('losing-reel'));
+            messageContainer.textContent = "¡Perdiste, intenta de nuevo!";
             messageContainer.style.color = 'var(--color-text-muted)';
             await fetch(`?action=setWinStreak`, {
                 method: 'POST',

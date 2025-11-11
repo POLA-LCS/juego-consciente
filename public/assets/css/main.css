@@ -167,3 +167,28 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+.winning-reel {
+    border-color: rgb(120, 184, 69) !important;
+    animation: slow-bounce 1s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.losing-reel {
+    border-color: var(--color-primary) !important;
+    opacity: 0.6;
+    transition: opacity 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes slow-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
