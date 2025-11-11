@@ -56,13 +56,11 @@ if (isset($_GET['action'])) {
             echo $controller->logout();
             header("Location: index.php");
             exit();
-            break;
         case 'delete':
             $user_id = $_SESSION['user_id'];
             echo $controller->deleteAccount($user_id);
             header("Location: index.php");
             exit();
-            break;
         case 'getBalance':
             $user_id = $_SESSION['user_id'];
             echo $controller->getBalance($user_id);
@@ -77,7 +75,6 @@ if (isset($_GET['action'])) {
 
             echo json_encode(['success' => ($result !== false), 'newBalance' => $result]);
             exit(); // Es buena práctica usar exit() después de enviar una respuesta AJAX.
-            break;
         case 'setBalance':
             $user_id = $_SESSION['user_id'];
             $amount = $_POST['amount'];
@@ -88,14 +85,12 @@ if (isset($_GET['action'])) {
 
             echo json_encode(['success' => ($result !== false), 'newBalance' => $result]);
             exit();
-            break;
         case 'getCheatSettings':
             $user_id = $_SESSION['user_id'];
             $settings = $controller->getCheatSettings($user_id);
             header('Content-Type: application/json');
             echo json_encode($settings);
             exit();
-            break;
         case 'updateCheatSettings':
             $user_id = $_SESSION['user_id'];
             $settings = $_POST; // Recibe todos los datos del formulario
@@ -103,14 +98,12 @@ if (isset($_GET['action'])) {
             header('Content-Type: application/json');
             echo json_encode(['success' => $result]);
             exit();
-            break;
         case 'getWinStreak':
             $user_id = $_SESSION['user_id'];
             $streak = $controller->getWinStreak($user_id);
             header('Content-Type: application/json');
             echo json_encode(['win_streak' => $streak]);
             exit();
-            break;
         case 'setWinStreak':
             $user_id = $_SESSION['user_id'];
             $streak = $_POST['streak'];
@@ -118,14 +111,12 @@ if (isset($_GET['action'])) {
             header('Content-Type: application/json');
             echo json_encode(['success' => $result]);
             exit();
-            break;
         case 'incrementWinStreak':
             $user_id = $_SESSION['user_id'];
             $result = $controller->incrementWinStreak($user_id);
             header('Content-Type: application/json');
             echo json_encode(['success' => $result]);
             exit();
-            break;
         case 'getPlayerData':
             $user_id = $_SESSION['user_id'];
             $playerData = [
@@ -136,7 +127,6 @@ if (isset($_GET['action'])) {
             header('Content-Type: application/json');
             echo json_encode($playerData);
             exit();
-            break;
     }
 }
 
@@ -160,7 +150,7 @@ class UserController {
             // Al registrar, también creamos sus settings de cheat por defecto
             $lastId = $this->db->lastInsertId();
             $this->cheatSettings->user_id = $lastId;
-            $this->cheatSettings->getSettings(); // Esto crea los defaults
+            $this->cheatSettings->getSettings(); // Con valores predeterminados
             return true;
         } else {
             return "Error al registrar usuario.";

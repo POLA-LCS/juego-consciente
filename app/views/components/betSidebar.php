@@ -1,11 +1,13 @@
 <?php
+// Verificación de acceso válido
 // Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
 if (!defined('ROOT_PATH')) {
     header('Location: index.php?page=error403');
     exit();
 }
 ?>
-<aside id="bet-sidebar" class="w-56 bg-[var(--color-surface)] p-3 border-r-2 border-[var(--color-primary)] flex flex-col justify-between">
+<aside id="bet-sidebar"
+    class="w-56 bg-[var(--color-surface)] p-3 border-r-2 border-[var(--color-primary)] flex flex-col justify-between">
     <div>
         <div class="text-center mb-2">
             <span class="text-lg text-[var(--color-text-muted)]">Saldo</span>
@@ -33,7 +35,10 @@ if (!defined('ROOT_PATH')) {
     </div>
     <div class="space-y-2">
         <button id="placeBet" class="btn w-full py-2 px-4 rounded-md font-bold">Apostar</button>
-        <button id="maxBetButton" class="btn-secondary w-full py-2 px-2 rounded-md font-bold text-sm">APUESTA MAXIMA</button>
+        <button id="maxBetButton" class="btn-secondary w-full py-2 px-2 rounded-md font-bold text-sm">APUESTA
+            MAXIMA</button>
         <button id="resetBet" class="w-full text-[var(--color-text-muted)] hover:text-white">Reset</button>
     </div>
 </aside>
+
+<script src="public/assets/js/bet.js"></script>

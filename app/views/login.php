@@ -1,20 +1,20 @@
 <?php
+// Verificación de acceso válido
 // Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
 if (!defined('ROOT_PATH')) {
     header('Location: index.php?page=error403');
     exit();
 }
+
+$pageTitle = 'Login';
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Juego Consciente</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="public/assets/css/main.css">
-</head>
+<?php include ROOT_PATH . 'app/views/components/head.php'; // Componente Head 
+?>
+
 <body class="bg-[var(--color-background)] flex flex-col min-h-screen">
+    <!-- Componente HeaderAuth -->
     <?php include ROOT_PATH . 'app/views/components/headerAuth.php'; ?>
     <main class="flex items-center justify-center flex-1">
         <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -46,9 +46,8 @@ if (!defined('ROOT_PATH')) {
             <p class="mt-4 text-center text-[var(--color-text-muted)]">¿No tienes cuenta? <a href="?page=register" class="text-[var(--color-primary)] hover:underline">Regístrate</a></p>
         </div>
     </main>
+    <!-- Componente Footer -->
     <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 </body>
-</html>
-    </div>
-</body>
+
 </html>

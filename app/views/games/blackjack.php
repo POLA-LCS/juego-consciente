@@ -1,20 +1,20 @@
 <?php
+// Verificación de acceso válido
 // Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
 if (!defined('ROOT_PATH')) {
     header('Location: index.php?page=error403');
     exit();
 }
+
+$pageTitle = 'Blackjack';
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blackjack - Juego Consciente</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="public/assets/css/main.css">
-</head>
+<?php include ROOT_PATH . 'app/views/components/head.php'; // Componente Head 
+?>
+
 <body class="flex flex-col min-h-screen">
+    <!-- Componente Header -->
     <?php include ROOT_PATH . 'app/views/components/header.php'; ?>
 
     <div class="game-container">
@@ -26,13 +26,15 @@ if (!defined('ROOT_PATH')) {
         </main>
 
         <!-- User Sidebar (Derecha, Oculto) -->
+        <!-- Componente UserSidebar -->
         <?php include ROOT_PATH . 'app/views/components/userSidebar.php'; ?>
+        <!-- Componente CheatSidebar -->
         <?php include ROOT_PATH . 'app/views/components/cheatSidebar.php'; ?>
     </div>
 
+    <!-- Componente Footer -->
     <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 
-    <script src="public/assets/js/user_sidebar.js"></script>
-    <script src="public/assets/js/cheat_sidebar.js"></script>
 </body>
+
 </html>
