@@ -17,7 +17,8 @@ $pageTitle = 'Login';
     <!-- Componente HeaderAuth -->
     <?php include ROOT_PATH . 'app/views/components/headerAuth.php'; ?>
     <main class="flex items-center justify-center flex-1">
-        <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div
+            class="bg-[var(--color-surface)] border border-[var(--color-border)] p-8 rounded-lg shadow-lg w-full max-w-md">
             <h2 class="text-2xl font-bold mb-6 text-center text-[var(--color-primary)]">Login</h2>
             <?php
             // Mostrar mensaje de error si existe
@@ -34,16 +35,23 @@ $pageTitle = 'Login';
             ?>
             <form action="?action=login" method="POST">
                 <div class="mb-4">
-                    <label for="username" class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Usuario</label>
-                    <input type="text" id="username" name="username" class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]" required>
+                    <label for="username"
+                        class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Usuario</label>
+                    <input type="text" id="username" name="username"
+                        class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                        required>
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Contraseña</label>
-                    <input type="password" id="password" name="password" class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]" required>
+                    <label for="password"
+                        class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Contraseña</label>
+                    <input type="password" id="password" name="password"
+                        class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                        required>
                 </div>
                 <button type="submit" class="w-full btn py-2 px-4 rounded-md font-bold">Iniciar Sesión</button>
             </form>
-            <p class="mt-4 text-center text-[var(--color-text-muted)]">¿No tienes cuenta? <a href="?page=register" class="text-[var(--color-primary)] hover:underline">Regístrate</a></p>
+            <p class="mt-4 text-center text-[var(--color-text-muted)]">¿No tienes cuenta? <a href="?page=register"
+                    class="text-[var(--color-primary)] hover:underline">Regístrate</a></p>
         </div>
     </main>
     <!-- Componente Footer -->

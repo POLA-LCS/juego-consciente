@@ -66,3 +66,5 @@ if (!defined('ROOT_PATH')) {
 </aside>
 
 <script src="public/assets/js/cheat_sidebar.js"></script>
+
+<script src="public/assets/js/cheat_sidebar.js"></script>

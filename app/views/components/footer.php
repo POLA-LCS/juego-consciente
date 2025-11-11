@@ -20,3 +20,8 @@ $current_footer_message = isset($footer_message) ? "<span class=\"text-[var(--co
 </footer>
 
 <script src="public/assets/js/user_sidebar.js"></script>
+<?php
+if (isset($load_cheat_sidebar_js) && $load_cheat_sidebar_js) {
+    echo '<script src="public/assets/js/cheat_sidebar.js"></script>';
+}
+?>
