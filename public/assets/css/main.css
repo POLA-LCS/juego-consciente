@@ -81,6 +81,35 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Montserrat', sans-serif; font-weight: bol
     background-color: var(--color-primary-hover);
 }
 
+.btn-chip {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.btn-chip:hover {
+    background-color: var(--color-border);
+    color: var(--color-text-base);
+}
+
+.active-chip {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.chip {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    border-radius: 9999px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+}
 .sidebar-link {
     display: block;
     padding: 0.75rem calc(1rem - 3px);

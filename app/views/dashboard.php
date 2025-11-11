@@ -30,7 +30,7 @@ $pageTitle = 'Dashboard';
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 max-w-6xl mx-auto center-grid">
             <!-- Tarjeta de Juego -->
-            <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group"
+            <!-- <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group"
                 onclick="window.location.href='?page=blackjack'">
                 <div class="relative h-80">
                     <img src="public/assets/images/card.jpg" alt="Blackjack" class="w-full h-full object-cover">
@@ -41,7 +41,7 @@ $pageTitle = 'Dashboard';
                             Blackjack</h2>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group"
                 onclick="window.location.href='?page=cups'">
                 <div class="relative h-80">
