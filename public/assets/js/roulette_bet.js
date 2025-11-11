@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (betAmount > 0) {
                 spot.innerHTML = `<span class="chip">${betAmount}</span>`;
             } else {
-                // Si no hay apuesta, restaurar el contenido original
+                // Si no hay apuesta se restaura el contenido original
                 const type = spot.dataset.betType;
                 const value = spot.dataset.betValue;
                 if (type === 'number') {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const betKey = `${spot.dataset.betType}_${spot.dataset.betValue}`;
         state.bets[betKey] = (state.bets[betKey] || 0) + betAmount;
         state.history.push({ key: betKey, amount: betAmount });
-        state.redoHistory = []; // Al hacer una nueva acción, se borra el historial de rehacer
+        state.redoHistory = []; // Al iniciar una nueva apuesta se borra el historial
         state.totalBet += betAmount;
         updateUI();
     }
@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateUI();
     }
 
+    // Para avanzar en el historial de chips en la apuesta actual
     function redoLastBet() {
         if (state.redoHistory.length === 0 || state.isBettingLocked) return;
 
@@ -106,6 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateUI();
     }
 
+    // Para limpiar la apuesta actual
     function clearAllBets() {
         if (state.isBettingLocked) return;
         state.history = [];
@@ -144,6 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    // Si los botones están habilitados
     function toggleControls(enabled) {
         spinButton.disabled = !enabled;
         clearBetsButton.disabled = !enabled;

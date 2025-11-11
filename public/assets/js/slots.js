@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    const WINNER_MODE = 1;
+    const LOSER_MODE = 2;
     // =================================================================
     // 1. ELEMENTOS DEL DOM
     // =================================================================
@@ -59,42 +61,74 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Simulación de giro
         let spinCount = 0;
         const spinInterval = setInterval(() => {
+            let lastSymbol = undefined;
+            let actual = symbols[Math.floor() * symbols.length];
             reels.forEach(reel => {
-                reel.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                while(actual == lastSymbol) {
+                    actual = symbols[Math.floor(Math.random() * symbols.length)];
+                }
+                lastSymbol = actual;
+                reel.textContent = actual;
             });
             spinCount++;
-            if (spinCount > 15) { // Detener después de ~1.5 segundos
+            if (spinCount > 10) {
                 clearInterval(spinInterval);
                 endGame();
             }
-        }, 100);
+        }, 150);
     }
 
     async function endGame() {
         // Lógica para determinar el resultado final
-        const finalReels = reels.map(() => symbols[Math.floor(Math.random() * symbols.length)]);
+        let finalReels = [];
 
         // Forzar resultado según los cheats
         const shouldWin = shouldPlayerWin();
-        if (shouldWin) { // Si el cheat de ganar está activo, forzamos una victoria de 3 símbolos
+
+        if(shouldWin === WINNER_MODE) { // Modo Ganador
             const winningSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-            finalReels.fill(winningSymbol);
+            
+            finalReels = [
+                [winningSymbol, winningSymbol, winningSymbol],
+                [symbols[Math.floor(Math.random() * symbols.length)], winningSymbol, winningSymbol],
+                [winningSymbol, winningSymbol, symbols[Math.floor(Math.random() * symbols.length)]]
+            ][Math.floor(Math.random() * 3)];
+        } else
+        // Modo perdedor
+        if(shouldWin === LOSER_MODE) {
+            let lastSymbol = undefined;
+            let actual = symbols[Math.floor(Math.random() * symbols.length)];
+            for(let i = 0; i < 3; i++) {
+                while(actual === lastSymbol) {
+                    actual = symbols[Math.floor(Math.random() * symbols.length)];
+                }
+                lastSymbol = actual;
+                finalReels.push(actual);
+            }
+        } else {
+            for(let i = 0; i < 3; i++) {
+                finalReels.push(symbols[Math.floor(Math.random() * symbols.length)]);
+            }
         }
 
+        showDelayedReels(finalReels);
+    }
+
+    function showDelayedReels(finalReels) {
         // Detener los rodillos secuencialmente
         setTimeout(() => {
             reels[0].textContent = finalReels[0];
-        }, 0);
+        }, 300);
 
         setTimeout(() => {
             reels[1].textContent = finalReels[1];
-        }, 500);
+        }, 600);
 
         setTimeout(() => {
             reels[2].textContent = finalReels[2];
             // Una vez que el último rodillo se detiene, comprobamos el resultado.
             checkWinAndFinalize(finalReels);
-        }, 1000);
+        }, 1200);
     }
 
     async function checkWinAndFinalize(finalReels) {
@@ -161,16 +195,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Comprobaciones de cheats
         if (gameState.cheatSettings.max_balance != -1 && potentialBalance > gameState.cheatSettings.max_balance) {
-            return false;
+            return LOSER_MODE;
         }
         if (gameState.cheatSettings.max_streak != -1 && gameState.winStreak >= gameState.cheatSettings.max_streak) {
-            return false;
+            return LOSER_MODE;
         }
-        if (gameState.cheatSettings.mode === 1) return true;
-        if (gameState.cheatSettings.mode === 2) return false;
+        if (gameState.cheatSettings.mode === WINNER_MODE) return WINNER_MODE;
+        if (gameState.cheatSettings.mode === LOSER_MODE) return LOSER_MODE;
 
         // Juego normal
-        return Math.random() < 0.2; // Probabilidad de ganar en slots: 20%
+        return 0;
     }
 
     // Listener principal que inicia el juego cuando se realiza una apuesta
