@@ -1,0 +1,122 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36" version="28.2.9">
+  <diagram name="Página-1" id="HMdwtFkSjV7rpVfB3Dcl">
+    <mxGraphModel dx="881" dy="708" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="lxSjKif8moBs8GwvoC6A-122" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1241" y="840" width="1079" height="680" as="geometry" />
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-92" value="Usuario" style="rounded=1;whiteSpace=wrap;arcSize=50;strokeWidth=2;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="1090" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-93" value="1.0&#xa;Gestionar&#xa;Autenticación" style="rounded=1;arcSize=20;strokeWidth=2;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1290" y="1370" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-94" value="2.0&#xa;Gestionar&#xa;Partida" style="rounded=1;arcSize=20;strokeWidth=2;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1730.5" y="1088" width="99" height="102" as="geometry" />
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-95" value="3.0&#xa;Gestionar&#xa;Cheats" style="rounded=1;arcSize=20;strokeWidth=2;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1730" y="890" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-96" value="DB 1:&#xa;users" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="1730" y="1370" width="100" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-97" value="DB 2:&#xa;cheat_settings" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=10;strokeWidth=2;whiteSpace=wrap;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="2130" y="1090" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-98" value="Credenciales" style="startArrow=none;endArrow=block;exitX=0.75;exitY=1;entryX=0.75;entryY=0;rounded=0;fontSize=16;entryDx=0;entryDy=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-92" target="lxSjKif8moBs8GwvoC6A-93">
+          <mxGeometry x="0.4325" y="5" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-99" value="Validar / Crear Usuario" style="startArrow=none;endArrow=block;exitX=1;exitY=0.25;entryX=0;entryY=0;rounded=0;fontSize=16;entryDx=0;entryDy=30;entryPerimeter=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-93" target="lxSjKif8moBs8GwvoC6A-96">
+          <mxGeometry x="-0.0003" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-100" value="Datos de Sesión" style="startArrow=none;endArrow=block;exitX=0;exitY=0;entryX=1;entryY=0.75;rounded=0;fontSize=16;exitDx=0;exitDy=70;exitPerimeter=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-96" target="lxSjKif8moBs8GwvoC6A-93">
+          <mxGeometry x="0.0003" y="2" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-101" value="Info de Sesión" style="startArrow=none;endArrow=block;entryX=0.25;entryY=1;rounded=0;fontSize=16;entryDx=0;entryDy=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-93" target="lxSjKif8moBs8GwvoC6A-92">
+          <mxGeometry x="0.4663" y="-6" relative="1" as="geometry">
+            <mxPoint x="1600" y="1285" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-102" value="Acción de Apuesta" style="startArrow=none;endArrow=block;exitX=1;exitY=0.25;entryX=0;entryY=0.24;rounded=0;fontSize=16;exitDx=0;exitDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-92" target="lxSjKif8moBs8GwvoC6A-94">
+          <mxGeometry x="-0.0016" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-103" value="Leer Datos&#xa;del Jugador" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;rounded=0;fontSize=16;exitDx=0;exitDy=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-94" target="lxSjKif8moBs8GwvoC6A-96">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-104" value="Saldo / Racha" style="curved=1;startArrow=none;endArrow=block;exitX=0.145;exitY=0;entryX=0.25;entryY=1;rounded=0;fontSize=16;entryDx=0;entryDy=0;exitDx=0;exitDy=2.9;exitPerimeter=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-96" target="lxSjKif8moBs8GwvoC6A-94">
+          <mxGeometry x="0.3678" y="-38" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1560" y="1280" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-105" value="Leer Cheats" style="startArrow=none;endArrow=block;exitX=1;exitY=0.25;entryX=0;entryY=0;rounded=0;fontSize=16;entryDx=0;entryDy=10;entryPerimeter=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-94" target="lxSjKif8moBs8GwvoC6A-97">
+          <mxGeometry x="0.0007" y="-3" relative="1" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-106" value="Configuración de&#xa;Cheats" style="startArrow=none;endArrow=block;exitX=0;exitY=1;entryX=1;entryY=0.75;rounded=0;fontSize=16;exitDx=0;exitDy=-10;exitPerimeter=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-97" target="lxSjKif8moBs8GwvoC6A-94">
+          <mxGeometry x="-0.0009" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-107" value="Actualizar&#xa;Saldo / Racha" style="curved=1;startArrow=none;endArrow=block;exitX=0.75;exitY=1;entryX=0.855;entryY=0;rounded=0;fontSize=16;exitDx=0;exitDy=0;entryDx=0;entryDy=2.9;entryPerimeter=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-94" target="lxSjKif8moBs8GwvoC6A-96">
+          <mxGeometry x="-0.3678" y="-38" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2000" y="1280" />
+            </Array>
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-108" value="Resultado del Juego" style="startArrow=none;endArrow=block;exitX=0;exitY=0.75;entryX=1;entryY=0.75;rounded=0;fontSize=16;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-94" target="lxSjKif8moBs8GwvoC6A-92">
+          <mxGeometry x="0.0017" relative="1" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-109" value="Nueva configuracion&#xa;de Cheats" style="curved=1;startArrow=none;endArrow=block;exitX=0.25;exitY=0;rounded=0;fontSize=16;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-92" target="lxSjKif8moBs8GwvoC6A-95">
+          <mxGeometry x="-0.0016" y="-41" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1320" y="920" />
+            </Array>
+            <mxPoint x="1640" y="890" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-110" value="Actualizar&#xa;Cheats" style="startArrow=none;endArrow=block;entryX=0.145;entryY=0;rounded=0;fontSize=16;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryDx=0;entryDy=2.9;entryPerimeter=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-95" target="lxSjKif8moBs8GwvoC6A-97">
+          <mxGeometry x="0.0156" y="-5" relative="1" as="geometry">
+            <mxPoint x="2940" y="980" as="sourcePoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-111" value="Confirmación" style="curved=1;startArrow=none;endArrow=block;exitX=0.855;exitY=0;entryX=1;entryY=0.25;rounded=0;fontSize=16;entryDx=0;entryDy=0;exitDx=0;exitDy=2.9;exitPerimeter=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-97" target="lxSjKif8moBs8GwvoC6A-95">
+          <mxGeometry x="0.0037" y="41" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2240" y="920" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lxSjKif8moBs8GwvoC6A-112" value="Notificación de&#xa;Cambio" style="startArrow=none;endArrow=block;exitX=0;exitY=0.68;entryX=0.5;entryY=0;rounded=0;fontSize=16;entryDx=0;entryDy=0;" edge="1" parent="1" source="lxSjKif8moBs8GwvoC6A-95" target="lxSjKif8moBs8GwvoC6A-92">
+          <mxGeometry x="-0.1673" y="11" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
