@@ -53,6 +53,7 @@ $pageTitle = 'Cups Game';
     <!-- Componente Footer -->
     <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
 
+    <script src="public/assets/js/bet.js"></script>
     <script src="public/assets/js/cups.js"></script>
 </body>
 

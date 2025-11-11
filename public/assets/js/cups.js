@@ -55,14 +55,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById(`cup-${cupNumber}`).style.transform = 'translateY(-30px)';
 
         if (isWinner) {
-            messageContainer.textContent = `¡Has ganado ${gameState.currentBet * 2}!`;
+            const wonBalance = gameState.currentBet * 2;
+            messageContainer.textContent = `¡Has ganado ${wonBalance}!`;
             messageContainer.style.color = 'var(--color-primary)';
             
             // Incrementar racha y sumar premio
             await fetch(`?action=incrementWinStreak`, { method: 'POST' });
             const response = await fetch(`?action=updateBalance`, {
                 method: 'POST',
-                body: new URLSearchParams({ 'amount': gameState.currentBet * 2 })
+                body: new URLSearchParams({ 'amount': wonBalance })
             });
             const data = await response.json();
             if (data.success) {
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }));
             }
         } else {
-            messageContainer.textContent = "Inténtalo de nuevo...";
+            messageContainer.textContent = "¡Perdiste! Inténtalo de nuevo...";
             messageContainer.style.color = 'var(--color-text-muted)';
             
             // Resetear racha

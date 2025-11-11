@@ -10,7 +10,7 @@ $pageTitle = 'Registro';
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<?php include ROOT_PATH . 'app/views/components/head.php'; // Componente Head 
+<?php include ROOT_PATH . 'app/views/components/head.php'; // Componente Head
 ?>
 
 <body class="bg-[var(--color-background)] flex flex-col min-h-screen">

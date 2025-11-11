@@ -23,6 +23,7 @@ if (!defined('ROOT_PATH')) {
             <span class="text-lg text-[var(--color-text-muted)]">Apuesta</span>
             <p id="currentBet" class="text-4xl font-bold text-[var(--color-primary)]">25</p>
         </div>
+
         <!-- Chips para añadir a la apuesta -->
         <div class="grid grid-cols-2 gap-2">
             <button data-amount="1" class="btn bet-chip py-1 rounded-md">+1</button>
@@ -40,5 +41,3 @@ if (!defined('ROOT_PATH')) {
         <button id="resetBet" class="w-full text-[var(--color-text-muted)] hover:text-white">Reset</button>
     </div>
 </aside>
-
-<script src="public/assets/js/bet.js"></script>
