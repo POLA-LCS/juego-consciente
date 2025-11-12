@@ -5,7 +5,9 @@
         &times;
     </button>
     <div class="text-center mb-6">
-        <img src="public/assets/images/logo.png" alt="Profile" class="h-20 w-20 rounded-full mx-auto mb-3">
+        <a href="" class="h-20 w-20 rounded-full mx-auto mb-3">
+            <img src="public/assets/images/logo.png" alt="Profile">
+        </a>
         <p class="text-lg text-[var(--color-text-base)] font-bold"><?php echo $_SESSION['username']; ?></p>
         <p class="text-sm text-[var(--color-text-muted)]">ID: <?php echo $_SESSION['user_id']; ?></p>
     </div>
@@ -15,12 +17,10 @@
             <li><a href="?page=info" class="sidebar-link text-[var(--color-text-base)]">Ludopatía</a></li>
             <li><a href="?page=contact" class="sidebar-link text-[var(--color-text-base)]">Contacto</a></li>
             <?php
-            // Definimos las páginas que son consideradas "juegos"
             $game_pages = ['blackjack', 'cups', 'roulette', 'slots'];
-            // Comprobamos si la página actual está en la lista de juegos para mostrar el botón
             if (isset($page) && in_array($page, $game_pages)):
             ?>
-            <li><a href="#" id="openCheatSidebar" class="sidebar-link text-[var(--color-text-base)]">Cheats</a></li>
+                <li><a href="#" id="openCheatSidebar" class="sidebar-link text-[var(--color-text-base)]">Cheats</a></li>
             <?php endif; ?>
             <li><a href="?action=logout" class="sidebar-link sidebar-link-danger">Logout</a></li>
         </ul>

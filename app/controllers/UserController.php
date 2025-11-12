@@ -5,7 +5,6 @@ if (!defined('ROOT_PATH')) {
     exit();
 }
 
-// ROOT_PATH es definido en index.php
 require_once ROOT_PATH . 'config/database.php';
 require_once ROOT_PATH . 'app/models/User.php';
 require_once ROOT_PATH . 'app/models/CheatSettings.php';
@@ -21,24 +20,33 @@ if (isset($_GET['action'])) {
                 $email = $_POST['email'];
                 $password = $_POST['password'];
 
-                if ($controller->isEmailTaken($email)) {
+                $is_email_valid = $controller->isEmailTaken($email);
+
+                // ERROR durante la verificacion del email
+                if ($is_email_valid === null) {
+                    $_SESSION['error_message'] = "Lo sentimos, ha ocurrido un error al verificar el e-mail.";
+                    header("Location: index.php?page=register");
+                    exit();
+                }
+
+                if (!$is_email_valid) {
                     $_SESSION['error_message'] = "El e-mail ya está registrado.";
                     header("Location: index.php?page=register");
                     exit();
-                } else {
-                    $controller->register($username, $email, $password);
-                    // Después de registrarse, es una buena práctica redirigir al login
-                    // con un mensaje de éxito.
-                    $_SESSION['success_message'] = "¡Registro completado! Por favor, inicia sesión.";
-                    header("Location: index.php?page=login");
-                    exit();
                 }
+
+                // Redireccion al login
+                $controller->register($username, $email, $password);
+                $_SESSION['success_message'] = "¡Registro completado! Por favor, inicia sesión.";
+                header("Location: index.php?page=login");
+                exit();
             }
-            break;
+
         case 'login':
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $username = $_POST['username']; // Asumiendo que el login es solo con username y password
+                $username = $_POST['username'];
                 $password = $_POST['password'];
+
                 if ($controller->login($username, $password)) {
                     // Asegurarse de que el usuario tenga settings de cheat al iniciar sesión
                     $controller->ensureCheatSettings($_SESSION['user_id']);
@@ -130,58 +138,67 @@ if (isset($_GET['action'])) {
     }
 }
 
-class UserController {
-    private $db;
-    private $user;
-    private $cheatSettings;
+class UserController
+{
+    private PDO $db;
+    private User $user;
+    private CheatSettings $cheatSettings;
 
-    public function __construct() {
+    public function __construct()
+    {
         $database = new Database();
         $this->db = $database->getConnection();
         $this->user = new User($this->db);
         $this->cheatSettings = new CheatSettings($this->db);
     }
 
-    public function register($username, $email, $password) {
+    public function register(string $username, string $email, string $password): ?bool
+    {
         $this->user->username = $username;
         $this->user->email = $email;
         $this->user->password = $password;
-        if($this->user->create()) {
-            // Al registrar, también creamos sus settings de cheat por defecto
-            $lastId = $this->db->lastInsertId();
-            $this->cheatSettings->user_id = $lastId;
-            $this->cheatSettings->getSettings(); // Con valores predeterminados
-            return true;
-        } else {
-            return "Error al registrar usuario.";
-        }
+
+        $user_create_result = $this->user->create();
+        if ($user_create_result == false)
+            return $user_create_result;
+
+        // Al registrar, también creamos sus settings de cheat por defecto
+        $lastId = $this->db->lastInsertId();
+        $this->cheatSettings->user_id = $lastId;
+        if ($this->cheatSettings->ensureSettings() === null)
+            return null;
+
+        return true;
     }
 
-    public function isEmailTaken($email) {
+    public function isEmailTaken(string $email): ?bool
+    {
         $this->user->email = $email;
         return $this->user->isEmailTaken();
     }
 
-    public function login($username, $password) {
+    public function login(string $username, string $password): ?bool
+    {
         $this->user->username = $username;
         $this->user->password = $password;
-        if($this->user->login()) {
+        $is_login_valid = $this->user->login();
+        if ($is_login_valid !== null) {
             $_SESSION['user_id'] = $this->user->id;
             $_SESSION['username'] = $this->user->username;
-            return true;
-        } else {
-            return false;
         }
+        return $is_login_valid;
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_destroy();
         return "Logout exitoso.";
     }
 
-    public function deleteAccount($user_id) {
+    public function deleteAccount($user_id)
+    {
         $this->user->id = $user_id;
-        if($this->user->delete()) {
+        if ($this->user->delete()) {
             session_destroy();
             return "Cuenta eliminada.";
         } else {
@@ -189,31 +206,37 @@ class UserController {
         }
     }
 
-    public function getBalance($user_id) {
+    public function getBalance($user_id)
+    {
         $this->user->id = $user_id;
         return $this->user->getBalance();
     }
 
-    public function updateBalance($user_id, $amount) {
+    public function updateBalance($user_id, $amount)
+    {
         $this->user->id = $user_id;
         return $this->user->updateBalance($amount);
     }
 
-    public function setBalance($user_id, $amount) {
+    public function setBalance($user_id, $amount)
+    {
         $this->user->id = $user_id;
         return $this->user->setBalance($amount);
     }
 
-    public function ensureCheatSettings($user_id) {
-        CheatSettings::ensureSettingsExist($this->db, $user_id);
+    public function ensureCheatSettings($user_id)
+    {
+        CheatSettings::settingsExist($this->db, $user_id);
     }
 
-    public function getCheatSettings($user_id) {
+    public function getCheatSettings($user_id)
+    {
         $this->cheatSettings->user_id = $user_id;
-        return $this->cheatSettings->getSettings();
+        return $this->cheatSettings->ensureSettings();
     }
 
-    public function updateCheatSettings($user_id, $settings) {
+    public function updateCheatSettings(int $user_id, $settings)
+    {
         $this->cheatSettings->user_id = $user_id;
         $this->cheatSettings->mode = $settings['mode'] ?? 0;
         $this->cheatSettings->max_streak = $settings['max_streak'] ?? -1;
@@ -221,19 +244,21 @@ class UserController {
         return $this->cheatSettings->updateSettings();
     }
 
-    public function getWinStreak($user_id) {
+    public function getWinStreak(int $user_id)
+    {
         $this->user->id = $user_id;
         return $this->user->getWinStreak();
     }
 
-    public function setWinStreak($user_id, $streak) {
+    public function setWinStreak(int $user_id, int $streak)
+    {
         $this->user->id = $user_id;
         return $this->user->setWinStreak($streak);
     }
 
-    public function incrementWinStreak($user_id) {
+    public function incrementWinStreak(int $user_id)
+    {
         $this->user->id = $user_id;
         return $this->user->incrementWinStreak();
     }
 }
-?>
