@@ -16,21 +16,27 @@ if (isset($_GET['action'])) {
     switch ($action) {
         case 'register':
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $username = $_POST['username'];
-                $email = $_POST['email'];
+                $username = trim($_POST['username'] ?? '');
+                $email = trim($_POST['email'] ?? '');
                 $password = $_POST['password'];
 
-                $is_email_valid = $controller->isEmailTaken($email);
+                if (empty($username) || empty($email) || empty($password)) {
+                    $_SESSION['error_message'] = "Todos los campos son obligatorios.";
+                    header("Location: index.php?page=register");
+                    exit();
+                }
+
+                $is_email_available = $controller->isEmailAvailable($email);
 
                 // ERROR durante la verificacion del email
-                if ($is_email_valid === null) {
+                if ($is_email_available === null) {
                     $_SESSION['error_message'] = "Lo sentimos, ha ocurrido un error al verificar el e-mail.";
                     header("Location: index.php?page=register");
                     exit();
                 }
 
-                if (!$is_email_valid) {
-                    $_SESSION['error_message'] = "El e-mail ya está registrado.";
+                if (!$is_email_available) {
+                    $_SESSION['error_message'] = "El e-mail ya está en uso.";
                     header("Location: index.php?page=register");
                     exit();
                 }
@@ -64,10 +70,21 @@ if (isset($_GET['action'])) {
             echo $controller->logout();
             header("Location: index.php");
             exit();
+
+        case 'updatePassword':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $user_id = $_SESSION['user_id'];
+                $current_password = $_POST['current_password'];
+                $new_password = $_POST['new_password'];
+                $confirm_password = $_POST['confirm_password'];
+                $controller->updatePassword($user_id, $current_password, $new_password, $confirm_password);
+            }
+            break;
         case 'delete':
-            $user_id = $_SESSION['user_id'];
-            echo $controller->deleteAccount($user_id);
-            header("Location: index.php");
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $user_id = $_SESSION['user_id'];
+                $controller->deleteAccount($user_id, $_POST['password']);
+            }
             exit();
         case 'getBalance':
             $user_id = $_SESSION['user_id'];
@@ -171,10 +188,10 @@ class UserController
         return true;
     }
 
-    public function isEmailTaken(string $email): ?bool
+    public function isEmailAvailable(string $email): ?bool
     {
         $this->user->email = $email;
-        return $this->user->isEmailTaken();
+        return $this->user->isEmailAvailable();
     }
 
     public function login(string $username, string $password): ?bool
@@ -195,15 +212,57 @@ class UserController
         return "Logout exitoso.";
     }
 
-    public function deleteAccount($user_id)
+    public function updatePassword(int $user_id, string $current_password, string $new_password, string $confirm_password)
     {
-        $this->user->id = $user_id;
+        if ($new_password !== $confirm_password) {
+            $_SESSION['error_message'] = "Las nuevas contraseñas no coinciden.";
+            header("Location: index.php?page=account");
+            exit();
+        }
+
+        if ($new_password === $current_password) {
+            $_SESSION['error_message'] = "La nueva contraseña no puede ser igual a la actual.";
+            header("Location: index.php?page=account");
+            exit();
+        }
+
+        $this->user->id = strval($user_id);
+        if ($this->user->updatePassword($current_password, $new_password)) {
+            $_SESSION['success_message'] = "Contraseña actualizada correctamente.";
+        } else {
+            $_SESSION['error_message'] = "La contraseña actual es incorrecta o ha ocurrido un error.";
+        }
+        header("Location: index.php?page=account");
+        exit();
+    }
+
+    public function deleteAccount(int $user_id, string $password)
+    {
+        $this->user->id = strval($user_id);
+
+        // Primero, verificamos la contraseña del usuario
+        if (!$this->user->verifyPassword($password)) {
+            $_SESSION['error_message'] = "Contraseña incorrecta. No se pudo eliminar la cuenta.";
+            header("Location: index.php?page=account");
+            exit();
+        }
+
+        // Si la contraseña es correcta, procedemos a eliminar
         if ($this->user->delete()) {
             session_destroy();
-            return "Cuenta eliminada.";
+            header("Location: index.php?page=login");
+            exit();
         } else {
-            return "Error al eliminar cuenta.";
+            $_SESSION['error_message'] = "Error al eliminar la cuenta.";
+            header("Location: index.php?page=account");
+            exit();
         }
+    }
+
+    public function getUserDetails(int $user_id): ?array
+    {
+        $this->user->id = strval($user_id);
+        return $this->user->getById();
     }
 
     public function getBalance($user_id)

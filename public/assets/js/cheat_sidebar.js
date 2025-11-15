@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // =================================================================
     function saveCheatSettings() {
         const formData = new FormData();
-        
+
         const newSettings = {
             mode: 0,
             max_streak: -1,
@@ -78,14 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
             method: 'POST',
             body: formData
         })
-        .then(r => r.json())
-        .then(data => {
-            if (data.success) {
-                // Disparamos un evento global para notificar a otros scripts del cambio.
-                document.dispatchEvent(new CustomEvent('cheatSettingsChanged', { detail: newSettings }));
-                console.log('Cheat settings saved and event dispatched:', newSettings);
-            }
-        });
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    // Disparamos un evento global para notificar a otros scripts del cambio.
+                    document.dispatchEvent(new CustomEvent('cheatSettingsChanged', { detail: newSettings }));
+                    console.log('Cheat settings saved and event dispatched:', newSettings);
+                }
+            });
     }
 
     // =================================================================

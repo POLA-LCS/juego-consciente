@@ -36,6 +36,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+html {
+    /* Evita el "flick" o salto de layout cuando aparece la barra de scroll */
+    scrollbar-gutter: stable;
+}
+
 .game-container {
     display: flex;
     flex: 1;
@@ -243,4 +248,34 @@ input:checked+.slider:before {
     50% {
         transform: translateY(-10px);
     }
+}
+
+/* --- Estilos para <details> animado --- */
+details>summary {
+    list-style: none;
+    /* Eliminar marcador por defecto */
+    transition: background-color 0.2s ease-in-out;
+    position: relative;
+}
+
+details>summary::-webkit-details-marker {
+    display: none;
+    /* Ocultar marcador en Chrome/Safari */
+}
+
+details>summary:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Flecha indicadora */
+details>summary::after {
+    content: '›';
+    position: absolute;
+    right: 1rem;
+    font-size: 1.5em;
+    transition: transform 0.3s ease-in-out;
+}
+
+details[open]>summary::after {
+    transform: rotate(90deg);
 }

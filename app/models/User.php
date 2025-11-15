@@ -41,7 +41,7 @@ class User
         return $stmt->execute();
     }
 
-    public function isEmailTaken(): ?bool
+    public function isEmailAvailable(): ?bool
     {
         $query = "SELECT id FROM " . $this->table_name . " WHERE email = :email";
         if (($stmt = $this->conn->prepare($query)) === false)
@@ -75,6 +75,64 @@ class User
 
         $this->id = strval($row['id']);
         return true;
+    }
+
+    public function verifyPassword(string $password): ?bool
+    {
+        $query = "SELECT password FROM " . $this->table_name . " WHERE id = :id";
+        if (($stmt = $this->conn->prepare($query)) === false) {
+            return null;
+        }
+
+        $stmt->bindParam(":id", $this->id);
+        if (!$stmt->execute()) {
+            return null;
+        }
+
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return password_verify($password, $row['password']);
+        }
+
+        return false;
+    }
+
+    public function updatePassword(string $current_password, string $new_password): ?bool
+    {
+        // Primero, verificar la contraseña actual
+        if (!$this->verifyPassword($current_password)) {
+            return false;
+        }
+
+        // Si es correcta, actualizar a la nueva
+        $query = "UPDATE " . $this->table_name . " SET password = :password WHERE id = :id";
+        if (($stmt = $this->conn->prepare($query)) === false) {
+            return null;
+        }
+
+        $stmt->bindValue(":password", password_hash($new_password, PASSWORD_DEFAULT));
+        $stmt->bindParam(":id", $this->id);
+
+        return $stmt->execute();
+    }
+
+    public function getById(): ?array
+    {
+        $query = "SELECT id, username, email, created_at FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
+        if (($stmt = $this->conn->prepare($query)) === false) {
+            return null;
+        }
+
+        $stmt->bindParam(":id", $this->id);
+        if (!$stmt->execute()) {
+            return null;
+        }
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return null;
     }
 
     public function delete(): ?bool

@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             let lastSymbol = undefined;
             let actual = symbols[Math.floor() * symbols.length];
             reels.forEach(reel => {
-                while(actual == lastSymbol) {
+                while (actual == lastSymbol) {
                     actual = symbols[Math.floor(Math.random() * symbols.length)];
                 }
                 lastSymbol = actual;
@@ -85,31 +85,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Forzar resultado según los cheats
         const shouldWin = shouldPlayerWin();
 
-        if(shouldWin === WINNER_MODE) { // Modo Ganador
+        if (shouldWin === WINNER_MODE) { // Modo Ganador
             const winningSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-            
+
             finalReels = [
                 [winningSymbol, winningSymbol, winningSymbol],
                 [symbols[Math.floor(Math.random() * symbols.length)], winningSymbol, winningSymbol],
                 [winningSymbol, winningSymbol, symbols[Math.floor(Math.random() * symbols.length)]]
             ][Math.floor(Math.random() * 3)];
         } else
-        // Modo perdedor
-        if(shouldWin === LOSER_MODE) {
-            let lastSymbol = undefined;
-            let actual = symbols[Math.floor(Math.random() * symbols.length)];
-            for(let i = 0; i < 3; i++) {
-                while(actual === lastSymbol) {
-                    actual = symbols[Math.floor(Math.random() * symbols.length)];
+            // Modo perdedor
+            if (shouldWin === LOSER_MODE) {
+                let lastSymbol = undefined;
+                let actual = symbols[Math.floor(Math.random() * symbols.length)];
+                for (let i = 0; i < 3; i++) {
+                    while (actual === lastSymbol) {
+                        actual = symbols[Math.floor(Math.random() * symbols.length)];
+                    }
+                    lastSymbol = actual;
+                    finalReels.push(actual);
                 }
-                lastSymbol = actual;
-                finalReels.push(actual);
+            } else {
+                for (let i = 0; i < 3; i++) {
+                    finalReels.push(symbols[Math.floor(Math.random() * symbols.length)]);
+                }
             }
-        } else {
-            for(let i = 0; i < 3; i++) {
-                finalReels.push(symbols[Math.floor(Math.random() * symbols.length)]);
-            }
-        }
 
         showDelayedReels(finalReels);
     }

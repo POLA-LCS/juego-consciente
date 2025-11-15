@@ -10,7 +10,8 @@ $pageTitle = 'Información sobre Ludopatía';
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<?php include ROOT_PATH . 'app/views/components/head.php'; // Componente Head 
+<!-- Componente head -->
+<?php include ROOT_PATH . 'app/views/components/head.php';
 ?>
 
 <body class="flex flex-col min-h-screen">

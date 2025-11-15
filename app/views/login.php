@@ -10,7 +10,8 @@ $pageTitle = 'Login';
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<?php include ROOT_PATH . 'app/views/components/head.php'; // Componente Head 
+<!-- Componente head -->
+<?php include ROOT_PATH . 'app/views/components/head.php';
 ?>
 
 <body class="bg-[var(--color-background)] flex flex-col min-h-screen">

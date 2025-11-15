@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const wonBalance = gameState.currentBet * 2;
             messageContainer.textContent = `¡Has ganado ${wonBalance}!`;
             messageContainer.style.color = 'var(--color-primary)';
-            
+
             // Incrementar racha y sumar premio
             await fetch(`?action=incrementWinStreak`, { method: 'POST' });
             const response = await fetch(`?action=updateBalance`, {
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
             messageContainer.textContent = "¡Perdiste! Inténtalo de nuevo...";
             messageContainer.style.color = 'var(--color-text-muted)';
-            
+
             // Resetear racha
             await fetch(`?action=setWinStreak`, {
                 method: 'POST',

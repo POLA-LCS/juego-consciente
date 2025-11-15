@@ -8,12 +8,13 @@ if (isset($_GET['action'])) {
 } else {
     $page = isset($_GET['page']) ? $_GET['page'] : 'login';
 
-    $protected_pages = ['dashboard', 'contact', 'info', 'blackjack', 'cups', 'roulette', 'slots'];
+    $protected_pages = ['account', 'dashboard', 'contact', 'info', 'blackjack', 'cups', 'roulette', 'slots'];
 
     $routes = [
         'login'     => 'app/views/login.php',
         'register'  => 'app/views/register.php',
         'dashboard' => 'app/views/dashboard.php',
+        'account'   => 'app/views/account.php',
         'contact'   => 'app/views/contact.php',
         'info'      => 'app/views/info.php',
         'blackjack' => 'app/views/games/blackjack.php',
@@ -21,6 +22,7 @@ if (isset($_GET['action'])) {
         'roulette'  => 'app/views/games/roulette.php',
         'slots'     => 'app/views/games/slots.php',
         'error403'  => 'app/views/errors/403.php',
+        'error404'  => 'app/views/errors/404.php',
     ];
 
     if (in_array($page, $protected_pages) && !isset($_SESSION['user_id'])) {
@@ -38,4 +40,3 @@ if (isset($_GET['action'])) {
         include 'app/views/errors/404.php';
     }
 }
-?>

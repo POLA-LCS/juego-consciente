@@ -5,16 +5,16 @@
         &times;
     </button>
     <div class="text-center mb-10">
-        <a class="w-fit h-fit" href="">
+        <a class="w-fit h-fit" href="?page=account">
             <img class="h-20 w-20 rounded-full mx-auto mb-3" src="public/assets/images/logo.png" alt="Profile">
         </a>
         <p class="text-lg text-[var(--color-text-base)] font-bold"><?php echo strtoupper($_SESSION['username']); ?></p>
-        <p class="text-sm text-[var(--color-text-muted)]">ID: <?php echo $_SESSION['user_id']; ?></p>
     </div>
     <nav>
         <ul class="space-y-2">
             <li><a href="?page=dashboard" class="sidebar-link text-[var(--color-text-base)]">Inicio</a></li>
-            <li><a href="?page=info" class="sidebar-link text-[var(--color-text-base)]">Ludopatía</a></li>
+            <li><a href="?page=account" class="sidebar-link text-[var(--color-text-base)]">Mi Cuenta</a></li>
+            <li><a href="?page=info" class="sidebar-link text-[var(--color-text-base)]">Sobre Ludopatía</a></li>
             <li><a href="?page=contact" class="sidebar-link text-[var(--color-text-base)]">Contacto</a></li>
             <?php
             if (isset($page) && in_array($page, [
