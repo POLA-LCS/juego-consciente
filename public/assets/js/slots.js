@@ -12,7 +12,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const messageContainer = document.getElementById('message-container');
 
     // Símbolos posibles para los rodillos
-    const symbols = ['🍒', '🍋', '🍊', '🍉', '⭐', '🔔', '💎'];
+    const symbols = ['🍒', '⭐', '💎'];
+    // const symbols = ['🍒', '🍋', '🍊', '🍉', '⭐', '🔔', '💎'];
 
     // =================================================================
     // 2. ESTADO DEL JUEGO (SLOTS)
