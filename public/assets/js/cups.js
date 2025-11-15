@@ -91,12 +91,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Disparamos un evento para que la UI de apuestas se actualice
         document.dispatchEvent(new CustomEvent('balanceUpdated', { detail: { newBalance: gameState.balance } }));
 
-        playAgainButton.classList.remove('hidden');
+        setTimeout(() => {
+            resetGame();
+        }, 2000);
     }
 
     function resetGame() {
-        gameState.gameInProgress = false;
-        playAgainButton.classList.add('hidden');
+        gameState.gameInProgress = false;;
         messageContainer.innerHTML = '&nbsp;';
         cups.forEach(cup => cup.style.transform = 'translateY(0)');
 
