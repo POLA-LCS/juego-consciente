@@ -2,15 +2,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     // =================================================================
     // 1. ELEMENTOS DEL DOM (Apuestas)
     // =================================================================
-    const balanceDisplay = document.getElementById('balance');
-    const winStreakDisplay = document.getElementById('winStreak');
-    const totalBetDisplay = document.getElementById('totalBet');
-    const betSpots = document.querySelectorAll('.bet-spot');
-    const chipSelectors = document.querySelectorAll('.chip-selector');
-    const clearBetsButton = document.getElementById('clearBets');
-    const spinButton = document.getElementById('spinButton');
-    const undoButton = document.getElementById('undoBet');
-    const redoButton = document.getElementById('redoBet');
+
+    const displays = [
+        balanceDisplay,
+        winStreakDisplay,
+        totalBetDisplay,
+        betSpots,
+        chipSelectors,
+        clearBetsButton,
+        spinButton,
+        undoButton,
+        redoButton,
+    ] = [
+            document.getElementById('balance'),
+            document.getElementById('winStreak'),
+            document.getElementById('totalBet'),
+            document.querySelectorAll('.bet-spot'),
+            document.querySelectorAll('.chip-selector'),
+            document.getElementById('clearBets'),
+            document.getElementById('spinButton'),
+            document.getElementById('undoBet'),
+            document.getElementById('redoBet'),
+        ];
 
     // =================================================================
     // 2. ESTADO DE LA APUESTA
@@ -33,6 +46,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         balanceDisplay.textContent = state.balance;
         winStreakDisplay.textContent = state.winStreak;
         totalBetDisplay.textContent = state.totalBet;
+
+        if (state.isBettingLocked) {
+            displays.forEach(d => {
+                d.disabled = true;
+                // iterate thourgh querySelectorAll results
+                if (d instanceof NodeList) {
+                    d.forEach(item => item.classList.add('locked'));
+                }
+            });
+        } else {
+            displays.forEach(d => {
+                d.disabled = false;
+                if (d instanceof NodeList) {
+                    d.forEach(item => item.classList.remove('locked'));
+                }
+            });
+        }
 
         // Actualizar visualmente cada apuesta
         betSpots.forEach(spot => {

@@ -96,7 +96,8 @@ h6 {
 }
 
 .btn:disabled,
-.btn-secondary:disabled {
+.btn-secondary:disabled,
+.locked {
     opacity: 0.5;
     cursor: not-allowed;
 }
