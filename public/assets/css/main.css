@@ -37,8 +37,9 @@ body {
 }
 
 html {
+    overflow-y: scroll;
     /* Evita el "flick" o salto de layout cuando aparece la barra de scroll */
-    scrollbar-gutter: stable;
+    /* scrollbar-gutter: stable; */
 }
 
 .game-container {
