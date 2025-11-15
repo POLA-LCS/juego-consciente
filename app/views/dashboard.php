@@ -43,8 +43,7 @@ $pageTitle = 'Dashboard';
                         </div>
                     </div>
                 </div> -->
-                <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group"
-                    onclick="window.location.href='?page=cups'">
+                <a href="?page=cups" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/cups.jpeg" alt="Cups Game" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -54,9 +53,8 @@ $pageTitle = 'Dashboard';
                                 Cups Game</h2>
                         </div>
                     </div>
-                </div>
-                <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group"
-                    onclick="window.location.href='?page=roulette'">
+                </a>
+                <a href="?page=roulette" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/roulette.jpeg" alt="Ruleta" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -66,9 +64,8 @@ $pageTitle = 'Dashboard';
                                 Ruleta</h2>
                         </div>
                     </div>
-                </div>
-                <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group"
-                    onclick="window.location.href='?page=slots'">
+                </a>
+                <a href="?page=slots" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/slots.jpeg" alt="Slots" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -78,7 +75,7 @@ $pageTitle = 'Dashboard';
                                 Slots</h2>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </main>

@@ -125,18 +125,22 @@ document.addEventListener('DOMContentLoaded', () => {
     // Lógica para "Establecer Monto" (ya existente)
     setCheatAmountButton.addEventListener('click', () => {
         const newAmount = parseInt(cheatAmountInput.value, 10);
-        if (isNaN(newAmount) || newAmount < 0) { alert('Por favor, introduce un monto válido.'); return; }
+        if (isNaN(newAmount) || newAmount < 0) {
+            alert('Por favor, introduce un monto válido.');
+            return;
+        }
+
         const formData = new FormData();
         formData.append('amount', newAmount);
+
         fetch('?action=setBalance', { method: 'POST', body: formData })
             .then(r => r.json())
             .then(data => {
-                if (data.success) {
-                    document.dispatchEvent(new CustomEvent('balanceUpdated', { detail: { newBalance: data.newBalance } }));
-                    cheatSidebar.classList.add('translate-x-full');
-                } else {
+                if (!data.success) {
                     alert('Error al establecer el nuevo monto.');
+                    return;
                 }
+                document.dispatchEvent(new CustomEvent('balanceUpdated', { detail: { newBalance: data.newBalance } }));
             });
     });
     cheatAmountInput.addEventListener('keydown', (e) => {
