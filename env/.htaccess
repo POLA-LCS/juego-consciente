@@ -1,7 +1,0 @@
-# Especifica la página de error personalizada para el código 403 (Forbidden).
-ErrorDocument 403 index.php?page=error403
-
-# Denegar el acceso a todos los archivos en este directorio desde el navegador.
-<Files "*">
-    Deny from all
-</Files>
