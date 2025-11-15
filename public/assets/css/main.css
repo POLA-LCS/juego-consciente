@@ -84,11 +84,15 @@ h6 {
     justify-content: center;
 }
 
+.btn,
+.btn-secondary {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 .btn {
     background-color: transparent;
     border: 2px solid var(--color-primary);
     color: var(--color-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn:disabled,
@@ -105,7 +109,7 @@ h6 {
 .btn-secondary {
     background-color: var(--color-primary);
     color: white;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-secondary:enabled:hover {

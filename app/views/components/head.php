@@ -1,9 +1,6 @@
 <?php
 // Verificación de acceso válido
-if (!defined('ROOT_PATH')) {
-    header('Location: index.php?page=error403');
-    exit();
-}
+
 
 // Define el título de la página. Si $pageTitle no está definida, usa un título por defecto.
 $title = isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - Juego Consciente' : 'Juego Consciente';

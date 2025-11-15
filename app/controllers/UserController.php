@@ -1,10 +1,4 @@
 <?php
-// Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
-if (!defined('ROOT_PATH')) {
-    header('Location: index.php?page=error403');
-    exit();
-}
-
 require_once ROOT_PATH . 'config/database.php';
 require_once ROOT_PATH . 'app/models/User.php';
 require_once ROOT_PATH . 'app/models/CheatSettings.php';

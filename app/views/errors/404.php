@@ -1,7 +1,4 @@
 <?php
-// ¡IMPORTANTE! Esta página NO debe llamar a protect_page() para evitar bucles de redirección.
-?>
-<?php
 $footer_message = "No intentes acceder a contenido protegido.";
 ?>
 <?php $pageTitle = 'Página no Encontrada'; ?>

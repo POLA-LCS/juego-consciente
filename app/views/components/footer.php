@@ -1,12 +1,4 @@
 <?php
-// Verificación de acceso válido
-// Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
-if (!defined('ROOT_PATH')) {
-    header('Location: index.php?page=error403');
-    exit();
-}
-?>
-<?php
 // Define el mensaje por defecto si no se ha pasado uno específico
 $default_footer_message = "Este sitio es una herramienta educativa para concienciar sobre la ludopatía. <span class=\"text-[var(--color-primary)]\">No promueve el juego real con dinero.</span>";
 $current_footer_message = isset($footer_message) ? "<span class=\"text-[var(--color-primary)]\">" . $footer_message . "</span>" : $default_footer_message;

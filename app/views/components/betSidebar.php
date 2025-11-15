@@ -1,11 +1,3 @@
-<?php
-// Verificación de acceso válido
-// Si ROOT_PATH no está definido, significa que se está accediendo directamente. Redirigimos al router.
-if (!defined('ROOT_PATH')) {
-    header('Location: index.php?page=error403');
-    exit();
-}
-?>
 <aside id="bet-sidebar"
     class="w-56 bg-[var(--color-surface)] p-3 border-r-2 border-[var(--color-primary)] flex flex-col justify-between">
     <div>

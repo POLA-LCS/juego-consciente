@@ -2,11 +2,6 @@
 // Strict typing
 declare(strict_types=1);
 
-if (!defined('ROOT_PATH')) {
-    header('Location: index.php?page=error403');
-    exit();
-}
-
 class CheatSettings
 {
     private PDO $conn;

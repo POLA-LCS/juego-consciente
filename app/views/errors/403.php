@@ -1,7 +1,4 @@
 <?php
-// ¡IMPORTANTE! Esta página NO debe llamar a protect_page() para evitar bucles de redirección.
-?>
-<?php
 $footer_message = "Acceso denegado. Por favor, continúa con el flujo natural de la página.";
 ?>
 <?php $pageTitle = 'Acceso Denegado'; ?>
@@ -15,7 +12,9 @@ $footer_message = "Acceso denegado. Por favor, continúa con el flujo natural de
 
     <div class="text-center flex-1 flex items-center justify-center">
         <div class="max-w-md">
-            <h1 class="text-9xl font-bold text-[var(--color-primary)]" style="font-family: 'Grand Casino', sans-serif;">
+            <h1
+                class="text-9xl font-bold text-[var(--color-primary)]" ç
+                style="font-family: 'Grand Casino', sans-serif;">
                 403
             </h1>
             <p class="text-2xl md:text-3xl font-bold text-[var(--color-text-base)] mt-4 mb-8">

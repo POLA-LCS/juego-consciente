@@ -1,9 +1,6 @@
 <?php
 // Verificación de acceso válido
-if (!defined('ROOT_PATH')) {
-    header('Location: index.php?page=error403');
-    exit();
-}
+
 
 $pageTitle = 'Cups Game';
 ?>
