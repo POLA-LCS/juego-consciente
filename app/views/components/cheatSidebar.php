@@ -4,7 +4,7 @@
         class="absolute top-2 right-4 text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors text-4xl font-light leading-none">
         &times;
     </button>
-    <h3 class="text-xl font-bold mb-4 text-[var(--color-primary)] text-center">Cheats</h3>
+    <h3 class="text-xl font-bold mb-4 text-[var(--color-primary)] text-center">Trampas</h3>
     <div class="space-y-4">
         <div class="space-y-2">
             <label for="cheatAmountInput"
@@ -13,7 +13,7 @@
                 <input type="number" id="cheatAmountInput" name="cheatAmount"
                     class="w-full px-3 py-2 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                     placeholder="Ej: 5000">
-                <button id="setCheatAmountButton" class="btn px-4 rounded-md">OK</button>
+                <button id="setCheatAmountButton" class="btn w-fit px-4 rounded-md">OK</button>
             </div>
         </div>
 

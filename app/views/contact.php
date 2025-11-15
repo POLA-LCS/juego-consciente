@@ -39,39 +39,42 @@ $pageTitle = 'Contacto';
                     </ul>
                 </div>
             </div>
-            <div class="bg-[var(--color-surface)] border border-[var(--color-border)] p-6 rounded-lg shadow-lg">
-                <h2 class="text-2xl font-bold mb-4 text-[var(--color-primary)]">Contáctanos</h2>
-                <form>
-                    <div class="mb-4">
-                        <label for="name"
-                            class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Nombre</label>
-                        <input type="text" id="name" name="name"
-                            class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-                            required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="email"
-                            class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Email</label>
-                        <input type="email" id="email" name="email"
-                            class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-                            required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="message"
-                            class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Mensaje</label>
-                        <textarea id="message" name="message" rows="4"
-                            class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-                            required></textarea>
-                    </div>
-                    <button type="submit" class="w-full btn py-2 px-4 rounded-md font-bold">Enviar Mensaje</button>
-                </form>
-            </div>
+            <details class="animated bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg shadow-lg cursor-pointer overflow-hidden">
+                <summary class="p-4 text-lg font-bold text-[var(--color-primary)]">Contáctanos</summary>
+                <div class="details-content px-4 pb-4">
+                    <form>
+                        <div class="mb-4">
+                            <label for="name"
+                                class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Nombre</label>
+                            <input type="text" id="name" name="name"
+                                class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                                required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email"
+                                class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Email</label>
+                            <input type="email" id="email" name="email"
+                                class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                                required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message"
+                                class="block text-sm font-medium mb-2 text-[var(--color-text-muted)]">Mensaje</label>
+                            <textarea id="message" name="message" rows="4"
+                                class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="w-full btn py-2 px-4 rounded-md font-bold">Enviar Mensaje</button>
+                    </form>
+                </div>
+            </details>
             <div class="text-center mt-6">
                 <a href="?page=dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Inicio</a>
             </div>
     </main>
 
     <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
+    <script src="public/assets/js/details_animation.js"></script>
 
 </body>
 

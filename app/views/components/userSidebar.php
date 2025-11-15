@@ -24,7 +24,7 @@
                 'slots'
             ])):
             ?>
-                <li><a href="#" id="openCheatSidebar" class="sidebar-link text-[var(--color-text-base)]">Cheats</a></li>
+                <li><a href="#" id="openCheatSidebar" class="sidebar-link-danger sidebar-link text-[var(--color-primary-hover)]">Trampas</a></li>
             <?php endif; ?>
             <li><a href="?action=logout" class="sidebar-link sidebar-link-danger">Cerrar sesión</a></li>
         </ul>
