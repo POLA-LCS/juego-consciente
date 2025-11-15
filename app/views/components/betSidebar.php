@@ -24,7 +24,9 @@ if (!defined('ROOT_PATH')) {
             <p id="currentBet" class="text-4xl font-bold text-[var(--color-primary)]">25</p>
         </div>
 
-        <!-- Chips para añadir a la apuesta -->
+    </div>
+    <!-- Chips para añadir a la apuesta -->
+    <div class="grid grid-cols-1 gap-2">
         <div class="grid grid-cols-2 gap-2">
             <button data-amount="1" class="btn bet-chip py-1 rounded-md">+1</button>
             <button data-amount="5" class="btn bet-chip py-1 rounded-md">+5</button>
@@ -33,11 +35,11 @@ if (!defined('ROOT_PATH')) {
             <button data-amount="100" class="btn bet-chip py-1 rounded-md">+100</button>
             <button data-amount="250" class="btn bet-chip py-1 rounded-md">+250</button>
         </div>
-    </div>
-    <div class="space-y-2">
-        <button id="placeBet" class="btn w-full py-2 px-4 rounded-md font-bold">Apostar</button>
-        <button id="maxBetButton" class="btn-secondary w-full py-2 px-2 rounded-md font-bold text-sm">APUESTA
-            MAXIMA</button>
-        <button id="resetBet" class="w-full text-[var(--color-text-muted)] hover:text-white">Reset</button>
+        <div class="space-y-2">
+            <button id="placeBet" class="btn w-full py-2 px-4 rounded-md font-bold">Apostar</button>
+            <button id="maxBetButton" class="btn-secondary w-full py-2 px-2 rounded-md font-bold transition-all duration-200">APUESTA
+                MAXIMA</button>
+            <button id="resetBet" class="w-full text-[var(--color-text-muted)] hover:text-white">Reset</button>
+        </div>
     </div>
 </aside>

@@ -91,7 +91,13 @@ h6 {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn:hover {
+.btn:disabled,
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn:enabled:hover {
     background-color: var(--color-primary);
     color: white;
 }
@@ -102,7 +108,7 @@ h6 {
     transition: background-color 0.3s ease;
 }
 
-.btn-secondary:hover {
+.btn-secondary:enabled:hover {
     background-color: var(--color-primary-hover);
 }
 
