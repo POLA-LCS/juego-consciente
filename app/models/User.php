@@ -13,22 +13,21 @@ class User
     private PDO $conn;
     private string $table_name = "users";
 
-    public string $id;
+    public int $id;
     public string $username;
     public string $email;
     public string $password;
-    public float $balance;
+    public float $balance = 1000.0;
 
     public function __construct(PDO $db)
     {
         $this->conn = $db;
     }
 
-    public function create(): ?bool
+    public function create(): void
     {
         $query = "INSERT INTO " . $this->table_name . " SET username=:username, email=:email, password=:password, balance=1000";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
+        $stmt = $this->conn->prepare($query);
 
         $this->username = htmlspecialchars(strip_tags($this->username));
         $this->email = htmlspecialchars(strip_tags($this->email));
@@ -38,56 +37,50 @@ class User
         $stmt->bindParam(":email", $this->email);
         $stmt->bindValue(":password", password_hash($this->password, PASSWORD_DEFAULT));
 
-        return $stmt->execute();
+        $stmt->execute();
     }
 
-    public function isEmailAvailable(): ?bool
+    public function isEmailAvailable(): bool
     {
         $query = "SELECT id FROM " . $this->table_name . " WHERE email = :email";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
+        $stmt = $this->conn->prepare($query);
 
         $this->email = htmlspecialchars(strip_tags($this->email));
         $stmt->bindParam(":email", $this->email);
-        if (!$stmt->execute()) return null;
+        $stmt->execute();
 
         // Devolver si el email ya está en uso
         return $stmt->rowCount() <= 0;
     }
 
-    public function login(): ?bool
+    public function login(): bool
     {
         $query = "SELECT id, username, password FROM " . $this->table_name . " WHERE username = :username";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
+        $stmt = $this->conn->prepare($query);
 
         $this->username = htmlspecialchars(strip_tags($this->username));
 
         $stmt->bindParam(":username", $this->username);
-        if (!$stmt->execute()) return null;
+        $stmt->execute();
 
         if ($stmt->rowCount() <= 0)
             return false;
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!password_verify($this->password, $row['password']))
+        if (!$row || !password_verify($this->password, $row['password']))
             return false;
 
-        $this->id = strval($row['id']);
+        $this->id = (int)$row['id'];
         return true;
     }
 
-    public function verifyPassword(string $password): ?bool
+    public function verifyPassword(string $password): bool
     {
         $query = "SELECT password FROM " . $this->table_name . " WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false) {
-            return null;
-        }
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":id", $this->id);
-        if (!$stmt->execute()) {
-            return null;
-        }
+        $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -97,170 +90,130 @@ class User
         return false;
     }
 
-    public function updatePassword(string $current_password, string $new_password): ?bool
+    public function updatePassword(string $current_password, string $new_password): void
     {
         // Primero, verificar la contraseña actual
         if (!$this->verifyPassword($current_password)) {
-            return false;
+            return;
         }
 
         // Si es correcta, actualizar a la nueva
         $query = "UPDATE " . $this->table_name . " SET password = :password WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false) {
-            return null;
-        }
-
+        $stmt = $this->conn->prepare($query);
         $stmt->bindValue(":password", password_hash($new_password, PASSWORD_DEFAULT));
         $stmt->bindParam(":id", $this->id);
 
-        return $stmt->execute();
+        $stmt->execute();
     }
 
-    public function getById(): ?array
+    public function getById(): array
     {
         $query = "SELECT id, username, email, created_at FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
-        if (($stmt = $this->conn->prepare($query)) === false) {
-            return null;
-        }
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":id", $this->id);
-        if (!$stmt->execute()) {
-            return null;
-        }
+        $stmt->execute();
 
-        if ($stmt->rowCount() > 0) {
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        }
-
-        return null;
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ?: [];
     }
 
-    public function delete(): ?bool
+    public function delete(): void
     {
         $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
+        $stmt = $this->conn->prepare($query);
 
-        $this->id = htmlspecialchars(strip_tags($this->id));
         $stmt->bindParam(":id", $this->id);
 
-        return $stmt->execute();
+        $stmt->execute();
     }
 
-    public function getBalance(): ?float
+    public function getBalance(): float
     {
         $query = "SELECT balance FROM " . $this->table_name . " WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
-
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":id", $this->id);
-        if (!$stmt->execute())
-            return null;
+        $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row["balance"];
+        return (float)($row["balance"] ?? 0.0);
     }
 
-    public function updateBalance(float $amount): ?float
+    public function updateBalance(float $amount): float
     {
         $query = "UPDATE " . $this->table_name . " SET balance = balance + :amount WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
-
-        $amount = htmlspecialchars(strip_tags(strval($amount)));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":amount", $amount);
         $stmt->bindParam(":id", $this->id);
-        if (!$stmt->execute())
-            return null;
+        $stmt->execute();
 
         return $this->getBalance();
     }
 
-    public function setBalance(float $newBalance): ?float
+    public function setBalance(float $newBalance): float
     {
         $query = "UPDATE " . $this->table_name . " SET balance = :newBalance WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
-
-        $newBalance = htmlspecialchars(strip_tags(strval($newBalance)));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":newBalance", $newBalance);
         $stmt->bindParam(":id", $this->id);
-        if (!$stmt->execute())
-            return null;
+        $stmt->execute();
         return $this->getBalance();
     }
 
-    public function getCheatMode(): ?int
+    public function getCheatMode(): int
     {
         $query = "SELECT cheat_mode FROM " . $this->table_name . " WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) == false)
-            return null;
-
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":id", $this->id);
-        if (!$stmt->execute())
-            return null;
+        $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row["cheat_mode"];
+        return (int)($row["cheat_mode"] ?? 0);
     }
 
-    public function setCheatMode(int $newMode)
+    public function setCheatMode(int $newMode): void
     {
         $query = "UPDATE " . $this->table_name . " SET cheat_mode = :newMode WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
-
-        $newMode = htmlspecialchars(strip_tags(strval($newMode)));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":newMode", $newMode);
         $stmt->bindParam(":id", $this->id);
 
-        return $stmt->execute();
+        $stmt->execute();
     }
 
-    public function getWinStreak(): ?int
+    public function getWinStreak(): int
     {
         $query = "SELECT win_streak FROM " . $this->table_name . " WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":id", $this->id);
-        if (!$stmt->execute())
-            return null;
+        $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row["win_streak"];
+        return (int)($row["win_streak"] ?? 0);
     }
 
-    public function setWinStreak(int $streak): ?bool
+    public function setWinStreak(int $streak): void
     {
         $query = "UPDATE " . $this->table_name . " SET win_streak = :streak WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
-
-        $streak = htmlspecialchars(strip_tags(strval($streak)));
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":streak", $streak);
         $stmt->bindParam(":id", $this->id);
-        return $stmt->execute();
+        $stmt->execute();
     }
 
-    public function incrementWinStreak(): ?bool
+    public function incrementWinStreak(): void
     {
         $query = "UPDATE " . $this->table_name . " SET win_streak = win_streak + 1 WHERE id = :id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":id", $this->id);
-        return $stmt->execute();
+        $stmt->execute();
     }
 }

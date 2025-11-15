@@ -26,20 +26,20 @@ class CheatSettings
      * Obtiene los settings del usuario. Si no existen, los crea.
      * Devuelve un array con los settings o null si ocurre un error.
      */
-    public function ensureSettings(): ?array
+    public function ensureSettings(): array
     {
         $query = "SELECT mode, max_streak, max_balance FROM " . $this->table_name . " WHERE user_id = :user_id LIMIT 1";;
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":user_id", $this->user_id);
-        if (!$stmt->execute()) return null;
+        $stmt->execute();
 
-        if ($stmt->rowCount() > 0)
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($result) {
+            return $result;
+        }
 
-        if (!$this->createDefaultSettings())
-            return null;
+        $this->createDefaultSettings();
 
         return [
             'mode' => 0,
@@ -48,39 +48,36 @@ class CheatSettings
         ];
     }
 
-    public function updateSettings(): ?bool
+    public function updateSettings(): void
     {
         $query = "UPDATE " . $this->table_name . " SET mode = :mode, max_streak = :max_streak, max_balance = :max_balance WHERE user_id = :user_id";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
-
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":mode", $this->mode);
         $stmt->bindParam(":max_streak", $this->max_streak);
         $stmt->bindParam(":max_balance", $this->max_balance);
         $stmt->bindParam(":user_id", $this->user_id);
 
-        return $stmt->execute();
+        $stmt->execute();
     }
 
-    private function createDefaultSettings(): ?bool
+    private function createDefaultSettings(): void
     {
         $query = "INSERT INTO " . $this->table_name . " (user_id, mode, max_streak, max_balance) VALUES (:user_id, 0, -1, -1)";
-        if (($stmt = $this->conn->prepare($query)) === false)
-            return null;
+        $stmt = $this->conn->prepare($query);
 
         $stmt->bindParam(":user_id", $this->user_id);
 
-        return $stmt->execute();
+        $stmt->execute();
     }
 
     /**
      * Asegura que los settings para un usuario existan.
-     * Devuelve los settings o null en caso de error.
+     * No devuelve nada. Lanza una excepción en caso de error.
      */
-    public static function settingsExist(PDO $db, int $user_id): bool
+    public static function settingsExist(PDO $db, int $user_id): void
     {
         $settings = new self($db);
         $settings->user_id = $user_id;
-        return $settings->ensureSettings() !== null;
+        $settings->ensureSettings(); // Esto lanzará una excepción en caso de error
     }
 }
