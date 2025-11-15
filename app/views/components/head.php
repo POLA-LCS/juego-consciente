@@ -15,4 +15,6 @@ $title = isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - Juego Consciente
     <title><?php echo $title; ?></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="public/assets/css/main.css">
+    <link rel="shortcut icon" href="public/assets/images/logo.png" type="image/x-icon">
+</head>
 </head>

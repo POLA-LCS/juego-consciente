@@ -6,7 +6,7 @@ if (!defined('ROOT_PATH')) {
     exit();
 }
 
-$pageTitle = 'Dashboard';
+$pageTitle = 'Inicio';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -25,7 +25,9 @@ $pageTitle = 'Dashboard';
     <!-- Main Content -->
     <main class="p-6">
         <div class="flex justify-center items-center mb-8">
-            <h1 class="text-5xl font-bold text-[var(--color-primary)]" style="font-family: 'Grand Casino', sans-serif;">
+            <h1
+                style="font-family: 'Grand Casino', sans-serif;"
+                class="text-5xl font-bold text-[var(--color-primary)] ludo-title">
                 ¡A Jugar!</h1>
         </div>
         <div class="flex justify-center">
@@ -46,7 +48,7 @@ $pageTitle = 'Dashboard';
                 <a href="?page=cups" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/cups.jpeg" alt="Cups Game" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+                        <div class="absolute inset-0 bg-black bg-opacity-65 group-hover:bg-opacity-55 transition-all duration-200"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <h2
                                 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">
@@ -57,7 +59,7 @@ $pageTitle = 'Dashboard';
                 <a href="?page=roulette" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/roulette.jpeg" alt="Ruleta" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+                        <div class="absolute inset-0 bg-black bg-opacity-65 group-hover:bg-opacity-55 transition-all duration-200"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <h2
                                 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">
@@ -68,7 +70,7 @@ $pageTitle = 'Dashboard';
                 <a href="?page=slots" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/slots.jpeg" alt="Slots" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+                        <div class="absolute inset-0 bg-black bg-opacity-65 group-hover:bg-opacity-55 transition-all duration-200"></div>
                         <div class="absolute inset-0 flex items-center justify-center">
                             <h2
                                 class="text-3xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">

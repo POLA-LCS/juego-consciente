@@ -4,25 +4,29 @@
         class="absolute top-2 right-4 text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors text-4xl font-light leading-none">
         &times;
     </button>
-    <div class="text-center mb-6">
-        <a href="" class="h-20 w-20 rounded-full mx-auto mb-3">
-            <img src="public/assets/images/logo.png" alt="Profile">
+    <div class="text-center mb-10">
+        <a class="w-fit h-fit" href="">
+            <img class="h-20 w-20 rounded-full mx-auto mb-3" src="public/assets/images/logo.png" alt="Profile">
         </a>
-        <p class="text-lg text-[var(--color-text-base)] font-bold"><?php echo $_SESSION['username']; ?></p>
+        <p class="text-lg text-[var(--color-text-base)] font-bold"><?php echo strtoupper($_SESSION['username']); ?></p>
         <p class="text-sm text-[var(--color-text-muted)]">ID: <?php echo $_SESSION['user_id']; ?></p>
     </div>
     <nav>
         <ul class="space-y-2">
-            <li><a href="?page=dashboard" class="sidebar-link text-[var(--color-text-base)]">Dashboard</a></li>
+            <li><a href="?page=dashboard" class="sidebar-link text-[var(--color-text-base)]">Inicio</a></li>
             <li><a href="?page=info" class="sidebar-link text-[var(--color-text-base)]">Ludopatía</a></li>
             <li><a href="?page=contact" class="sidebar-link text-[var(--color-text-base)]">Contacto</a></li>
             <?php
-            $game_pages = ['blackjack', 'cups', 'roulette', 'slots'];
-            if (isset($page) && in_array($page, $game_pages)):
+            if (isset($page) && in_array($page, [
+                'blackjack',
+                'cups',
+                'roulette',
+                'slots'
+            ])):
             ?>
                 <li><a href="#" id="openCheatSidebar" class="sidebar-link text-[var(--color-text-base)]">Cheats</a></li>
             <?php endif; ?>
-            <li><a href="?action=logout" class="sidebar-link sidebar-link-danger">Logout</a></li>
+            <li><a href="?action=logout" class="sidebar-link sidebar-link-danger">Cerrar sesión</a></li>
         </ul>
     </nav>
 </aside>

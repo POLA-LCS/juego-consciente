@@ -17,7 +17,7 @@ El objetivo principal no es ser un casino funcional, sino una plataforma interac
 ## Características Principales
 
 - **Sistema de Autenticación:** Registro, inicio de sesión y gestión de sesiones de usuario.
-- **Dashboard de Juegos:** Un lobby central para acceder a los diferentes juegos simulados.
+- **Inicio de Juegos:** Un lobby central para acceder a los diferentes juegos simulados.
 - **Juegos Implementados:**
     - **Cups Game:** Juego de los vasos completamente funcional con animaciones.
     - **Blackjack, Roulette, Slots:** En estado "Próximamente".

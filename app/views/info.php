@@ -66,7 +66,7 @@ $pageTitle = 'Información sobre Ludopatía';
                     para controlar los síntomas asociados.</p>
             </div>
             <div class="text-center">
-                <a href="?page=dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Dashboard</a>
+                <a href="?page=dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Inicio</a>
             </div>
     </main>
 

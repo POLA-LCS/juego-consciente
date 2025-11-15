@@ -71,7 +71,7 @@ $pageTitle = 'Contacto';
                 </form>
             </div>
             <div class="text-center mt-6">
-                <a href="?page=dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Dashboard</a>
+                <a href="?page=dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Inicio</a>
             </div>
     </main>
 
