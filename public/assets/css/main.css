@@ -16,8 +16,16 @@
 }
 
 @font-face {
-    font-family: 'Roboto';
-    src: url('../fonts/roboto/Roboto-Regular.ttf') format('truetype');
+    font-family: 'Poppins';
+    src: url('../fonts/poppins/Poppins-Regular.woff') format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    font-family: 'Poppins';
 }
 
 :root {
@@ -33,7 +41,7 @@
 body {
     background-color: var(--color-background);
     color: var(--color-text-base);
-    font-family: 'Roboto', sans-serif;
+    font-family: Poppins, sans-serif;
 }
 
 html {
