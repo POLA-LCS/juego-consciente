@@ -32,11 +32,25 @@ $pageTitle = 'Login';
             <form action="?action=login" method="POST">
                 <div class="form-group">
                     <label for="username" class="form-label">Usuario</label>
-                    <input type="text" id="username" name="username" class="form-input" required>
+                    <input required
+                        type="text"
+                        id="username"
+                        name="username"
+                        class="w-full
+                        px-3 py-2
+                        bg-[var(--color-background)]
+                        border border-[var(--color-border)]
+                        rounded-md
+                        focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]
+                        ">
                 </div>
                 <div class="form-group mb-6">
                     <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" id="password" name="password" class="form-input" required>
+                    <input required
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
                 </div>
                 <button type="submit" class="btn">Iniciar Sesión</button>
             </form>

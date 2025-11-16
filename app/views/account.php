@@ -56,15 +56,27 @@ $userData = $userController->getUserDetails($_SESSION['user_id']);
                         <form action="?action=updatePassword" method="POST" class="pt-4">
                             <div class="form-group">
                                 <label for="current_password" class="form-label">Contraseña Actual</label>
-                                <input type="password" id="current_password" name="current_password" class="form-input" required>
+                                <input required
+                                    type="password"
+                                    id="current_password"
+                                    name="current_password"
+                                    class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
                             </div>
                             <div class="form-group">
                                 <label for="new_password" class="form-label">Nueva Contraseña</label>
-                                <input type="password" id="new_password" name="new_password" class="form-input" required>
+                                <input required
+                                    type="password"
+                                    id="new_password"
+                                    name="new_password"
+                                    class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
                             </div>
                             <div class="form-group">
                                 <label for="confirm_password" class="form-label">Confirmar Nueva Contraseña</label>
-                                <input type="password" id="confirm_password" name="confirm_password" class="form-input" required>
+                                <input required
+                                    type="password"
+                                    id="confirm_password"
+                                    name="confirm_password"
+                                    class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
                             </div>
                             <button type="submit" class="btn mt-6">Actualizar Contraseña</button>
                         </form>
@@ -79,7 +91,11 @@ $userData = $userController->getUserDetails($_SESSION['user_id']);
                         <form action="?action=delete" method="POST">
                             <div class="form-group">
                                 <label for="delete_confirm_password" class="form-label text-red-300">Contraseña Actual</label>
-                                <input type="password" id="delete_confirm_password" name="password" class="form-input" required>
+                                <input required
+                                    type="password"
+                                    id="delete_confirm_password"
+                                    name="password"
+                                    class="w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]">
                             </div>
                             <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md font-bold transition-colors mt-4">Eliminar Mi Cuenta Permanentemente</button>
                         </form>
