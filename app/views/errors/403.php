@@ -1,7 +1,8 @@
 <?php
 $footer_message = "Acceso denegado. Por favor, continúa con el flujo natural de la página.";
+$page_title = 'Acceso Denegado';
 ?>
-<?php $pageTitle = 'Acceso Denegado'; ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->

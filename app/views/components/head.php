@@ -1,9 +1,5 @@
 <?php
-// Verificación de acceso válido
-
-
-// Define el título de la página. Si $pageTitle no está definida, usa un título por defecto.
-$title = isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - Juego Consciente' : 'Juego Consciente';
+$title = isset($page_title) ? htmlspecialchars($page_title) . ' - Juego Consciente' : 'Juego Consciente';
 ?>
 
 <head>

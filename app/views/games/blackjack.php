@@ -1,9 +1,7 @@
 <?php
-
-
-
-$pageTitle = 'Blackjack';
+$page_title = 'Blackjack';
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->

@@ -5,7 +5,8 @@
         <h1
             style="font-family: 'Grand Casino', sans-serif;"
             class="text-4xl text-[var(--color-primary)] group-hover:text-[var(--color-primary-hover)] transition-colors">
-            Juego Consciente</h1>
+            Juego Consciente
+        </h1>
     </a>
     <?php if (!isset($dontUseUserSidebarIcon)): ?>
         <button id="openUserSidebar"

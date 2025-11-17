@@ -1,9 +1,7 @@
 <?php
-// Verificación de acceso válido
-
-
-$pageTitle = 'Cups Game';
+$page_title = 'Cups Game';
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->

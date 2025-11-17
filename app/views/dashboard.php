@@ -1,8 +1,5 @@
 <?php
-
-
-
-$pageTitle = 'Inicio';
+$page_title = 'Inicio';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,9 +14,7 @@ $pageTitle = 'Inicio';
     <?php include ROOT_PATH . 'app/views/components/userSidebar.php'; ?>
     <?php /* 
     <!-- Componente CheatSidebar -->
-    include ROOT_PATH . 'app/views/components/cheatSidebar.php'; */ ?>
-
-    <!-- Main Content -->
+    include ROOT_PATH . 'app/views/components/cheatSidebar.php'; */ ?> <!-- Main Content -->
     <main class="p-6">
         <div class="flex justify-center items-center mb-8">
             <h1
@@ -77,11 +72,8 @@ $pageTitle = 'Inicio';
                 </a>
             </div>
         </div>
-    </main>
-
-    <!-- Componente Footer -->
+    </main> <!-- Componente Footer -->
     <?php include ROOT_PATH . 'app/views/components/footer.php'; ?>
-
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 <?php
+$page_title = 'Página no Encontrada';
 $footer_message = "No intentes acceder a contenido protegido.";
 ?>
-<?php $pageTitle = 'Página no Encontrada'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->

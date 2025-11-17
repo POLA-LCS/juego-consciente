@@ -1,9 +1,7 @@
 <?php
-
-
-
-$pageTitle = 'Registro';
+$page_title = 'Registro';
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <?php include ROOT_PATH . 'app/views/components/head.php'; // Componente Head

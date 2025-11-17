@@ -1,14 +1,12 @@
 <?php
-
-
-
-$pageTitle = 'Cuenta';
+$page_title = 'Cuenta';
 
 // Incluir el controlador para obtener los datos del usuario
 require_once ROOT_PATH . 'app/controllers/UserController.php';
 $userController = new UserController();
 $userData = $userController->getUserDetails($_SESSION['user_id']);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->

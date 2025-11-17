@@ -1,9 +1,7 @@
 <?php
-
-
-
-$pageTitle = 'Información sobre Ludopatía';
+$page_title = 'Información sobre Ludopatía';
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->
