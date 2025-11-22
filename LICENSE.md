@@ -1,6 +1,6 @@
 **Licencia de Código Fuente Disponible y Propietario**
 
-Copyright (c) 2024 Pilling, Baltazar Zara; Pesci, Elias; Roche, Lautaro; Torres, Joaquin (en adelante, "los Titulares de los Derechos de Autor").
+Copyright (c) 2024 Pesci, Elias; Pilling, Baltazar Zara; Roche, Lautaro; Torres, Joaquin (en adelante, "los Titulares de los Derechos de Autor").
 
 **TODOS LOS DERECHOS RESERVADOS.**
 
