@@ -17,20 +17,20 @@ try {
 
                     if (empty($username) || empty($email) || empty($password)) {
                         $_SESSION['error_message'] = "Todos los campos son obligatorios.";
-                        header("Location: index.php?page=register");
+                        header("Location: register");
                         exit();
                     }
 
                     if (!$controller->isEmailAvailable($email)) {
                         $_SESSION['error_message'] = "El e-mail ya está en uso.";
-                        header("Location: index.php?page=register");
+                        header("Location: register");
                         exit();
                     }
 
                     // Redireccion al login
                     $controller->register($username, $email, $password);
                     $_SESSION['success_message'] = "¡Registro completado! Por favor, inicia sesión.";
-                    header("Location: index.php?page=login");
+                    header("Location: login");
                     exit();
                 }
 
@@ -42,19 +42,19 @@ try {
                     if ($controller->login($username, $password)) {
                         // Asegurarse de que el usuario tenga settings de cheat al iniciar sesión
                         $controller->ensureCheatSettings($_SESSION['user_id']);
-                        header("Location: index.php?page=dashboard");
+                        header("Location: dashboard");
                         exit();
                     } else {
                         // Si el login falla, guardamos un error en la sesión y redirigimos al login.
                         $_SESSION['error_message'] = "Usuario o contraseña incorrectos.";
-                        header("Location: index.php?page=login");
+                        header("Location: login");
                         exit();
                     }
                 }
                 break;
             case 'logout':
                 $controller->logout();
-                header("Location: index.php");
+                header("Location: login");
                 exit();
 
             case 'updatePassword':
@@ -146,8 +146,8 @@ try {
     } else {
         $_SESSION['error_message'] = "Ha ocurrido un error inesperado en el servidor.";
         // Redirigir a una página de error o a la página anterior
-        $page = $_GET['page'] ?? 'index';
-        header("Location: index.php?page=" . $page);
+        $page = $_GET['page'] ?? 'login';
+        header("Location: " . $page);
     }
     exit();
 }
@@ -208,20 +208,20 @@ class UserController
     {
         if ($new_password !== $confirm_password) {
             $_SESSION['error_message'] = "Las nuevas contraseñas no coinciden.";
-            header("Location: index.php?page=account");
+            header("Location: account");
             exit();
         }
 
         if ($new_password === $current_password) {
             $_SESSION['error_message'] = "La nueva contraseña no puede ser igual a la actual.";
-            header("Location: index.php?page=account");
+            header("Location: account");
             exit();
         }
 
         $this->user->id = $user_id;
         $this->user->updatePassword($current_password, $new_password);
         $_SESSION['success_message'] = "Contraseña actualizada correctamente.";
-        header("Location: index.php?page=account");
+        header("Location: account");
         exit();
     }
 
@@ -232,14 +232,14 @@ class UserController
         // Primero, verificamos la contraseña del usuario
         if (!$this->user->verifyPassword($password)) {
             $_SESSION['error_message'] = "Contraseña incorrecta. No se pudo eliminar la cuenta.";
-            header("Location: index.php?page=account");
+            header("Location: account");
             exit();
         }
 
         // Si la contraseña es correcta, procedemos a eliminar
         $this->user->delete();
         $this->logout();
-        header("Location: index.php?page=login");
+        header("Location: login");
         exit();
     }
 

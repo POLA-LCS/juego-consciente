@@ -35,7 +35,7 @@ $page_title = 'Registro';
                 </div>
                 <button type="submit" class="btn">Registrarse</button>
             </form>
-            <p class="mt-4 text-center text-[var(--color-text-muted)]">¿Ya tienes cuenta? <a href="?page=login" class="form-link">Inicia Sesión</a></p>
+            <p class="mt-4 text-center text-[var(--color-text-muted)]">¿Ya tienes cuenta? <a href="login" class="form-link">Inicia Sesión</a></p>
         </div>
     </main>
     <!-- Componente Footer -->

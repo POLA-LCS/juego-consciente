@@ -17,7 +17,7 @@ $page_title = 'Blackjack';
         <main class="p-6 flex-1 flex flex-col items-center justify-center text-center">
             <h1 class="text-5xl font-bold text-[var(--color-primary)] mb-4">Blackjack</h1>
             <p class="text-2xl text-[var(--color-text-muted)] mb-8">Próximamente...</p>
-            <a href="?page=dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Inicio</a>
+            <a href="dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Inicio</a>
         </main>
 
         <!-- User Sidebar (Derecha, Oculto) -->

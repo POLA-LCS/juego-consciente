@@ -5,7 +5,7 @@
     # Establecer la base de la reescritura a la carpeta actual
     # Si tu proyecto está en un subdirectorio (ej: localhost/balta/ludopatia),
     # descomenta la siguiente línea y ajústala.
-    # RewriteBase /balta/ludopatia/
+    RewriteBase /balta/ludopatia/
 
     # 1. Bloquear el acceso directo a carpetas sensibles
     # Redirige internamente a la página de error 403 si se intenta acceder a 'app' o 'config'

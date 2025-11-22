@@ -1,6 +1,6 @@
 <header
     class="bg-[var(--color-surface)] text-white py-4 px-6 border-b border-[var(--color-border)] flex justify-between items-center">
-    <a href="?page=dashboard" class="flex items-center gap-4 group">
+    <a href="dashboard" class="flex items-center gap-4 group">
         <img src="public/assets/images/logo.png" alt="Logo" class="h-16 w-16">
         <h1
             style="font-family: 'Grand Casino', sans-serif;"

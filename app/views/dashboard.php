@@ -26,7 +26,7 @@ $page_title = 'Inicio';
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <!-- Tarjeta de Juego -->
                 <!-- <div class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group"
-                    onclick="window.location.href='?page=blackjack'">
+                    onclick="window.location.href='blackjack'">
                     <div class="relative h-80">
                         <img src="public/assets/images/card.jpg" alt="Blackjack" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -37,7 +37,7 @@ $page_title = 'Inicio';
                         </div>
                     </div>
                 </div> -->
-                <a href="?page=cups" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
+                <a href="cups" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/cups.jpeg" alt="Cups Game" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-65 group-hover:bg-opacity-55 transition-all duration-200"></div>
@@ -48,7 +48,7 @@ $page_title = 'Inicio';
                         </div>
                     </div>
                 </a>
-                <a href="?page=roulette" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
+                <a href="roulette" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/roulette.jpeg" alt="Ruleta" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-65 group-hover:bg-opacity-55 transition-all duration-200"></div>
@@ -59,7 +59,7 @@ $page_title = 'Inicio';
                         </div>
                     </div>
                 </a>
-                <a href="?page=slots" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
+                <a href="slots" class="game-card bg-[var(--color-surface)] rounded-lg shadow-lg cursor-pointer overflow-hidden group">
                     <div class="relative h-80">
                         <img src="public/assets/images/slots.jpeg" alt="Slots" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-black bg-opacity-65 group-hover:bg-opacity-55 transition-all duration-200"></div>

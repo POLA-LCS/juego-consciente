@@ -67,7 +67,7 @@ $page_title = 'Información sobre Ludopatía';
             </div>
         </div>
         <div class="mt-10 text-center">
-            <a href="?page=dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Inicio</a>
+            <a href="dashboard" class="btn py-2 px-6 rounded-md font-bold">Volver al Inicio</a>
         </div>
     </main>
 

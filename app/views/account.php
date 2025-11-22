@@ -103,7 +103,7 @@ $userData = $userController->getUserDetails($_SESSION['user_id']);
         </div>
 
         <div class="text-center mt-8">
-            <a href="?page=dashboard" class="btn inline-block w-auto px-6">Volver al Inicio</a>
+            <a href="dashboard" class="btn inline-block w-auto px-6">Volver al Inicio</a>
         </div>
     </main>
 
