@@ -1,5 +1,7 @@
 <?php
-$title = isset($page_title) ? htmlspecialchars($page_title) . ' - Juego Consciente' : 'Juego Consciente';
+$title = !isset($page_title)
+    ? 'Juego Consciente'
+    : htmlspecialchars($page_title) . ' - Juego Consciente';
 ?>
 
 <head>

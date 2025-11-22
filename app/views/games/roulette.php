@@ -1,5 +1,5 @@
 <?php
-$page_title = 'Roulette';
+$page_title = 'Ruleta';
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +54,7 @@ $page_title = 'Roulette';
                     <div class="bet-spot h-12 flex items-center justify-center bg-gray-700" data-bet-type="dozen"
                         data-bet-value="1">1ra Docena</div>
                     <div class="bet-spot h-12 flex items-center justify-center bg-gray-700" data-bet-type="dozen"
-                        data-bet-value="2">2da Docena</div>
+                        data-bet-value="2">2ra Docena</div>
                     <div class="bet-spot h-12 flex items-center justify-center bg-gray-700" data-bet-type="dozen"
                         data-bet-value="3">3ra Docena</div>
                 </div>

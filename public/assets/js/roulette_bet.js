@@ -63,9 +63,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             const betAmount = state.bets[betKey] || 0;
 
             if (betAmount > 0) {
-                // Si hay una apuesta en esta casilla, muestra una ficha con el monto.
-                spot.innerHTML = `<span class="chip">${betAmount}</span>`;
+                // Si hay una apuesta, añadimos la clase 'has-chip' y ponemos el monto.
+                // El estilo se encargará de mostrar la imagen de fondo.
+                spot.classList.add('has-chip');
+                spot.innerHTML = `${betAmount}`;
             } else {
+                spot.classList.remove('has-chip');
                 // Si no hay apuesta, muestra el texto original de la casilla.
                 const type = spot.dataset.betType;
                 const value = spot.dataset.betValue;
