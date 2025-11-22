@@ -16,7 +16,7 @@ define('BASE_URL', '/');
 // --- Controlador de Acciones (API) ---
 if (isset($_GET['action'])) {
     // Todas las peticiones de acción (como login, register, etc.) se manejan aquí.
-    include SRC_PATH . 'app/controllers/UserController.php';
+    require SRC_PATH . 'app/controllers/UserController.php';
     exit();
 }
 
@@ -49,7 +49,7 @@ $view_routes = [
 ];
 
 // Entrada inicial
-$page = isset($_GET['page']) ? $_GET['page'] : 'register';
+$page = $_GET['page'] ?? 'register';
 
 // --- Lógica de Enrutamiento ---
 
@@ -67,5 +67,5 @@ if (!array_key_exists($page, $view_routes)) {
 }
 
 // 4. Cargar la vista correspondiente usando la ruta del servidor (SRC_PATH).
-include SRC_PATH . $view_routes[$page];
+require SRC_PATH . $view_routes[$page];
 exit();

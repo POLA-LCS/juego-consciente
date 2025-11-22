@@ -4,12 +4,12 @@ $page_title = 'Contacto';
 
 <!DOCTYPE html>
 <html lang="es">
-<?php include SRC_PATH . 'app/views/components/head.php'; // Componente Head
+<?php require SRC_PATH . 'app/views/components/head.php'; // Componente Head
 ?>
 
 <body class="flex flex-col min-h-screen">
-    <?php include SRC_PATH . 'app/views/components/header.php'; ?>
-    <?php include SRC_PATH . 'app/views/components/userSidebar.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/header.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/userSidebar.php'; ?>
 
     <main class="p-6 flex-1">
         <div class="max-w-2xl mx-auto">
@@ -72,7 +72,7 @@ $page_title = 'Contacto';
             </div>
     </main>
 
-    <?php include SRC_PATH . 'app/views/components/footer.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/footer.php'; ?>
     <script src="assets/js/details_animation.js"></script>
 
 </body>

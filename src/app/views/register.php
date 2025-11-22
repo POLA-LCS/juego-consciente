@@ -4,12 +4,12 @@ $page_title = 'Registro';
 
 <!DOCTYPE html>
 <html lang="es">
-<?php include SRC_PATH . 'app/views/components/head.php'; // Componente Head
+<?php require SRC_PATH . 'app/views/components/head.php'; // Componente Head
 ?>
 
 <body class="bg-[var(--color-background)] flex flex-col min-h-screen">
     <!-- Componente HeaderAuth -->
-    <?php include SRC_PATH . 'app/views/components/headerAuth.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/headerAuth.php'; ?>
     <main class="flex items-center justify-center flex-1">
         <div class="form-container">
             <h2 class="text-2xl font-bold mb-6 text-center text-[var(--color-primary)]">Registro</h2>
@@ -39,7 +39,7 @@ $page_title = 'Registro';
         </div>
     </main>
     <!-- Componente Footer -->
-    <?php include SRC_PATH . 'app/views/components/footer.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/footer.php'; ?>
 </body>
 
 </html>

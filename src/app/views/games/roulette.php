@@ -5,12 +5,12 @@ $page_title = 'Ruleta';
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->
-<?php include SRC_PATH . 'app/views/components/head.php';
+<?php require SRC_PATH . 'app/views/components/head.php';
 ?>
 
 <body class="flex flex-col min-h-screen">
     <!-- Componente Header -->
-    <?php include SRC_PATH . 'app/views/components/header.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/header.php'; ?>
 
     <div class="game-container">
         <!-- Panel de Apuestas de la Ruleta -->
@@ -96,13 +96,13 @@ $page_title = 'Ruleta';
 
         <!-- User Sidebar (Derecha, Oculto) -->
         <!-- Componente UserSidebar -->
-        <?php include SRC_PATH . 'app/views/components/userSidebar.php'; ?>
+        <?php require SRC_PATH . 'app/views/components/userSidebar.php'; ?>
         <!-- Componente CheatSidebar -->
-        <?php include SRC_PATH . 'app/views/components/cheatSidebar.php'; ?>
+        <?php require SRC_PATH . 'app/views/components/cheatSidebar.php'; ?>
     </div>
 
     <!-- Componente Footer -->
-    <?php include SRC_PATH . 'app/views/components/footer.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/footer.php'; ?>
 
     <script src="assets/js/roulette_bet.js"></script>
     <script src="assets/js/roulette_game.js"></script>

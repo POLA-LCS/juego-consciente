@@ -4,17 +4,17 @@ $page_title = 'Inicio';
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->
-<?php include SRC_PATH . 'app/views/components/head.php';
+<?php require SRC_PATH . 'app/views/components/head.php';
 ?>
 
 <body class="flex flex-col min-h-screen">
     <!-- Componente Header -->
-    <?php include SRC_PATH . 'app/views/components/header.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/header.php'; ?>
     <!-- Componente UserSidebar -->
-    <?php include SRC_PATH . 'app/views/components/userSidebar.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/userSidebar.php'; ?>
     <?php /* 
     <!-- Componente CheatSidebar -->
-    include SRC_PATH . 'app/views/components/cheatSidebar.php'; */ ?> <!-- Main Content -->
+    require SRC_PATH . 'app/views/components/cheatSidebar.php'; */ ?> <!-- Main Content -->
     <main class="p-6">
         <div class="flex justify-center items-center mb-8">
             <h1
@@ -73,7 +73,7 @@ $page_title = 'Inicio';
             </div>
         </div>
     </main> <!-- Componente Footer -->
-    <?php include SRC_PATH . 'app/views/components/footer.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/footer.php'; ?>
 </body>
 
 </html>

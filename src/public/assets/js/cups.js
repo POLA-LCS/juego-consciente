@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     /** Carga los datos iniciales del jugador y los trucos desde el servidor. */
     async function initializeGame() {
         const response = await fetch('?action=getPlayerData');
-        const data = await response.json();
 
+        const data = await response.json();
         gameState.balance = parseInt(data.balance, 10);
         gameState.winStreak = parseInt(data.win_streak, 10);
         gameState.cheatSettings = {

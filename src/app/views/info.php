@@ -5,14 +5,14 @@ $page_title = 'Información sobre Ludopatía';
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->
-<?php include SRC_PATH . 'app/views/components/head.php';
+<?php require SRC_PATH . 'app/views/components/head.php';
 ?>
 
 <body class="flex flex-col min-h-screen">
     <!-- Componente Header -->
-    <?php include SRC_PATH . 'app/views/components/header.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/header.php'; ?>
     <!-- Componente UserSidebar -->
-    <?php include SRC_PATH . 'app/views/components/userSidebar.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/userSidebar.php'; ?>
 
     <main class="p-6 flex-1">
         <h1 class="text-4xl font-bold mb-6 text-center text-[var(--color-primary)]">¿Qué es la LUDOPATIA?</h1>
@@ -72,7 +72,7 @@ $page_title = 'Información sobre Ludopatía';
     </main>
 
     <!-- Componente Footer -->
-    <?php include SRC_PATH . 'app/views/components/footer.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/footer.php'; ?>
 
 </body>
 

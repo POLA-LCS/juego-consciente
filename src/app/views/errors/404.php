@@ -6,13 +6,13 @@ $footer_message = "No intentes acceder a contenido protegido.";
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->
-<?php include SRC_PATH . 'app/views/components/head.php';
+<?php require SRC_PATH . 'app/views/components/head.php';
 ?>
 
 <body class="bg-[var(--color-background)] flex flex-col min-h-screen">
     <?php
     $dontUseUserSidebarIcon = true;
-    include SRC_PATH . 'app/views/components/headerAuth.php';
+    require SRC_PATH . 'app/views/components/headerAuth.php';
     ?>
 
     <div class="text-center flex-1 flex items-center justify-center">
@@ -31,7 +31,7 @@ $footer_message = "No intentes acceder a contenido protegido.";
         </div>
     </div>
 
-    <?php include SRC_PATH . 'app/views/components/footer.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/footer.php'; ?>
 </body>
 
 </html>

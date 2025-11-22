@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // ================================================================= //
     // Almacena la información clave que el script necesita para funcionar.
     const MIN_BET = 100;
-    let state = {
+    let betState = {
         balance: 0,
         winStreak: 0,
         currentBet: MIN_BET,
@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', async () => {
      * valores actuales del estado del juego.
      */
     function updateBetUI() {
-        if (balanceDisplay) balanceDisplay.textContent = state.balance;
-        if (winStreakDisplay) winStreakDisplay.textContent = state.winStreak;
-        if (currentBetDisplay) currentBetDisplay.textContent = state.currentBet;
+        if (balanceDisplay) balanceDisplay.textContent = betState.balance;
+        if (winStreakDisplay) winStreakDisplay.textContent = betState.winStreak;
+        if (currentBetDisplay) currentBetDisplay.textContent = betState.currentBet;
     }
 
     /**
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      * @param {boolean} enabled - `true` para habilitar, `false` para deshabilitar.
      */
     function toggleBetControls(enabled) {
-        state.isBettingLocked = !enabled;
+        betState.isBettingLocked = !enabled;
         if (placeBetButton) placeBetButton.disabled = !enabled;
         if (resetBetButton) resetBetButton.disabled = !enabled;
         if (maxBetButton) maxBetButton.disabled = !enabled;
@@ -64,23 +64,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     /** Añade una cantidad a la apuesta actual, sin superar el saldo. */
     function addToBet(amount) {
-        if (state.isBettingLocked) return;
-        const newBet = state.currentBet + amount;
-        state.currentBet = Math.min(newBet, state.balance);
+        if (betState.isBettingLocked) return;
+        const newBet = betState.currentBet + amount;
+        betState.currentBet = Math.min(newBet, betState.balance);
         updateBetUI();
     }
 
     /** Reinicia la apuesta a su valor mínimo. */
     function resetBet() {
-        if (state.isBettingLocked) return;
-        state.currentBet = Math.min(MIN_BET, state.balance);
+        if (betState.isBettingLocked) return;
+        betState.currentBet = Math.min(MIN_BET, betState.balance);
         updateBetUI();
     }
 
     /** Establece la apuesta al saldo máximo disponible. */
     function setMaxBet() {
-        if (state.isBettingLocked) return;
-        state.currentBet = state.balance;
+        if (betState.isBettingLocked) return;
+        betState.currentBet = betState.balance;
         updateBetUI();
     }
 
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      * Bloquea los controles hasta que el juego termine.
      */
     async function placeBet() {
-        if (state.currentBet <= 0 || state.currentBet > state.balance) {
+        if (betState.currentBet <= 0 || betState.currentBet > betState.balance) {
             alert("Apuesta inválida.");
             return;
         }
@@ -98,16 +98,20 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const response = await fetch(`?action=updateBalance`, {
             method: 'POST',
-            body: new URLSearchParams({ 'amount': -state.currentBet })
+            body: new URLSearchParams({ 'amount': -betState.currentBet })
         });
+
         const data = await response.json();
 
         if (data.success) {
-            state.balance = data.newBalance;
+            betState.balance = data.newBalance;
             updateBetUI();
             // Notifica al script del juego que la apuesta se ha realizado.
             document.dispatchEvent(new CustomEvent('betPlaced', {
-                detail: { newBalance: state.balance, betAmount: state.currentBet }
+                detail: {
+                    newBalance: betState.balance,
+                    betAmount: betState.currentBet
+                }
             }));
         } else {
             alert('Error al realizar la apuesta.');
@@ -126,8 +130,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function initializeBetting() {
         const response = await fetch('?action=getPlayerData');
         const data = await response.json();
-        state.balance = parseInt(data.balance, 10);
-        state.winStreak = parseInt(data.win_streak, 10);
+        betState.balance = parseInt(data.balance, 10);
+        betState.winStreak = parseInt(data.win_streak, 10);
         resetBet();
         updateBetUI();
 
@@ -145,7 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Escucha eventos de otros scripts para mantener el estado sincronizado.
     document.addEventListener('balanceUpdated', e => {
-        state.balance = e.detail.newBalance;
+        betState.balance = e.detail.newBalance;
         updateBetUI();
     });
 
@@ -155,7 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     document.addEventListener('winStreakUpdated', e => {
-        state.winStreak = e.detail.newWinStreak;
+        betState.winStreak = e.detail.newWinStreak;
         updateBetUI();
     });
 

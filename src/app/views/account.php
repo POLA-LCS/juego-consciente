@@ -10,13 +10,13 @@ $userData = $userController->getUserDetails($_SESSION['user_id']);
 <!DOCTYPE html>
 <html lang="es">
 <!-- Componente head -->
-<?php include SRC_PATH . 'app/views/components/head.php';
+<?php require SRC_PATH . 'app/views/components/head.php';
 ?>
 
 <body class="flex flex-col min-h-screen">
     <!-- Componente Header -->
     <?php $dontUseUserSidebarIcon = true; ?>
-    <?php include SRC_PATH . 'app/views/components/header.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/header.php'; ?>
 
     <main class="p-8 flex-1">
         <div class="max-w-lg mx-auto">
@@ -107,7 +107,7 @@ $userData = $userController->getUserDetails($_SESSION['user_id']);
     </main>
 
     <!-- Componente Footer -->
-    <?php include SRC_PATH . 'app/views/components/footer.php'; ?>
+    <?php require SRC_PATH . 'app/views/components/footer.php'; ?>
     <script src="assets/js/details_animation.js"></script>
 
 </body>
