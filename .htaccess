@@ -1,21 +1,11 @@
 <IfModule mod_rewrite.c>
-    # Activar el motor de reescritura de URLs
     RewriteEngine On
 
-    # Establecer la base de la reescritura a la carpeta actual
-    # Si tu proyecto está en un subdirectorio (ej: localhost/balta/ludopatia),
-    # descomenta la siguiente línea y ajústala.
-    # RewriteBase /balta/ludopatia/
+    # Establece el directorio base si el proyecto está en una subcarpeta.
+    # Ejemplo: /juego-consciente/
+    # RewriteBase /tu-subdirectorio/
 
-    # 1. Bloquear el acceso directo a carpetas sensibles
-    # Redirige internamente a la página de error 403 si se intenta acceder a 'app' o 'config'
-    RewriteRule ^(app|config|diagramas|env) index.php?page=ERROR_403 [L]
-
-    # 2. Redirigir todas las peticiones a index.php (Front Controller)
-    # A menos que la petición sea para un archivo (-f) o directorio (-d) que ya existe.
-    # Esto permite que los assets (CSS, JS, imágenes) en la carpeta 'public' se carguen correctamente.
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php?page=$1 [QSA,L]
-
+    # Reenvía todas las peticiones a la carpeta src/public/
+    # sin cambiar la URL en el navegador.
+    RewriteRule ^(.*)$ src/public/$1 [L]
 </IfModule>

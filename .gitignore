@@ -3,7 +3,7 @@
 
 # Archivos de compilación y artefactos
 # El CSS de Tailwind es generado, no debe estar en el control de versiones.
-/public/assets/css/tailwind.css
+src/public/assets/css/tailwind.css
 *.map
 
 # Archivos específicos del sistema operativo

@@ -3,8 +3,8 @@
     "version": "1.0.0",
     "description": "Plataforma web educativa para la concienciación y prevención de la ludopatía a través de la simulación de juegos de casino.",
     "scripts": {
-        "dev": "tailwindcss -i ./public/assets/css/input.css -o ./public/assets/css/main.css --watch",
-        "build": "tailwindcss -i ./public/assets/css/input.css -o ./public/assets/css/main.css --minify"
+        "dev": "tailwindcss -i ./src/public/assets/css/input.css -o ./src/public/assets/css/main.css --watch",
+        "build": "tailwindcss -i ./src/public/assets/css/input.css -o ./src/public/assets/css/main.css --minify"
     },
     "repository": {
         "type": "git",
