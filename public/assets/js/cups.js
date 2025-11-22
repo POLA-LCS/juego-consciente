@@ -1,57 +1,95 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // =================================================================
-    // 1. ELEMENTOS DEL DOM
-    // =================================================================
+    /**
+     * Este script controla la lógica del juego de los vasos (Trileros).
+     * Se encarga de:
+     * - Iniciar el juego cuando se realiza una apuesta.
+     * - Determinar si el jugador gana o pierde, considerando los trucos.
+     * - Animar los vasos y mostrar el resultado.
+     * - Comunicarse con el servidor para actualizar el saldo y la racha.
+     * - Resetear el juego para la siguiente ronda.
+     */
+
+    // ================================================================= //
+    // 1. ELEMENTOS DEL DOM                                              //
+    // ================================================================= //
+    // Guardamos en variables las partes de la página con las que vamos a interactuar.
     const cups = document.querySelectorAll('.cup');
     const messageContainer = document.getElementById('message-container');
     const playAgainButton = document.getElementById('playAgain');
 
-    // =================================================================
-    // 2. ESTADO DEL JUEGO (CUPS)
-    // =================================================================
+    // ================================================================= //
+    // 2. ESTADO DEL JUEGO                                               //
+    // ================================================================= //
+    // El objeto 'gameState' es la "memoria" del juego. Guarda toda la
+    // información importante que necesita para funcionar.
     let gameState = {
         balance: 0,
         winStreak: 0,
         currentBet: 0,
-        MIN_BET: 0, // Se inicializará con el evento 'betScriptLoaded'
+        MIN_BET: 0, // Se cargará desde el script de apuestas.
         cheatSettings: { mode: 0, max_streak: -1, max_balance: -1 },
-        canChoose: false,
-        gameInProgress: false,
+        canChoose: false, // ¿Puede el jugador elegir un vaso ahora mismo?
+        gameInProgress: false, // ¿Hay una partida en curso?
     };
 
-    // =================================================================
-    // 5. LÓGICA DEL JUEGO
-    // =================================================================
+    // ================================================================= //
+    // 3. LÓGICA DEL JUEGO                                               //
+    // ================================================================= //
+
+    /**
+     * Inicia una nueva ronda del juego. Se llama cuando se realiza una apuesta.
+     * @param {object} betDetails - Contiene la información de la apuesta (monto, nuevo saldo).
+     */
     function startGame(betDetails) {
         gameState.gameInProgress = true;
         gameState.balance = betDetails.newBalance;
         gameState.currentBet = betDetails.betAmount;
 
         messageContainer.textContent = "Elige un vaso...";
-        gameState.canChoose = true;
+        gameState.canChoose = true; // A partir de ahora, el jugador puede hacer clic en un vaso.
     }
 
+    /**
+     * Decide si el jugador debe ganar o perder en esta ronda.
+     * Tiene en cuenta los trucos activados (modo ganador/perdedor, límites).
+     * @returns {boolean} - `true` si el jugador debe ganar, `false` si debe perder.
+     */
     function shouldPlayerWin() {
+        // Calculamos cuánto ganaría el jugador y cuál sería su nuevo saldo.
         const potentialWinAmount = gameState.currentBet * 2;
         const potentialBalance = gameState.balance + potentialWinAmount;
 
+        // --- Lógica de Trucos ---
+        // 1. Si ganar supera el saldo máximo permitido, forzamos una derrota.
         if (gameState.cheatSettings.max_balance != -1 && potentialBalance > gameState.cheatSettings.max_balance) {
             return false;
         }
+        // 2. Si ya alcanzó la racha máxima permitida, forzamos una derrota.
         if (gameState.cheatSettings.max_streak != -1 && gameState.winStreak >= gameState.cheatSettings.max_streak) {
             return false;
         }
-        if (gameState.cheatSettings.mode === 1) return true; // Modo ganador
-        if (gameState.cheatSettings.mode === 2) return false; // Modo perdedor
+        // 3. Si el "Modo Ganador" está activo, forzamos una victoria.
+        if (gameState.cheatSettings.mode === 1) return true;
+        // 4. Si el "Modo Perdedor" está activo, forzamos una derrota.
+        if (gameState.cheatSettings.mode === 2) return false;
 
-        return Math.random() < (1 / 3); // Juego normal
+        // --- Juego Normal (sin trucos) ---
+        // Hay 3 vasos, así que la probabilidad normal de ganar es 1 entre 3.
+        return Math.random() < (1 / 3);
     }
 
+    /**
+     * Se ejecuta cuando el jugador hace clic en un vaso.
+     * @param {number} cupNumber - El número del vaso elegido (1, 2 o 3).
+     */
     async function chooseCup(cupNumber) {
+        // Si no es el momento de elegir (ej. el juego ya terminó), no hacemos nada.
         if (!gameState.canChoose) return;
-        gameState.canChoose = false;
+        gameState.canChoose = false; // Bloqueamos para que no se pueda hacer clic de nuevo.
 
-        const isWinner = shouldPlayerWin();
+        const isWinner = shouldPlayerWin(); // Decidimos si gana o pierde.
+
+        // Levantamos el vaso elegido para mostrar lo que hay debajo.
         document.getElementById(`cup-${cupNumber}`).style.transform = 'translateY(-30px)';
 
         if (isWinner) {
@@ -59,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             messageContainer.textContent = `¡Has ganado ${wonBalance}!`;
             messageContainer.style.color = 'var(--color-primary)';
 
-            // Incrementar racha y sumar premio
+            // Le pedimos al servidor que incremente nuestra racha y nos dé el premio.
             await fetch(`?action=incrementWinStreak`, { method: 'POST' });
             const response = await fetch(`?action=updateBalance`, {
                 method: 'POST',
@@ -67,8 +105,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             const data = await response.json();
             if (data.success) {
+                // Actualizamos nuestros datos locales con la respuesta del servidor.
                 gameState.balance = data.newBalance;
                 gameState.winStreak++;
+                // Avisamos a otros scripts (como el de la barra de apuestas) que la racha cambió.
                 document.dispatchEvent(new CustomEvent('winStreakUpdated', {
                     detail: { newWinStreak: gameState.winStreak }
                 }));
@@ -77,39 +117,45 @@ document.addEventListener('DOMContentLoaded', async () => {
             messageContainer.textContent = "¡Perdiste! Inténtalo de nuevo...";
             messageContainer.style.color = 'var(--color-text-muted)';
 
-            // Resetear racha
+            // Le pedimos al servidor que reinicie nuestra racha de victorias a 0.
             await fetch(`?action=setWinStreak`, {
                 method: 'POST',
                 body: new URLSearchParams({ 'streak': 0 })
             });
             gameState.winStreak = 0;
+            // Avisamos a otros scripts del cambio en la racha.
             document.dispatchEvent(new CustomEvent('winStreakUpdated', {
                 detail: { newWinStreak: gameState.winStreak }
             }));
         }
 
-        // Disparamos un evento para que la UI de apuestas se actualice
+        // Avisamos a otros scripts que el saldo ha cambiado para que actualicen la pantalla.
         document.dispatchEvent(new CustomEvent('balanceUpdated', { detail: { newBalance: gameState.balance } }));
 
+        // Esperamos 2 segundos antes de preparar la siguiente ronda.
         setTimeout(() => {
             resetGame();
         }, 2000);
     }
 
+    /** Prepara el juego para una nueva ronda. */
     function resetGame() {
-        gameState.gameInProgress = false;;
-        messageContainer.innerHTML = '&nbsp;';
-        cups.forEach(cup => cup.style.transform = 'translateY(0)');
+        gameState.gameInProgress = false;
+        messageContainer.innerHTML = '&nbsp;'; // Limpiamos el mensaje.
+        cups.forEach(cup => cup.style.transform = 'translateY(0)'); // Bajamos los vasos.
 
-        // Dispara un evento para que los controles de apuesta se reactiven
+        // Avisamos al script de apuestas que el juego ha terminado, para que reactive los botones.
         document.dispatchEvent(new CustomEvent('gameEnded'));
 
-        initializeGame(); // Recarga los datos del jugador para la siguiente ronda
+        // Volvemos a cargar los datos por si algo cambió.
+        initializeGame();
     }
 
-    // =================================================================
-    // 6. INICIALIZACIÓN Y EVENT LISTENERS
-    // =================================================================
+    // ================================================================= //
+    // 4. INICIALIZACIÓN Y MANEJO DE EVENTOS                             //
+    // ================================================================= //
+
+    /** Carga los datos iniciales del jugador y los trucos desde el servidor. */
     async function initializeGame() {
         const response = await fetch('?action=getPlayerData');
         const data = await response.json();
@@ -123,25 +169,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
     }
 
-    // Listeners del Juego
+    // Asignamos las funciones a los eventos de clic.
     playAgainButton.addEventListener('click', resetGame);
     cups.forEach((cup, index) => cup.addEventListener('click', () => chooseCup(index + 1)));
 
-    // Listener principal que inicia el juego cuando se realiza una apuesta
+    // --- Eventos Globales ---
+
+    // Este es el evento principal: cuando el script de apuestas nos dice "¡Apuesta realizada!", iniciamos el juego.
     document.addEventListener('betPlaced', (e) => {
         startGame(e.detail);
     });
 
-    // Listener para saber cuándo el script de apuestas está listo
+    // Esperamos a que el script de apuestas nos diga que está listo para obtener la apuesta mínima.
     document.addEventListener('betScriptLoaded', (e) => {
         console.log('Bet script loaded. MIN_BET:', e.detail.MIN_BET);
         gameState.MIN_BET = e.detail.MIN_BET;
     });
 
-    // Listeners de Cheats (para actualizaciones en tiempo real)
+    // Si el saldo o los trucos cambian desde otro script (como el panel de trucos), actualizamos nuestro estado.
     document.addEventListener('balanceUpdated', e => gameState.balance = e.detail.newBalance);
     document.addEventListener('cheatSettingsChanged', e => gameState.cheatSettings = e.detail);
 
-    // Iniciar todo
+    // Inicia todo al cargar la página.
     initializeGame();
 });

@@ -1,7 +1,17 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // =================================================================
-    // 1. ELEMENTOS DEL DOM (Sidebar de Apuestas)
-    // =================================================================
+    /**
+     * Este script gestiona la lógica de la barra lateral de apuestas (Bet Sidebar).
+     * Se encarga de:
+     * - Cargar y mostrar el saldo y la racha de victorias del jugador.
+     * - Permitir al jugador aumentar, reiniciar o establecer la apuesta máxima.
+     * - Procesar la apuesta y comunicarla al juego correspondiente.
+     * - Bloquear y desbloquear los controles de apuesta durante el juego.
+     */
+
+    // ================================================================= //
+    // 1. ELEMENTOS DEL DOM                                              //
+    // ================================================================= //
+    // Referencias a los elementos de la interfaz con los que interactuamos.
     const balanceDisplay = document.getElementById('balance');
     const winStreakDisplay = document.getElementById('winStreak');
     const currentBetDisplay = document.getElementById('currentBet');
@@ -10,26 +20,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     const placeBetButton = document.getElementById('placeBet');
     const maxBetButton = document.getElementById('maxBetButton');
 
-    // =================================================================
-    // 2. ESTADO DE LA APUESTA
-    // =================================================================
+    // ================================================================= //
+    // 2. ESTADO DEL JUEGO                                               //
+    // ================================================================= //
+    // Almacena la información clave que el script necesita para funcionar.
     const MIN_BET = 100;
     let state = {
         balance: 0,
         winStreak: 0,
         currentBet: MIN_BET,
-        isBettingLocked: false, // Para bloquear controles durante una acción
+        isBettingLocked: false, // Bloquea los controles mientras un juego está en curso.
     };
 
-    // =================================================================
-    // 3. FUNCIONES DE ACTUALIZACIÓN DE UI
-    // =================================================================
+    // ================================================================= //
+    // 3. FUNCIONES DE INTERFAZ (UI)                                     //
+    // ================================================================= //
+
+    /**
+     * Actualiza los elementos visuales (saldo, racha, apuesta) con los
+     * valores actuales del estado del juego.
+     */
     function updateBetUI() {
         if (balanceDisplay) balanceDisplay.textContent = state.balance;
         if (winStreakDisplay) winStreakDisplay.textContent = state.winStreak;
         if (currentBetDisplay) currentBetDisplay.textContent = state.currentBet;
     }
 
+    /**
+     * Habilita o deshabilita todos los controles de apuesta.
+     * @param {boolean} enabled - `true` para habilitar, `false` para deshabilitar.
+     */
     function toggleBetControls(enabled) {
         state.isBettingLocked = !enabled;
         if (placeBetButton) placeBetButton.disabled = !enabled;
@@ -38,9 +58,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (betChips) betChips.forEach(b => b.disabled = !enabled);
     }
 
-    // =================================================================
-    // 4. LÓGICA DE APUESTAS
-    // =================================================================
+    // ================================================================= //
+    // 4. LÓGICA DE APUESTAS                                             //
+    // ================================================================= //
+
+    /** Añade una cantidad a la apuesta actual, sin superar el saldo. */
     function addToBet(amount) {
         if (state.isBettingLocked) return;
         const newBet = state.currentBet + amount;
@@ -48,25 +70,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateBetUI();
     }
 
+    /** Reinicia la apuesta a su valor mínimo. */
     function resetBet() {
         if (state.isBettingLocked) return;
         state.currentBet = Math.min(MIN_BET, state.balance);
         updateBetUI();
     }
 
+    /** Establece la apuesta al saldo máximo disponible. */
     function setMaxBet() {
         if (state.isBettingLocked) return;
         state.currentBet = state.balance;
         updateBetUI();
     }
 
+    /**
+     * Procesa la apuesta: la descuenta del saldo y notifica al juego.
+     * Bloquea los controles hasta que el juego termine.
+     */
     async function placeBet() {
         if (state.currentBet <= 0 || state.currentBet > state.balance) {
             alert("Apuesta inválida.");
             return;
         }
 
-        toggleBetControls(false); // Bloquea los controles
+        toggleBetControls(false); // Bloquea los controles durante la partida.
 
         const response = await fetch(`?action=updateBalance`, {
             method: 'POST',
@@ -77,19 +105,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (data.success) {
             state.balance = data.newBalance;
             updateBetUI();
-            // Dispara un evento global para que el juego actual sepa que la apuesta fue exitosa
+            // Notifica al script del juego que la apuesta se ha realizado.
             document.dispatchEvent(new CustomEvent('betPlaced', {
                 detail: { newBalance: state.balance, betAmount: state.currentBet }
             }));
         } else {
             alert('Error al realizar la apuesta.');
-            toggleBetControls(true); // Desbloquea si falla
+            toggleBetControls(true); // Desbloquea los controles si la apuesta falla.
         }
     }
 
-    // =================================================================
-    // 5. INICIALIZACIÓN Y EVENT LISTENERS
-    // =================================================================
+    // ================================================================= //
+    // 5. INICIALIZACIÓN Y MANEJO DE EVENTOS                             //
+    // ================================================================= //
+
+    /**
+     * Carga los datos iniciales del jugador (saldo, racha) desde el servidor
+     * y configura el estado inicial de las apuestas.
+     */
     async function initializeBetting() {
         const response = await fetch('?action=getPlayerData');
         const data = await response.json();
@@ -98,35 +131,34 @@ document.addEventListener('DOMContentLoaded', async () => {
         resetBet();
         updateBetUI();
 
-        // Dispara un evento para notificar a los juegos que el script de apuestas está listo
+        // Notifica a otros scripts (como los juegos) que este script está listo.
         document.dispatchEvent(new CustomEvent('betScriptLoaded', {
             detail: { MIN_BET: MIN_BET }
         }));
     }
 
-    // Listeners de la UI de apuestas
+    // Asigna las funciones a los clics de los botones.
     betChips.forEach(b => b.addEventListener('click', () => addToBet(parseInt(b.dataset.amount, 10))));
     resetBetButton.addEventListener('click', resetBet);
     placeBetButton.addEventListener('click', placeBet);
     maxBetButton.addEventListener('click', setMaxBet);
 
-    // Listener para actualizaciones externas (ej: desde cheat sidebar)
+    // Escucha eventos de otros scripts para mantener el estado sincronizado.
     document.addEventListener('balanceUpdated', e => {
         state.balance = e.detail.newBalance;
         updateBetUI();
     });
 
-    // Listener para cuando un juego termina, para reactivar los controles de apuesta.
     document.addEventListener('gameEnded', () => {
         console.log('Game has ended. Re-enabling bet controls.');
-        toggleBetControls(true);
+        toggleBetControls(true); // Reactiva los controles para la siguiente ronda.
     });
 
-    // Listener para cuando la racha de victorias cambia
     document.addEventListener('winStreakUpdated', e => {
         state.winStreak = e.detail.newWinStreak;
         updateBetUI();
     });
 
+    // Inicia el script.
     initializeBetting();
 });

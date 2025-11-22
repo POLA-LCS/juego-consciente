@@ -1,9 +1,21 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    /**
+     * Este script controla la lógica del juego de la máquina tragaperras (Slots).
+     * Se encarga de:
+     * - Iniciar el juego y la animación de giro cuando se realiza una apuesta.
+     * - Determinar el resultado (victoria o derrota) considerando los trucos.
+     * - Animar los rodillos y mostrar el resultado final.
+     * - Comunicarse con el servidor para actualizar el saldo y la racha.
+     */
+
+    // Constantes para que el código sea más legible. En lugar de usar números
+    // como 1 y 2, usamos nombres que explican lo que significan.
     const WINNER_MODE = 1;
     const LOSER_MODE = 2;
-    // =================================================================
-    // 1. ELEMENTOS DEL DOM
-    // =================================================================
+
+    // ================================================================= //
+    // 1. ELEMENTOS DEL DOM Y CONSTANTES                                 //
+    // ================================================================= //
     const reels = [
         document.getElementById('reel-1'),
         document.getElementById('reel-2'),
@@ -11,24 +23,206 @@ document.addEventListener('DOMContentLoaded', async () => {
     ];
     const messageContainer = document.getElementById('message-container');
 
-    // Símbolos posibles para los rodillos
+    // Los símbolos que pueden aparecer en los rodillos.
     const symbols = ['🍒', '⭐', '💎'];
-    // const symbols = ['🍒', '🍋', '🍊', '🍉', '⭐', '🔔', '💎'];
 
-    // =================================================================
-    // 2. ESTADO DEL JUEGO (SLOTS)
-    // =================================================================
+    // ================================================================= //
+    // 2. ESTADO DEL JUEGO                                               //
+    // ================================================================= //
+    // La "memoria" del juego, donde guardamos toda la información importante.
     let gameState = {
         balance: 0,
         winStreak: 0,
         currentBet: 0,
         cheatSettings: { mode: 0, max_streak: -1, max_balance: -1 },
-        gameInProgress: false,
+        gameInProgress: false, // ¿Hay una partida en curso?
     };
 
-    // =================================================================
-    // 3. INICIALIZACIÓN Y LISTENERS
-    // =================================================================
+    // ================================================================= //
+    // 3. LÓGICA DEL JUEGO                                               //
+    // ================================================================= //
+
+    /**
+     * Inicia una nueva partida. Se llama cuando se realiza una apuesta.
+     * @param {object} betDetails - La información de la apuesta.
+     */
+    function startGame(betDetails) {
+        if (gameState.gameInProgress) return; // Si ya hay un juego, no hacemos nada.
+        gameState.gameInProgress = true;
+
+        // Actualizamos nuestro estado con la información de la apuesta.
+        gameState.balance = betDetails.newBalance;
+        gameState.currentBet = betDetails.betAmount;
+
+        // Limpiamos los estilos de la partida anterior.
+        reels.forEach(reel => {
+            reel.classList.remove('winning-reel', 'losing-reel');
+        });
+
+        messageContainer.textContent = "Girando...";
+        messageContainer.style.color = 'var(--color-text-muted)';
+
+        // Simulación de giro: cambiamos los símbolos rápidamente.
+        let spinCount = 0;
+        const spinInterval = setInterval(() => {
+            // Cambiamos el símbolo de cada rodillo.
+            reels.forEach(reel => {
+                reel.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+            });
+
+            spinCount++;
+            // Después de unos 1.5 segundos, detenemos la animación y vemos el resultado.
+            if (spinCount > 10) {
+                clearInterval(spinInterval);
+                endGame();
+            }
+        }, 150); // Se repite cada 150 milisegundos.
+    }
+
+    /**
+     * Determina el resultado final y lo muestra en los rodillos.
+     */
+    async function endGame() {
+        let finalReels = [];
+
+        // Decidimos si el jugador debe ganar o perder, según los trucos.
+        const result = shouldPlayerWin();
+
+        if (result === WINNER_MODE) {
+            // --- Forzar Victoria ---
+            const winningSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+            // Creamos una combinación ganadora (3 iguales o 2 iguales).
+            finalReels = [winningSymbol, winningSymbol, winningSymbol];
+
+        } else if (result === LOSER_MODE) {
+            // --- Forzar Derrota ---
+            // Creamos una combinación que garantice que no hay 2 símbolos iguales seguidos.
+            let s1 = symbols[Math.floor(Math.random() * symbols.length)];
+            let s2 = symbols[Math.floor(Math.random() * symbols.length)];
+            let s3 = symbols[Math.floor(Math.random() * symbols.length)];
+            // Nos aseguramos de que no haya premio.
+            while (s1 === s2 || s2 === s3) {
+                s2 = symbols[Math.floor(Math.random() * symbols.length)];
+                s3 = symbols[Math.floor(Math.random() * symbols.length)];
+            }
+            finalReels = [s1, s2, s3];
+
+        } else {
+            // --- Juego Normal ---
+            // Generamos 3 símbolos al azar.
+            for (let i = 0; i < 3; i++) {
+                finalReels.push(symbols[Math.floor(Math.random() * symbols.length)]);
+            }
+        }
+
+        // Mostramos el resultado final con una pequeña animación de retraso.
+        showDelayedReels(finalReels);
+    }
+
+    /**
+     * Muestra los símbolos finales en los rodillos uno por uno para crear suspense.
+     * @param {string[]} finalReels - El array con los 3 símbolos finales.
+     */
+    function showDelayedReels(finalReels) {
+        // Detenemos el primer rodillo.
+        setTimeout(() => { reels[0].textContent = finalReels[0]; }, 300);
+        // Detenemos el segundo rodillo.
+        setTimeout(() => { reels[1].textContent = finalReels[1]; }, 600);
+        // Detenemos el tercer rodillo y comprobamos el resultado.
+        setTimeout(() => {
+            reels[2].textContent = finalReels[2];
+            checkWinAndFinalize(finalReels);
+        }, 1200);
+    }
+
+    /**
+     * Comprueba si la combinación es ganadora, calcula el premio y finaliza la partida.
+     * @param {string[]} finalReels - El array con los 3 símbolos finales.
+     */
+    async function checkWinAndFinalize(finalReels) {
+        let prize = 0;
+        let winningReels = [];
+
+        // Comprobamos si hay 3 símbolos iguales.
+        if (finalReels[0] === finalReels[1] && finalReels[1] === finalReels[2]) {
+            prize = gameState.currentBet * 5; // Premio gordo
+            winningReels = [0, 1, 2];
+        }
+        // Comprobamos si los 2 primeros son iguales.
+        else if (finalReels[0] === finalReels[1]) {
+            prize = gameState.currentBet * 1.5; // Premio pequeño
+            winningReels = [0, 1];
+        }
+        // Comprobamos si los 2 últimos son iguales.
+        else if (finalReels[1] === finalReels[2]) {
+            prize = gameState.currentBet * 1.5; // Premio pequeño
+            winningReels = [1, 2];
+        }
+
+        if (prize > 0) {
+            messageContainer.textContent = `¡Has ganado ${prize}!`;
+            messageContainer.style.color = 'var(--color-primary)';
+            winningReels.forEach(index => reels[index].classList.add('winning-reel'));
+
+            // Pedimos al servidor que actualice nuestra racha y saldo.
+            await fetch(`?action=incrementWinStreak`, { method: 'POST' });
+            const response = await fetch(`?action=updateBalance`, {
+                method: 'POST',
+                body: new URLSearchParams({ 'amount': prize })
+            });
+            const data = await response.json();
+            if (data.success) {
+                gameState.balance = data.newBalance;
+                gameState.winStreak++;
+            }
+        } else {
+            messageContainer.textContent = "¡Perdiste, intenta de nuevo!";
+            messageContainer.style.color = 'var(--color-text-muted)';
+            reels.forEach(reel => reel.classList.add('losing-reel'));
+
+            // Pedimos al servidor que reinicie nuestra racha.
+            await fetch(`?action=setWinStreak`, {
+                method: 'POST',
+                body: new URLSearchParams({ 'streak': 0 })
+            });
+            gameState.winStreak = 0;
+        }
+
+        // Avisamos a otros scripts que el juego ha terminado y que el saldo/racha han cambiado.
+        document.dispatchEvent(new CustomEvent('balanceUpdated', { detail: { newBalance: gameState.balance } }));
+        document.dispatchEvent(new CustomEvent('winStreakUpdated', { detail: { newWinStreak: gameState.winStreak } }));
+        document.dispatchEvent(new CustomEvent('gameEnded'));
+
+        gameState.gameInProgress = false; // La partida ha terminado.
+    }
+
+    /**
+     * Decide si el jugador debe ganar o perder, considerando los trucos.
+     * @returns {number} - WINNER_MODE, LOSER_MODE o 0 (juego normal).
+     */
+    function shouldPlayerWin() {
+        const potentialWinAmount = gameState.currentBet * 5; // Calculamos con el premio máximo.
+        const potentialBalance = gameState.balance + potentialWinAmount;
+
+        // --- Lógica de Trucos ---
+        if (gameState.cheatSettings.max_balance != -1 && potentialBalance > gameState.cheatSettings.max_balance) {
+            return LOSER_MODE; // Si ganar supera el saldo máximo, forzamos derrota.
+        }
+        if (gameState.cheatSettings.max_streak != -1 && gameState.winStreak >= gameState.cheatSettings.max_streak) {
+            return LOSER_MODE; // Si ya alcanzó la racha máxima, forzamos derrota.
+        }
+        if (gameState.cheatSettings.mode === WINNER_MODE) return WINNER_MODE; // Forzar victoria.
+        if (gameState.cheatSettings.mode === LOSER_MODE) return LOSER_MODE; // Forzar derrota.
+
+        // --- Juego Normal ---
+        return 0; // 0 significa que el resultado será aleatorio.
+    }
+
+    // ================================================================= //
+    // 4. INICIALIZACIÓN Y MANEJO DE EVENTOS                             //
+    // ================================================================= //
+
+    /** Carga los datos iniciales del jugador y los trucos desde el servidor. */
     async function initializeGame() {
         const response = await fetch('?action=getPlayerData');
         const data = await response.json();
@@ -41,178 +235,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             max_balance: parseInt(data.cheat_settings.max_balance, 10),
         };
     }
-    // =================================================================
-    // 5. LÓGICA DEL JUEGO
-    // =================================================================
-    function startGame(betDetails) {
-        if (gameState.gameInProgress) return;
-        gameState.gameInProgress = true;
-        gameState.balance = betDetails.newBalance;
-        gameState.currentBet = betDetails.betAmount;
 
-        // Limpiar resaltados de la partida anterior
-        reels.forEach(reel => {
-            reel.classList.remove('winning-reel');
-            reel.classList.remove('losing-reel');
-        });
-
-        messageContainer.textContent = "Girando...";
-        messageContainer.style.color = 'var(--color-text-muted)';
-
-        // Simulación de giro
-        let spinCount = 0;
-        const spinInterval = setInterval(() => {
-            let lastSymbol = undefined;
-            let actual = symbols[Math.floor() * symbols.length];
-            reels.forEach(reel => {
-                while (actual == lastSymbol) {
-                    actual = symbols[Math.floor(Math.random() * symbols.length)];
-                }
-                lastSymbol = actual;
-                reel.textContent = actual;
-            });
-            spinCount++;
-            if (spinCount > 10) {
-                clearInterval(spinInterval);
-                endGame();
-            }
-        }, 150);
-    }
-
-    async function endGame() {
-        // Lógica para determinar el resultado final
-        let finalReels = [];
-
-        // Forzar resultado según los cheats
-        const shouldWin = shouldPlayerWin();
-
-        if (shouldWin === WINNER_MODE) { // Modo Ganador
-            const winningSymbol = symbols[Math.floor(Math.random() * symbols.length)];
-
-            finalReels = [
-                [winningSymbol, winningSymbol, winningSymbol],
-                [symbols[Math.floor(Math.random() * symbols.length)], winningSymbol, winningSymbol],
-                [winningSymbol, winningSymbol, symbols[Math.floor(Math.random() * symbols.length)]]
-            ][Math.floor(Math.random() * 3)];
-        } else
-            // Modo perdedor
-            if (shouldWin === LOSER_MODE) {
-                let lastSymbol = undefined;
-                let actual = symbols[Math.floor(Math.random() * symbols.length)];
-                for (let i = 0; i < 3; i++) {
-                    while (actual === lastSymbol) {
-                        actual = symbols[Math.floor(Math.random() * symbols.length)];
-                    }
-                    lastSymbol = actual;
-                    finalReels.push(actual);
-                }
-            } else {
-                for (let i = 0; i < 3; i++) {
-                    finalReels.push(symbols[Math.floor(Math.random() * symbols.length)]);
-                }
-            }
-
-        showDelayedReels(finalReels);
-    }
-
-    function showDelayedReels(finalReels) {
-        // Detener los rodillos secuencialmente
-        setTimeout(() => {
-            reels[0].textContent = finalReels[0];
-        }, 300);
-
-        setTimeout(() => {
-            reels[1].textContent = finalReels[1];
-        }, 600);
-
-        setTimeout(() => {
-            reels[2].textContent = finalReels[2];
-            // Una vez que el último rodillo se detiene, comprobamos el resultado.
-            checkWinAndFinalize(finalReels);
-        }, 1200);
-    }
-
-    async function checkWinAndFinalize(finalReels) {
-        let prize = 0;
-        let winningReels = [];
-
-        // Comprobar victoria de 3 símbolos
-        if (finalReels[0] === finalReels[1] && finalReels[1] === finalReels[2]) {
-            prize = gameState.currentBet * 5;
-            winningReels = [0, 1, 2];
-        }
-        // Comprobar victoria de 2 símbolos (1 y 2)
-        else if (finalReels[0] === finalReels[1]) {
-            prize = gameState.currentBet * 1.5;
-            winningReels = [0, 1];
-        }
-        // Comprobar victoria de 2 símbolos (2 y 3)
-        else if (finalReels[1] === finalReels[2]) {
-            prize = gameState.currentBet * 1.5;
-            winningReels = [1, 2];
-        }
-
-        if (prize > 0) {
-            messageContainer.textContent = `¡Has ganado ${prize}!`;
-            messageContainer.style.color = 'var(--color-primary)';
-
-            // Resaltar los rodillos ganadores
-            winningReels.forEach(index => {
-                reels[index].classList.add('winning-reel');
-            });
-
-            await fetch(`?action=incrementWinStreak`, { method: 'POST' });
-            const response = await fetch(`?action=updateBalance`, {
-                method: 'POST',
-                body: new URLSearchParams({ 'amount': prize })
-            });
-            const data = await response.json();
-            if (data.success) {
-                gameState.balance = data.newBalance;
-                gameState.winStreak++;
-            }
-        } else {
-            reels.forEach(reel => reel.classList.add('losing-reel'));
-            messageContainer.textContent = "¡Perdiste, intenta de nuevo!";
-            messageContainer.style.color = 'var(--color-text-muted)';
-            await fetch(`?action=setWinStreak`, {
-                method: 'POST',
-                body: new URLSearchParams({ 'streak': 0 })
-            });
-            gameState.winStreak = 0;
-        }
-
-        // Notificar a otros scripts
-        document.dispatchEvent(new CustomEvent('balanceUpdated', { detail: { newBalance: gameState.balance } }));
-        document.dispatchEvent(new CustomEvent('winStreakUpdated', { detail: { newWinStreak: gameState.winStreak } }));
-        document.dispatchEvent(new CustomEvent('gameEnded')); // ¡Muy importante!
-
-        gameState.gameInProgress = false;
-    }
-
-    function shouldPlayerWin() {
-        const potentialWinAmount = gameState.currentBet * 5; // Premio x5
-        const potentialBalance = gameState.balance + potentialWinAmount;
-
-        // Comprobaciones de cheats
-        if (gameState.cheatSettings.max_balance != -1 && potentialBalance > gameState.cheatSettings.max_balance) {
-            return LOSER_MODE;
-        }
-        if (gameState.cheatSettings.max_streak != -1 && gameState.winStreak >= gameState.cheatSettings.max_streak) {
-            return LOSER_MODE;
-        }
-        if (gameState.cheatSettings.mode === WINNER_MODE) return WINNER_MODE;
-        if (gameState.cheatSettings.mode === LOSER_MODE) return LOSER_MODE;
-
-        // Juego normal
-        return 0;
-    }
-
-    // Listener principal que inicia el juego cuando se realiza una apuesta
+    // --- Eventos Globales ---
+    // Cuando el script de apuestas nos avisa, iniciamos el juego.
     document.addEventListener('betPlaced', (e) => startGame(e.detail));
-
-    // Listener para cuando los cheats cambian
+    // Si cambian los trucos, actualizamos nuestro estado.
     document.addEventListener('cheatSettingsChanged', e => gameState.cheatSettings = e.detail);
 
+    // Inicia todo al cargar la página.
     initializeGame();
 });
