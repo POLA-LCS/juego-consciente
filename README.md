@@ -1,4 +1,5 @@
-# Juego Consciente: Plataforma Educativa sobre Ludopatía
+# Juego Consciente: Plataforma Educativa
+![Logo Juego Consciente](public/assets/images/logo.png "Logo Juego Consciente")
 
 ## 1. Objetivo del Proyecto
 
@@ -38,31 +39,24 @@ Para ejecutar este proyecto en un entorno local, se necesita el siguiente stack 
   - **Base de Datos:** MySQL o MariaDB.
 - **Navegador Web:** Una versión moderna de Chrome, Firefox, Safari o Edge.
 
-## 4. Instalación y Puesta en Marcha
+## 4. Modelo de Uso y Contratación
 
-Para ejecutar este proyecto en un entorno local, sigue estos pasos:
+**Juego Consciente** no es un software de código abierto. Se ofrece como un servicio (SaaS) para instituciones, educadores y profesionales que deseen utilizarlo como herramienta de apoyo en charlas y programas de prevención de la ludopatía.
 
-1.  **Clonar el Repositorio:**
-    ```bash
-    git clone https://github.com/tu-usuario/tu-repositorio.git
-    ```
+El código fuente de este repositorio se hace público con fines de **transparencia y evaluación educativa**. Permite a potenciales clientes y a la comunidad académica revisar nuestras prácticas de desarrollo y la lógica interna de la simulación.
 
-2.  **Configurar el Entorno:**
-    - Asegúrate de tener **XAMPP** instalado y los servicios de Apache y MySQL en funcionamiento.
-    - Coloca la carpeta del proyecto dentro del directorio `htdocs` de XAMPP.
+### ¿Cómo utilizar esta herramienta?
+Si representas a una institución educativa, centro de salud o eres un profesional interesado en utilizar "Juego Consciente" en tus presentaciones, por favor contáctanos para discutir las opciones de licenciamiento y firmar un contrato formal de uso.
 
-3.  **Base de Datos:**
-    - Accede a **phpMyAdmin** desde el panel de control de XAMPP (generalmente en `http://localhost/phpmyadmin`).
-    - Ve a la pestaña **"Importar"**.
-    - Selecciona el archivo `env/ludopatia.sql` del proyecto.
-    - Ejecuta la importación para crear la base de datos `ludopatia` y todas las tablas necesarias.
+**Contacto:** `juego.consciente.lcs@gmail.com`
 
-4.  **Configuración de Conexión:**
-    - Abre el archivo `app/config/database.php`.
-    - Verifica que las credenciales (`$host`, `$db_name`, `$username`, `$password`) coincidan con la configuración de tu entorno MySQL. Por defecto, está configurado para un XAMPP estándar.
+El uso, copia, modificación, distribución o implementación de este software sin un contrato de licencia explícito está estrictamente prohibido y será objeto de acciones legales, como se detalla en nuestra licencia.
 
-5.  **Acceder a la Aplicación:**
-    - Abre tu navegador y navega a `http://localhost/nombre-de-la-carpeta-del-proyecto/`.
+### Repositorio
+El código fuente puede ser consultado en nuestro repositorio de GitHub:
+```bash
+git clone https://github.com/POLA-LCS/juego-consciente.git
+```
 
 ## 5. Tecnologías Utilizadas
 
@@ -74,11 +68,11 @@ Para ejecutar este proyecto en un entorno local, sigue estos pasos:
 
 ## 6. Integrantes del Proyecto
 
-- Pilling, Baltazar Zara
 - Pesci, Elias
+- Pilling, Baltazar Zara
 - Roche, Lautaro
 - Torres, Joaquin
 
 ## 7. Licencia
 
-Este proyecto se distribuye bajo una licencia privada. Todos los derechos reservados. Consulta el archivo `LICENSE.md` para más detalles.
+Este proyecto se distribuye bajo una licencia de **Código Fuente Disponible y Propietario**. El uso no autorizado está estrictamente prohibido. Consulta el archivo `LICENSE.md` para más detalles.
