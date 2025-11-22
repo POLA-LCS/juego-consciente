@@ -1,5 +1,5 @@
 # Juego Consciente: Plataforma Educativa
-![Logo Juego Consciente](public/assets/images/logo.png "Logo Juego Consciente")
+![Logo Juego Consciente](src/public/assets/images/logo.png "Logo Juego Consciente")
 
 ## 1. Objetivo del Proyecto
 
