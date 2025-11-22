@@ -1,11 +1,4 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-
-    # Establece el directorio base si el proyecto está en una subcarpeta.
-    # Ejemplo: /juego-consciente/
-    # RewriteBase /tu-subdirectorio/
-
-    # Reenvía todas las peticiones a la carpeta src/public/
-    # sin cambiar la URL en el navegador.
     RewriteRule ^(.*)$ src/public/$1 [L]
 </IfModule>
