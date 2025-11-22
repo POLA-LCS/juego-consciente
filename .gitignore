@@ -1,10 +1,18 @@
+# Dependencias de Node.js
 /node_modules/
-package-lock.json
+
+# Archivos de compilación y artefactos
+# El CSS de Tailwind es generado, no debe estar en el control de versiones.
 /public/assets/css/tailwind.css
 *.map
-MacOS
+
+# Archivos específicos del sistema operativo
 .DS_Store
-Windows
 Thumbs.db
-VS Code
+
+# Archivos específicos del editor de código
 .vscode/
+
+# Datos de prueba y entorno
+# La carpeta de semillas puede contener datos de prueba que no deben estar en el repo principal.
+/database/seed/

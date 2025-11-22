@@ -45,18 +45,11 @@ Para ejecutar este proyecto en un entorno local, se necesita el siguiente stack 
 
 El código fuente de este repositorio se hace público con fines de **transparencia y evaluación educativa**. Permite a potenciales clientes y a la comunidad académica revisar nuestras prácticas de desarrollo y la lógica interna de la simulación.
 
-### ¿Cómo utilizar esta herramienta?
 Si representas a una institución educativa, centro de salud o eres un profesional interesado en utilizar "Juego Consciente" en tus presentaciones, por favor contáctanos para discutir las opciones de licenciamiento y firmar un contrato formal de uso.
 
 **Contacto:** `juego.consciente.lcs@gmail.com`
 
 El uso, copia, modificación, distribución o implementación de este software sin un contrato de licencia explícito está estrictamente prohibido y será objeto de acciones legales, como se detalla en nuestra licencia.
-
-### Repositorio
-El código fuente puede ser consultado en nuestro repositorio de GitHub:
-```bash
-git clone https://github.com/POLA-LCS/juego-consciente.git
-```
 
 ## 5. Tecnologías Utilizadas
 
@@ -76,3 +69,6 @@ git clone https://github.com/POLA-LCS/juego-consciente.git
 ## 7. Licencia
 
 Este proyecto se distribuye bajo una licencia de **Código Fuente Disponible y Propietario**. El uso no autorizado está estrictamente prohibido. Consulta el archivo `LICENSE.md` para más detalles.
+
+## 8. Setup
+Para evaluar localmente el proyecto ve a [SETUP](SETUP.md).

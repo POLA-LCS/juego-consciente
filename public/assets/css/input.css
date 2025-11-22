@@ -1,0 +1,354 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Grand Casino';
+    src: url('../fonts/grand_casino/Grand-Casino.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/montserrat/Montserrat-Regular.otf') format('opentype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'Montserrat';
+    src: url('../fonts/montserrat/Montserrat-Bold.otf') format('opentype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('../fonts/poppins/Poppins-Regular.woff') format('truetype');
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    font-family: 'Poppins';
+}
+
+:root {
+    --color-background: #0c0c0c;
+    --color-surface: #141414;
+    --color-border: #2a2a2a;
+    --color-primary: #e52e2e;
+    --color-primary-hover: #f04444;
+    --color-text-base: #f0f0f0;
+    --color-text-muted: #a0a0a0;
+}
+
+body {
+    background-color: var(--color-background);
+    color: var(--color-text-base);
+    font-family: Poppins, sans-serif;
+}
+
+html {
+    overflow-y: scroll;
+    /* Evita el "flick" o salto de layout cuando aparece la barra de scroll */
+    /* scrollbar-gutter: stable; */
+}
+
+.game-container {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+}
+
+main {
+    flex-grow: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
+.game-card {
+    border: 2px solid rgba(255, 26, 26, 0.3);
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.game-card:hover {
+    border-color: var(--color-primary);
+    transform: scale(1.03);
+}
+
+.btn,
+.btn-secondary {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn {
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+
+.btn:disabled,
+.btn-secondary:disabled,
+.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn:enabled:hover,
+.btn:enabled:focus {
+    outline: none;
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--color-primary);
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-secondary:enabled:hover,
+.btn-secondary:enabled:focus {
+    outline: none;
+    background-color: var(--color-primary-hover);
+}
+
+.btn-chip {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.chip {
+    background: url('../assets/images/poker-chip.png');
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    text-align: center;
+    align-items: center;
+}
+
+.sidebar-link {
+    display: block;
+    padding: 0.75rem calc(1rem - 3px);
+    border-right: 3px solid transparent;
+    border-radius: 0.5rem 0 0 0.5rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-right-color 0.2s ease-in-out;
+}
+
+.sidebar-link:hover,
+.sidebar-link:focus {
+    outline: none;
+    background-color: var(--color-border);
+    border-right-color: var(--color-primary);
+}
+
+.sidebar-link-danger {
+    color: var(--color-primary);
+}
+
+.sidebar-link-danger:hover {
+    background-color: var(--color-primary);
+    color: white;
+    border-right-color: var(--color-primary);
+}
+
+#openUserSidebar:focus {
+    outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #3a3a3a;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #059669;
+}
+
+input:checked+.slider:before {
+    transform: translateX(22px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.winning-reel {
+    border-color: rgb(120, 184, 69) !important;
+    animation: slow-bounce 1s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.losing-reel {
+    border-color: var(--color-primary) !important;
+    opacity: 0.6;
+    transition: opacity 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+@keyframes slow-bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* --- Estilos para <details> animado --- */
+details>summary {
+    list-style: none;
+    /* Eliminar marcador por defecto */
+    transition: background-color 0.2s ease-in-out;
+    position: relative;
+}
+
+details>summary::-webkit-details-marker {
+    display: none;
+    /* Ocultar marcador en Chrome/Safari */
+}
+
+details>summary:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Flecha indicadora */
+details>summary::after {
+    content: '›';
+    position: absolute;
+    right: 1rem;
+    font-size: 1.5em;
+    transition: transform 0.3s ease-in-out;
+}
+
+details[open]>summary::after {
+    transform: rotate(90deg);
+}
+
+/* --- Componentes de Formularios --- */
+.form-container {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 28rem;
+    /* max-w-md */
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    /* text-sm */
+    font-weight: 500;
+    /* font-medium */
+    margin-bottom: 0.5rem;
+    color: var(--color-text-muted);
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 0.375rem;
+    outline: none;
+}
+
+.form-input:focus {
+    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+    --tw-ring-color: var(--color-primary);
+}
+
+.form-link {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.form-link:hover {
+    text-decoration: underline;
+}
+
+.bet-spot.has-chip {
+    background-image: url('../images/poker-chip.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    text-shadow: 0 0 1rem rgba(0, 0, 0, 1);
+}
