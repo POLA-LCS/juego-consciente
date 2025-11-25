@@ -2,7 +2,7 @@
 require_once SRC_PATH . 'config/database.php';
 require_once SRC_PATH . 'app/models/User.php';
 require_once SRC_PATH . 'app/models/CheatSettings.php';
-require_once SRC_PATH . 'app/models/History.php';
+require_once SRC_PATH . 'app/models/GameHistory.php';
 
 $controller = new UserController();
 
@@ -153,7 +153,7 @@ try {
         http_response_code(500);
         echo json_encode(['success' => false, 'message' => 'Error en la base de datos.']);
     } else {
-        $_SESSION['error_message'] = "Ha ocurrido un error inesperado en el servidor.";
+        $_SESSION['error_message'] = "Ha ocurrido un error inesperado en el servidor: " . $e->getMessage();
         // Redirigir a una página de error o a la página anterior
         $page = $_GET['page'] ?? 'login';
         header("Location: " . $page);

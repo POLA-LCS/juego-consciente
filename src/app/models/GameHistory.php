@@ -2,10 +2,12 @@
 // Strict typing
 declare(strict_types=1);
 
-class History
+require_once(SRC_PATH . 'config/database.php');
+
+class GameHistory
 {
     private PDO $conn;
-    private string $table_name = "history";
+    private string $table_name;
 
     public int $id;
     public int $user_id;
@@ -16,6 +18,7 @@ class History
     public function __construct(PDO $db)
     {
         $this->conn = $db;
+        $this->table_name = Database::$GameHistoryTable;
     }
 
     public function add(): void

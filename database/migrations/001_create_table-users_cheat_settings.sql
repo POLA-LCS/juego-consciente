@@ -1,7 +1,7 @@
 -- Migration: Crear la tabla de configuración de trucos
 --
 CREATE TABLE
-    `cheat_settings` (
+    `users_cheat_settings` (
         `id` INT NOT NULL AUTO_INCREMENT,
         `user_id` INT NOT NULL,
         `mode` INT NOT NULL DEFAULT 0 COMMENT '0: Normal, 1: Ganador, 2: Perdedor',

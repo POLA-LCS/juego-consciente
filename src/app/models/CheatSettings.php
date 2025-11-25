@@ -2,10 +2,12 @@
 // Strict typing
 declare(strict_types=1);
 
+require_once(SRC_PATH . 'config/database.php');
+
 class CheatSettings
 {
     private PDO $conn;
-    private string $table_name = "user_cheat_settings";
+    private string $table_name;
 
     public int $user_id = 0;
     public int $mode = 0;
@@ -15,6 +17,7 @@ class CheatSettings
     public function __construct(PDO $db)
     {
         $this->conn = $db;
+        $this->table_name = Database::$CheatSettingsTable;
     }
 
     /**

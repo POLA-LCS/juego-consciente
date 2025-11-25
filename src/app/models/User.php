@@ -2,10 +2,12 @@
 // Strict typing
 declare(strict_types=1);
 
+require_once(SRC_PATH . 'config/database.php');
+
 class User
 {
     private PDO $conn;
-    private string $table_name = "users";
+    private string $table_name;
 
     public int $id;
     public string $username;
@@ -16,6 +18,7 @@ class User
     public function __construct(PDO $db)
     {
         $this->conn = $db;
+        $this->table_name = Database::$UserTable;
     }
 
     public function create(): void
