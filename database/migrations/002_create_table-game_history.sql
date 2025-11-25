@@ -4,7 +4,7 @@ CREATE TABLE
     `game_history` (
         `id` INT NOT NULL AUTO_INCREMENT,
         `user_id` INT NOT NULL,
-        `game` VARCHAR(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ej: roulette, cups, slots',
+        `game` VARCHAR(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Ej: roulette, cups, slots',
         `result` INT NOT NULL,
         `played_at` timestamp NOT NULL DEFAULT current_timestamp(),
         PRIMARY KEY (`id`),
