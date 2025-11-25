@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const winnings = calculateWinnings(winningNumber, betDetails.bets);
 
         if (winnings > 0) {
+            await logGameResult('roulette', Math.floor(winnings - betDetails.totalBet));
             messageContainer.textContent = `¡Has ganado ${winnings}!`;
             messageContainer.style.color = 'var(--color-primary)';
 
@@ -93,6 +94,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: new URLSearchParams({ 'amount': winnings })
             });
         } else {
+            await logGameResult('roulette', -Math.floor(betDetails.totalBet));
             messageContainer.textContent = "¡Perdiste! Inténtalo de nuevo...";
             messageContainer.style.color = 'var(--color-text-muted)';
 
@@ -124,15 +126,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             const betAmount = bets[betKey];
 
             // Comprobamos si la apuesta es ganadora y añadimos el premio.
-            if (type === 'number' && parseInt(value) === winningNumber) totalWinnings += betAmount * 36;
-            if (type === 'color' && value === winningColor) totalWinnings += betAmount * 2;
+            if (type === 'number' && parseInt(value) === winningNumber) totalWinnings += Math.floor(betAmount * 36);
+            if (type === 'color' && value === winningColor) totalWinnings += Math.floor(betAmount * 2);
             if (type === 'dozen') {
-                if (value == 1 && winningNumber >= 1 && winningNumber <= 12) totalWinnings += betAmount * 3;
-                if (value == 2 && winningNumber >= 13 && winningNumber <= 24) totalWinnings += betAmount * 3;
-                if (value == 3 && winningNumber >= 25 && winningNumber <= 36) totalWinnings += betAmount * 3;
+                if (value == 1 && winningNumber >= 1 && winningNumber <= 12) totalWinnings += Math.floor(betAmount * 3);
+                if (value == 2 && winningNumber >= 13 && winningNumber <= 24) totalWinnings += Math.floor(betAmount * 3);
+                if (value == 3 && winningNumber >= 25 && winningNumber <= 36) totalWinnings += Math.floor(betAmount * 3);
             }
         }
-        return totalWinnings;
+        return Math.floor(totalWinnings);
     }
 
     /**
@@ -214,6 +216,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (isSpinning) return '#374151'; // Gris mientras gira.
         if (number === 0) return '#0c9d5b'; // Verde para el 0.
         return REDS.includes(number) ? 'var(--color-primary)' : '#1f1f1f'; // Rojo o Negro.
+    }
+
+    /**
+     * Envía el resultado de la partida al servidor para que se guarde en el historial.
+     * @param {string} gameName - El nombre del juego.
+     * @param {number} resultAmount - El monto neto ganado o perdido (negativo si es pérdida).
+     */
+    async function logGameResult(gameName, resultAmount) {
+        console.log(`[Game History] Logging result for '${gameName}'. Net Amount: ${resultAmount}`);
+        await fetch('?action=logGame', {
+            method: 'POST',
+            body: new URLSearchParams({ 'game': gameName, 'result': resultAmount })
+        });
     }
 
     // ================================================================= //

@@ -13,7 +13,7 @@ class User
     public string $username;
     public string $email;
     public string $password;
-    public float $balance = 1000.0;
+    public int $balance = 1000;
 
     public function __construct(PDO $db)
     {
@@ -125,7 +125,7 @@ class User
         $stmt->execute();
     }
 
-    public function getBalance(): float
+    public function getBalance(): int
     {
         $query = "SELECT balance FROM " . $this->table_name . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
@@ -134,10 +134,10 @@ class User
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return (float)($row["balance"] ?? 0.0);
+        return (int)($row["balance"] ?? 0);
     }
 
-    public function updateBalance(float $amount): float
+    public function updateBalance(int $amount): int
     {
         $query = "UPDATE " . $this->table_name . " SET balance = balance + :amount WHERE id = :id";
         $stmt = $this->conn->prepare($query);
@@ -149,7 +149,7 @@ class User
         return $this->getBalance();
     }
 
-    public function setBalance(float $newBalance): float
+    public function setBalance(int $newBalance): int
     {
         $query = "UPDATE " . $this->table_name . " SET balance = :newBalance WHERE id = :id";
         $stmt = $this->conn->prepare($query);

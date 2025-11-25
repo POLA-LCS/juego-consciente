@@ -89,6 +89,8 @@ document.addEventListener('DOMContentLoaded', async () => {
      * Bloquea los controles hasta que el juego termine.
      */
     async function placeBet() {
+        console.log(betState);
+
         if (betState.currentBet <= 0 || betState.currentBet > betState.balance) {
             alert("Apuesta inválida.");
             return;
@@ -130,7 +132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function initializeBetting() {
         const response = await fetch('?action=getPlayerData');
         const data = await response.json();
-        betState.balance = parseInt(data.balance, 10);
+        betState.balance = Math.floor(parseInt(data.balance, 10));
         betState.winStreak = parseInt(data.win_streak, 10);
         resetBet();
         updateBetUI();
@@ -149,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Escucha eventos de otros scripts para mantener el estado sincronizado.
     document.addEventListener('balanceUpdated', e => {
-        betState.balance = e.detail.newBalance;
+        betState.balance = Math.floor(e.detail.newBalance);
         updateBetUI();
     });
 

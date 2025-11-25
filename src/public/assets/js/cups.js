@@ -93,7 +93,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById(`cup-${cupNumber}`).style.transform = 'translateY(-30px)';
 
         if (isWinner) {
-            const wonBalance = gameState.currentBet * 2;
+            const wonBalance = Math.floor(gameState.currentBet * 2);
+            await logGameResult('cups', wonBalance);
             messageContainer.textContent = `¡Has ganado ${wonBalance}!`;
             messageContainer.style.color = 'var(--color-primary)';
 
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const data = await response.json();
             if (data.success) {
                 // Actualizamos nuestros datos locales con la respuesta del servidor.
-                gameState.balance = data.newBalance;
+                gameState.balance = Math.floor(data.newBalance);
                 gameState.winStreak++;
                 // Avisamos a otros scripts (como el de la barra de apuestas) que la racha cambió.
                 document.dispatchEvent(new CustomEvent('winStreakUpdated', {
@@ -114,6 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }));
             }
         } else {
+            await logGameResult('cups', -Math.floor(gameState.currentBet));
             messageContainer.textContent = "¡Perdiste! Inténtalo de nuevo...";
             messageContainer.style.color = 'var(--color-text-muted)';
 
@@ -138,6 +140,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 2000);
     }
 
+    /**
+     * Envía el resultado de la partida al servidor para que se guarde en el historial.
+     * @param {string} gameName - El nombre del juego.
+     * @param {number} resultAmount - El monto ganado o perdido (negativo si es pérdida).
+     */
+    async function logGameResult(gameName, resultAmount) {
+        console.log(`[Game History] Logging result for '${gameName}'. Amount: ${resultAmount}`);
+        await fetch('?action=logGame', {
+            method: 'POST',
+            body: new URLSearchParams({ 'game': gameName, 'result': resultAmount })
+        });
+    }
+
     /** Prepara el juego para una nueva ronda. */
     function resetGame() {
         gameState.gameInProgress = false;
@@ -159,7 +174,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function initializeGame() {
         const response = await fetch('?action=getPlayerData');
 
-        const data = await response.json();
+        const data = await response.json(); // No need for Math.floor here, as it's just initialization
         gameState.balance = parseInt(data.balance, 10);
         gameState.winStreak = parseInt(data.win_streak, 10);
         gameState.cheatSettings = {
@@ -187,7 +202,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Si el saldo o los trucos cambian desde otro script (como el panel de trucos), actualizamos nuestro estado.
-    document.addEventListener('balanceUpdated', e => gameState.balance = e.detail.newBalance);
+    document.addEventListener('balanceUpdated', e => gameState.balance = Math.floor(e.detail.newBalance));
     document.addEventListener('cheatSettingsChanged', e => gameState.cheatSettings = e.detail);
 
     // Inicia todo al cargar la página.

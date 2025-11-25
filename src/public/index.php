@@ -22,10 +22,10 @@ if (isset($_GET['action'])) {
 
 // Rutas protegidas
 $protected_pages = [
-    'account',
     'dashboard',
-    'contact',
+    'account',
     'info',
+    'contact',
     'blackjack',
     'cups',
     'roulette',
@@ -34,8 +34,8 @@ $protected_pages = [
 
 // Rutas validas
 $view_routes = [
-    'register'  => 'app/views/register.php',
     'login'     => 'app/views/login.php',
+    'register'  => 'app/views/register.php',
     'dashboard' => 'app/views/dashboard.php',
     'account'   => 'app/views/account.php',
     'info'      => 'app/views/info.php',
@@ -44,12 +44,12 @@ $view_routes = [
     'cups'      => 'app/views/games/cups.php',
     'roulette'  => 'app/views/games/roulette.php',
     'slots'     => 'app/views/games/slots.php',
-    'ERROR_403'  => 'app/views/errors/403.php',
-    'ERROR_404'  => 'app/views/errors/404.php',
+    'ERROR_403' => 'app/views/errors/403.php',
+    'ERROR_404' => 'app/views/errors/404.php',
 ];
 
 // Entrada inicial
-$page = $_GET['page'] ?? 'register';
+$page = $_GET['page'] ?? 'login';
 
 // --- Lógica de Enrutamiento ---
 

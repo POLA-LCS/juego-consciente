@@ -3,7 +3,6 @@ require_once SRC_PATH . 'config/database.php';
 require_once SRC_PATH . 'app/models/User.php';
 require_once SRC_PATH . 'app/models/CheatSettings.php';
 require_once SRC_PATH . 'app/models/GameHistory.php';
-
 $controller = new UserController();
 
 try {
@@ -81,7 +80,7 @@ try {
 
         case 'updateBalance':
             $user_id = $_SESSION['user_id'];
-            $amount = (float)($_POST['amount'] ?? 0);
+            $amount = (int)($_POST['amount'] ?? 0);
             $result = $controller->updateBalance($user_id, $amount);
 
             header('Content-Type: application/json');
@@ -90,7 +89,7 @@ try {
 
         case 'setBalance':
             $user_id = $_SESSION['user_id'];
-            $amount = (float)($_POST['amount'] ?? 0);
+            $amount = (int)($_POST['amount'] ?? 0);
             $result = $controller->setBalance($user_id, $amount);
 
             header('Content-Type: application/json');
@@ -144,6 +143,16 @@ try {
             header('Content-Type: application/json');
             echo json_encode($playerData);
             exit;
+
+        case 'logGame':
+            $user_id = $_SESSION['user_id'];
+            $game = $_POST['game'] ?? 'unknown';
+            $result = (int)($_POST['result'] ?? 0);
+
+            $controller->logGame($user_id, $game, $result);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true]);
+            exit;
     }
 } catch (PDOException $e) {
     // Loggear el error $e->getMessage() en un entorno de producción
@@ -166,6 +175,7 @@ class UserController
     private PDO $db;
     private User $user;
     private CheatSettings $cheatSettings;
+    private GameHistory $history;
 
     public function __construct()
     {
@@ -173,6 +183,7 @@ class UserController
         $this->db = $database->getConnection();
         $this->user = new User($this->db);
         $this->cheatSettings = new CheatSettings($this->db);
+        $this->history = new GameHistory($this->db);
     }
 
     public function register(
@@ -269,7 +280,7 @@ class UserController
         return $this->user->getById();
     }
 
-    public function getBalance(int $user_id): float
+    public function getBalance(int $user_id): int
     {
         $this->user->id = $user_id;
         return $this->user->getBalance();
@@ -277,16 +288,16 @@ class UserController
 
     public function updateBalance(
         int $user_id,
-        float $amount
-    ): float {
+        int $amount
+    ): int {
         $this->user->id = $user_id;
         return $this->user->updateBalance($amount);
     }
 
     public function setBalance(
         int $user_id,
-        float $amount
-    ): float {
+        int $amount
+    ): int {
         $this->user->id = $user_id;
         return $this->user->setBalance($amount);
     }
@@ -331,5 +342,17 @@ class UserController
     {
         $this->user->id = $user_id;
         $this->user->incrementWinStreak();
+    }
+
+    public function logGame(
+        int $user_id,
+        string $game,
+        int $result
+    ): void {
+        error_log("[Game History] User ID: {$user_id}, Game: {$game}, Result: {$result}");
+        $this->history->user_id = $user_id;
+        $this->history->game = $game;
+        $this->history->result = $result;
+        $this->history->create();
     }
 }

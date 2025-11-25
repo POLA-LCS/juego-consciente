@@ -145,21 +145,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Comprobamos si hay 3 símbolos iguales.
         if (finalReels[0] === finalReels[1] && finalReels[1] === finalReels[2]) {
-            prize = gameState.currentBet * 5; // Premio gordo
+            prize = Math.floor(gameState.currentBet * 5); // Premio gordo
             winningReels = [0, 1, 2];
         }
         // Comprobamos si los 2 primeros son iguales.
         else if (finalReels[0] === finalReels[1]) {
-            prize = gameState.currentBet * 1.5; // Premio pequeño
+            prize = Math.floor(gameState.currentBet * 1.5); // Premio pequeño
             winningReels = [0, 1];
         }
         // Comprobamos si los 2 últimos son iguales.
         else if (finalReels[1] === finalReels[2]) {
-            prize = gameState.currentBet * 1.5; // Premio pequeño
+            prize = Math.floor(gameState.currentBet * 1.5); // Premio pequeño
             winningReels = [1, 2];
         }
 
         if (prize > 0) {
+            await logGameResult('slots', prize);
             messageContainer.textContent = `¡Has ganado ${prize}!`;
             messageContainer.style.color = 'var(--color-primary)';
             winningReels.forEach(index => reels[index].classList.add('winning-reel'));
@@ -172,10 +173,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             const data = await response.json();
             if (data.success) {
-                gameState.balance = data.newBalance;
+                gameState.balance = Math.floor(data.newBalance);
                 gameState.winStreak++;
             }
         } else {
+            await logGameResult('slots', -Math.floor(gameState.currentBet));
             messageContainer.textContent = "¡Perdiste, intenta de nuevo!";
             messageContainer.style.color = 'var(--color-text-muted)';
             reels.forEach(reel => reel.classList.add('losing-reel'));
@@ -201,7 +203,7 @@ document.addEventListener('DOMContentLoaded', async () => {
      * @returns {number} - WINNER_MODE, LOSER_MODE o 0 (juego normal).
      */
     function shouldPlayerWin() {
-        const potentialWinAmount = gameState.currentBet * 5; // Calculamos con el premio máximo.
+        const potentialWinAmount = Math.floor(gameState.currentBet * 5); // Calculamos con el premio máximo.
         const potentialBalance = gameState.balance + potentialWinAmount;
 
         // --- Lógica de Trucos ---
@@ -218,6 +220,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         return 0; // 0 significa que el resultado será aleatorio.
     }
 
+    /**
+     * Envía el resultado de la partida al servidor para que se guarde en el historial.
+     * @param {string} gameName - El nombre del juego.
+     * @param {number} resultAmount - El monto ganado o perdido (negativo si es pérdida).
+     */
+    async function logGameResult(gameName, resultAmount) {
+        console.log(`[Game History] Logging result for '${gameName}'. Amount: ${resultAmount}`);
+        await fetch('?action=logGame', {
+            method: 'POST',
+            body: new URLSearchParams({ 'game': gameName, 'result': resultAmount })
+        });
+    }
+
     // ================================================================= //
     // 4. INICIALIZACIÓN Y MANEJO DE EVENTOS                             //
     // ================================================================= //
@@ -227,7 +242,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('?action=getPlayerData');
         const data = await response.json();
 
-        gameState.balance = parseInt(data.balance, 10);
+        gameState.balance = Math.floor(parseInt(data.balance, 10));
         gameState.winStreak = parseInt(data.win_streak, 10);
         gameState.cheatSettings = {
             mode: parseInt(data.cheat_settings.mode, 10),
