@@ -6,154 +6,155 @@ require_once SRC_PATH . 'app/models/GameHistory.php';
 $controller = new UserController();
 
 try {
-    switch ($_GET['action']) {
-        // ====== ACCIONES QUE MODIFICAN EL USUARIO =========
-        case 'register':
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST')
-                exit;
-            $username = trim($_POST['username'] ?? '');
-            $email = trim($_POST['email'] ?? '');
-            $password = $_POST['password'];
+    if (isset($_GET['action']))
+        switch ($_GET['action']) {
+            // ====== ACCIONES QUE MODIFICAN EL USUARIO =========
+            case 'register':
+                if ($_SERVER['REQUEST_METHOD'] !== 'POST')
+                    exit;
+                $username = trim($_POST['username'] ?? '');
+                $email = trim($_POST['email'] ?? '');
+                $password = $_POST['password'];
 
-            if (empty($username) || empty($email) || empty($password)) {
-                $_SESSION['error_message'] = "Todos los campos son obligatorios.";
-                header("Location: register");
-                exit;
-            }
+                if (empty($username) || empty($email) || empty($password)) {
+                    $_SESSION['error_message'] = "Todos los campos son obligatorios.";
+                    header("Location: register");
+                    exit;
+                }
 
-            if (!$controller->isEmailAvailable($email)) {
-                $_SESSION['error_message'] = "El e-mail ya está en uso.";
-                header("Location: register");
-                exit;
-            }
+                if (!$controller->isEmailAvailable($email)) {
+                    $_SESSION['error_message'] = "El e-mail ya está en uso.";
+                    header("Location: register");
+                    exit;
+                }
 
-            // Redireccion al login
-            $controller->register($username, $email, $password);
-            $_SESSION['success_message'] = "¡Registro completado! Por favor, inicia sesión.";
-            header("Location: login");
-            exit;
-
-        case 'login':
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST')
-                exit;
-
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-
-            if ($controller->login($username, $password)) {
-                // Asegurarse de que el usuario tenga settings de cheat al iniciar sesión
-                $controller->ensureCheatSettings($_SESSION['user_id']);
-                header("Location: dashboard");
-            } else {
-                // Si el login falla, guardamos un error en la sesión y redirigimos al login.
-                $_SESSION['error_message'] = "Usuario o contraseña incorrectos.";
+                // Redireccion al login
+                $controller->register($username, $email, $password);
+                $_SESSION['success_message'] = "¡Registro completado! Por favor, inicia sesión.";
                 header("Location: login");
-            }
-            exit;
-
-        case 'logout':
-            $controller->logout();
-            header("Location: login");
-            exit;
-
-        case 'updatePassword':
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST')
                 exit;
-            $user_id = $_SESSION['user_id'];
-            $current_password = $_POST['current_password'];
-            $new_password = $_POST['new_password'];
-            $confirm_password = $_POST['confirm_password'];
-            $controller->updatePassword($user_id, $current_password, $new_password, $confirm_password);
-            exit;
 
-        case 'delete':
-            if ($_SERVER['REQUEST_METHOD'] !== 'POST')
+            case 'login':
+                if ($_SERVER['REQUEST_METHOD'] !== 'POST')
+                    exit;
+
+                $username = $_POST['username'];
+                $password = $_POST['password'];
+
+                if ($controller->login($username, $password)) {
+                    // Asegurarse de que el usuario tenga settings de cheat al iniciar sesión
+                    $controller->ensureCheatSettings($_SESSION['user_id']);
+                    header("Location: dashboard");
+                } else {
+                    // Si el login falla, guardamos un error en la sesión y redirigimos al login.
+                    $_SESSION['error_message'] = "Usuario o contraseña incorrectos.";
+                    header("Location: login");
+                }
                 exit;
-            $user_id = $_SESSION['user_id'];
-            $controller->deleteAccount($user_id, $_POST['password']);
-            exit;
-            // ====== ACCIONES QUE NO MODIFICAN AL USUARIO =========
-        case 'getBalance':
-            $user_id = $_SESSION['user_id'];
-            echo $controller->getBalance($user_id);
-            exit;
 
-        case 'updateBalance':
-            $user_id = $_SESSION['user_id'];
-            $amount = (int)($_POST['amount'] ?? 0);
-            $result = $controller->updateBalance($user_id, $amount);
+            case 'logout':
+                $controller->logout();
+                header("Location: login");
+                exit;
 
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true, 'newBalance' => $result]);
-            exit;
+            case 'updatePassword':
+                if ($_SERVER['REQUEST_METHOD'] !== 'POST')
+                    exit;
+                $user_id = $_SESSION['user_id'];
+                $current_password = $_POST['current_password'];
+                $new_password = $_POST['new_password'];
+                $confirm_password = $_POST['confirm_password'];
+                $controller->updatePassword($user_id, $current_password, $new_password, $confirm_password);
+                exit;
 
-        case 'setBalance':
-            $user_id = $_SESSION['user_id'];
-            $amount = (int)($_POST['amount'] ?? 0);
-            $result = $controller->setBalance($user_id, $amount);
+            case 'delete':
+                if ($_SERVER['REQUEST_METHOD'] !== 'POST')
+                    exit;
+                $user_id = $_SESSION['user_id'];
+                $controller->deleteAccount($user_id, $_POST['password']);
+                exit;
+                // ====== ACCIONES QUE NO MODIFICAN AL USUARIO =========
+            case 'getBalance':
+                $user_id = $_SESSION['user_id'];
+                echo $controller->getBalance($user_id);
+                exit;
 
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true, 'newBalance' => $result]);
-            exit;
+            case 'updateBalance':
+                $user_id = $_SESSION['user_id'];
+                $amount = (int)($_POST['amount'] ?? 0);
+                $result = $controller->updateBalance($user_id, $amount);
 
-        case 'getCheatSettings':
-            $user_id = $_SESSION['user_id'];
-            $settings = $controller->getCheatSettings($user_id);
-            header('Content-Type: application/json');
-            echo json_encode($settings);
-            exit;
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true, 'newBalance' => $result]);
+                exit;
 
-        case 'updateCheatSettings':
-            $user_id = $_SESSION['user_id'];
-            $settings = $_POST; // Recibe todos los datos del formulario
-            $controller->updateCheatSettings($user_id, $settings);
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true]);
-            exit;
+            case 'setBalance':
+                $user_id = $_SESSION['user_id'];
+                $amount = (int)($_POST['amount'] ?? 0);
+                $result = $controller->setBalance($user_id, $amount);
 
-        case 'getWinStreak':
-            $user_id = $_SESSION['user_id'];
-            $streak = $controller->getWinStreak($user_id);
-            header('Content-Type: application/json');
-            echo json_encode(['win_streak' => $streak]);
-            exit;
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true, 'newBalance' => $result]);
+                exit;
 
-        case 'setWinStreak':
-            $user_id = $_SESSION['user_id'];
-            $streak = (int)($_POST['streak'] ?? 0);
-            $controller->setWinStreak($user_id, $streak);
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true]);
-            exit;
+            case 'getCheatSettings':
+                $user_id = $_SESSION['user_id'];
+                $settings = $controller->getCheatSettings($user_id);
+                header('Content-Type: application/json');
+                echo json_encode($settings);
+                exit;
 
-        case 'incrementWinStreak':
-            $user_id = $_SESSION['user_id'];
-            $controller->incrementWinStreak($user_id);
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true]);
-            exit;
+            case 'updateCheatSettings':
+                $user_id = $_SESSION['user_id'];
+                $settings = $_POST; // Recibe todos los datos del formulario
+                $controller->updateCheatSettings($user_id, $settings);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                exit;
 
-        case 'getPlayerData':
-            $user_id = $_SESSION['user_id'];
-            $playerData = [
-                'balance' => $controller->getBalance($user_id),
-                'win_streak' => $controller->getWinStreak($user_id),
-                'cheat_settings' => $controller->getCheatSettings($user_id)
-            ];
-            header('Content-Type: application/json');
-            echo json_encode($playerData);
-            exit;
+            case 'getWinStreak':
+                $user_id = $_SESSION['user_id'];
+                $streak = $controller->getWinStreak($user_id);
+                header('Content-Type: application/json');
+                echo json_encode(['win_streak' => $streak]);
+                exit;
 
-        case 'logGame':
-            $user_id = $_SESSION['user_id'];
-            $game = $_POST['game'] ?? 'unknown';
-            $result = (int)($_POST['result'] ?? 0);
+            case 'setWinStreak':
+                $user_id = $_SESSION['user_id'];
+                $streak = (int)($_POST['streak'] ?? 0);
+                $controller->setWinStreak($user_id, $streak);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                exit;
 
-            $controller->logGame($user_id, $game, $result);
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true]);
-            exit;
-    }
+            case 'incrementWinStreak':
+                $user_id = $_SESSION['user_id'];
+                $controller->incrementWinStreak($user_id);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                exit;
+
+            case 'getPlayerData':
+                $user_id = $_SESSION['user_id'];
+                $playerData = [
+                    'balance' => $controller->getBalance($user_id),
+                    'win_streak' => $controller->getWinStreak($user_id),
+                    'cheat_settings' => $controller->getCheatSettings($user_id)
+                ];
+                header('Content-Type: application/json');
+                echo json_encode($playerData);
+                exit;
+
+            case 'logGame':
+                $user_id = $_SESSION['user_id'];
+                $game = $_POST['game'] ?? 'unknown';
+                $result = (int)($_POST['result'] ?? 0);
+
+                $controller->logGame($user_id, $game, $result);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+                exit;
+        }
 } catch (PDOException $e) {
     // Loggear el error $e->getMessage() en un entorno de producción
     $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';

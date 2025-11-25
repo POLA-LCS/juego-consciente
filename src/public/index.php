@@ -24,12 +24,13 @@ if (isset($_GET['action'])) {
 $protected_pages = [
     'dashboard',
     'account',
+    'history',
     'info',
     'contact',
     'blackjack',
     'cups',
     'roulette',
-    'slots'
+    'slots',
 ];
 
 // Rutas validas
@@ -38,6 +39,7 @@ $view_routes = [
     'register'  => 'app/views/register.php',
     'dashboard' => 'app/views/dashboard.php',
     'account'   => 'app/views/account.php',
+    'history'   => 'app/views/history.php',
     'info'      => 'app/views/info.php',
     'contact'   => 'app/views/contact.php',
     'blackjack' => 'app/views/games/blackjack.php',

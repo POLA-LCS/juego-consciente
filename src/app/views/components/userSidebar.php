@@ -14,6 +14,7 @@
         <ul class="space-y-2">
             <li><a href="dashboard" class="sidebar-link text-[var(--color-text-base)]">Inicio</a></li>
             <li><a href="account" class="sidebar-link text-[var(--color-text-base)]">Mi Cuenta</a></li>
+            <li><a href="history" class="sidebar-link text-[var(--color-text-base)]">Historial</a></li>
             <li><a href="info" class="sidebar-link text-[var(--color-text-base)]">Sobre Ludopatía</a></li>
             <li><a href="contact" class="sidebar-link text-[var(--color-text-base)]">Contacto</a></li>
             <?php
