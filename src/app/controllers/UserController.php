@@ -176,7 +176,7 @@ class UserController
     private PDO $db;
     private User $user;
     private CheatSettings $cheatSettings;
-    private GameHistory $history;
+    private GameHistory $game_history;
 
     public function __construct()
     {
@@ -184,7 +184,7 @@ class UserController
         $this->db = $database->getConnection();
         $this->user = new User($this->db);
         $this->cheatSettings = new CheatSettings($this->db);
-        $this->history = new GameHistory($this->db);
+        $this->game_history = new GameHistory($this->db);
     }
 
     public function register(
@@ -351,9 +351,9 @@ class UserController
         int $result
     ): void {
         error_log("[Game History] User ID: {$user_id}, Game: {$game}, Result: {$result}");
-        $this->history->user_id = $user_id;
-        $this->history->game = $game;
-        $this->history->result = $result;
-        $this->history->create();
+        $this->game_history->user_id = $user_id;
+        $this->game_history->game = $game;
+        $this->game_history->result = $result;
+        $this->game_history->create();
     }
 }

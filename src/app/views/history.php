@@ -33,37 +33,32 @@ $gameHistory = $historyModel->getHistoryByUserId($_SESSION['user_id']);
                                 <th class="p-4 text-lg font-bold text-[var(--color-primary)] text-center">Fecha</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <?php if (empty($gameHistory)): ?>
-                                <tr>
-                                    <td colspan="3" class="p-4 text-center text-[var(--color-text-muted)]">No hay partidas en tu historial todavía.</td>
-                                </tr>
-                            <?php else: ?>
-                                <?php foreach ($gameHistory as $record): ?>
-                                    <tr class="border-t border-[var(--color-border)] hover:bg-[var(--color-background)] transition-colors">
-                                        <td class="p-4 uppercase font-semibold text-center"><?php echo strtoupper(htmlspecialchars($record['game'])); ?></td>
-                                        <td class="p-4 text-center font-bold <?php echo $record['result'] > 0 ? 'text-green-400' : 'text-red-400'; ?>">
-                                            <?php
-                                            $string_number = ((string)$record['result']);
-                                            $string_number = ($record['result'] < 0) ? '- ' . substr($string_number, 1) : '+ ' . $string_number;
-                                            echo htmlspecialchars($string_number);
-                                            ?>
-                                        </td>
-                                        <td class="p-4 text-center">
-                                            <span class="block font-semibold"><?php echo date('d/m/Y', strtotime($record['played_at'])); ?></span>
-                                            <span class="block text-xs text-[var(--color-text-muted)]"><?php echo date('H:i:s', strtotime($record['played_at'])); ?></span>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                        <tbody id="history-body">
+                            <!-- Las filas se generarán con JavaScript -->
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Controles de Paginación -->
+                <div id="pagination-controls" class="flex justify-center items-center space-x-4 mt-6">
+                    <button id="prev-page" class="btn px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg disabled:bg-gray-500 disabled:cursor-not-allowed">Anterior</button>
+                    <span id="page-info" class="w-full text-center font-semibold"></span>
+                    <button id="next-page" class="btn px-4 py-2 bg-[var(--color-primary)] text-white rounded-lg disabled:bg-gray-500 disabled:cursor-not-allowed">Siguiente</button>
+                </div>
+
+
             </div>
         </main>
     </div>
     <!-- Componente Footer -->
     <?php require SRC_PATH . 'app/views/components/footer.php'; ?>
+
+    <!-- Pasamos los datos de PHP a una variable de JavaScript -->
+    <script>
+        const gameHistoryData = <?php echo json_encode($gameHistory); ?>;
+    </script>
+    <!-- Incluimos el script externo que contiene la lógica -->
+    <script src="assets/js/history_pages.js"></script>
 </body>
 
 </html>
