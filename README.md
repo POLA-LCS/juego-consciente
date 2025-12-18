@@ -1,9 +1,8 @@
 # Juego Consciente
 
+![Logo Juego Consciente](/src/public/assets/images/logo.png "Logo Juego Consciente")
 > [!WARNING]  
 > Este es un Software de Simulación Pedagógica para la Prevención de Fraudes en Juegos de Azar.
-
-![Logo Juego Consciente](/src/public/assets/images/logo.png "Logo Juego Consciente")
 
 ## 1. Objetivo del Proyecto
 
